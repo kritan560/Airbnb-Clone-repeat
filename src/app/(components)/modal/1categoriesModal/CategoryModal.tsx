@@ -33,7 +33,7 @@ const CategoryModal = () => {
                 title="Which of this best describe your place"
                 subtitle="Pick a category"
             />
-            <div className="h-[290px] scrollbar-thumb-red-400 overflow-y-scroll scrollbar-thin scrollbar-thumb-rounded-lg -mr-4 pr-2 mt-2">
+            <Body className="scrollbar-thumb-red-400 overflow-y-scroll scrollbar-thin scrollbar-thumb-rounded-lg -mr-4 scroll-smooth">
                 {firstAndSecondIcons.map((items, index) => (
                     <div key={index} className="flex gap-x-4 mt-4">
                         {items.map((item, index) => (
@@ -47,11 +47,11 @@ const CategoryModal = () => {
                         ))}
                     </div>
                 ))}
-            </div>
+            </Body>
 
             <Button
                 disabled={false}
-                className="bg-red w-full bg-red-400 py-2 rounded-lg"
+                // className="bg-red w-full bg-red-400 py-2 rounded-lg"
                 primaryLabel="next"
             />
         </div>

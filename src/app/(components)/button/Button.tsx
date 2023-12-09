@@ -18,7 +18,7 @@ const Button: React.FC<ButtonProps> = ({
     className
 }) => {
     return (
-        <div className="absolute bottom-0 w-full">
+        <div className="absolute bottom-0 flex justify-center bg-red w-full bg-red-400 py-2 rounded-lg">
             <button
                 disabled={disabled}
                 className={`${className} ${disabled && "bg-slate-300"}`}

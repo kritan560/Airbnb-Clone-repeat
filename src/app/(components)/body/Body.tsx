@@ -1,6 +1,11 @@
 import { ReactNode } from "react";
 
-const Body = ({ children }: { children: ReactNode }) => {
-    return <div className="h-[300px]">{children}</div>;
+type BodyType = {
+    children?: ReactNode;
+    className?: string;
+};
+
+const Body: React.FC<BodyType> = ({ children, className }) => {
+    return <div className={`${className} h-[290px] mt-4`}>{children}</div>;
 };
 export default Body;
