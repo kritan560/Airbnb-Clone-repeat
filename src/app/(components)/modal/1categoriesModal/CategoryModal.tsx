@@ -1,59 +1,118 @@
-"use client";
-
-import { IoAddCircleSharp } from "react-icons/io5";
+import { IoDiamondSharp } from "react-icons/io5";
 import Button from "../../button/Button";
 import Heading from "../../heading/Heading";
 import Body from "../../body/Body";
+import { GiBoatFishing, GiDesert, GiJungle } from "react-icons/gi";
+import { MdTempleHindu } from "react-icons/md";
+import {
+    FaRegSnowflake,
+    FaSchool,
+    FaSkiing,
+    FaUniversity
+} from "react-icons/fa";
+import { PiSwimmingPoolDuotone } from "react-icons/pi";
+import { LiaHotelSolid } from "react-icons/lia";
+import { FieldValues, UseFormSetValue, UseFormWatch } from "react-hook-form";
+import { useEffect, useRef } from "react";
+import CategoryStore from "@/app/store/categoryStore";
 
-const CategoryModal = () => {
+type CategoryModalProps = {
+    setValue: UseFormSetValue<FieldValues>;
+    id: string;
+    watch: UseFormWatch<FieldValues>;
+};
+
+const CategoryModal: React.FC<CategoryModalProps> = ({
+    setValue,
+    id,
+    watch
+}) => {
+    type CategoryIcon = typeof categoryIcons extends (infer U)[]
+        ? U
+        : typeof categoryIcons;
+
     const categoryIcons = [
-        { icon: IoAddCircleSharp, iconName: "circle sharp0" },
-        { icon: IoAddCircleSharp, iconName: "circle sharp1" },
-
-        { icon: IoAddCircleSharp, iconName: "circle sharp2" },
-        { icon: IoAddCircleSharp, iconName: "circle sharp3" },
-        { icon: IoAddCircleSharp, iconName: "circle sharp3" },
-        { icon: IoAddCircleSharp, iconName: "circle sharp3" },
-        { icon: IoAddCircleSharp, iconName: "circle sharp3" },
-        { icon: IoAddCircleSharp, iconName: "circle sharp3" },
-        { icon: IoAddCircleSharp, iconName: "circle sharp3" },
-        { icon: IoAddCircleSharp, iconName: "circle sharp3" },
-
-        { icon: IoAddCircleSharp, iconName: "circle sharp4" }
+        { icon: FaRegSnowflake, iconName: "Artic" },
+        { icon: GiDesert, iconName: "Desert" },
+        { icon: MdTempleHindu, iconName: "Temple" },
+        { icon: FaSchool, iconName: "School" },
+        { icon: FaUniversity, iconName: "University" },
+        { icon: FaSkiing, iconName: "Skiing" },
+        { icon: GiBoatFishing, iconName: "Fishing" },
+        { icon: PiSwimmingPoolDuotone, iconName: "Swimming Pool" },
+        { icon: LiaHotelSolid, iconName: "Hotels" },
+        { icon: IoDiamondSharp, iconName: "Luxury" },
+        { icon: GiJungle, iconName: "Jungle Safari" }
     ];
 
     let firstAndSecondIcons = [];
-
     for (let i = 0; i < categoryIcons.length; i += 2) {
         firstAndSecondIcons.push(categoryIcons.slice(i, i + 2));
     }
+
+    const categoryValue: CategoryIcon | undefined = watch(id);
+
+    // handling scroll position of category Modal
+    const categoryStore = CategoryStore();
+    const categoryScrollRef = useRef<HTMLDivElement>(null);
+
+    function handleScroll() {
+        if (categoryScrollRef.current) {
+            categoryStore.setScrollPosition(
+                categoryScrollRef.current.scrollTop
+            );
+        }
+    }
+
+    useEffect(() => {
+        const categoryScrollRefCurrent = categoryScrollRef.current;
+        categoryScrollRefCurrent &&
+            ((categoryScrollRefCurrent.scrollTop =
+                categoryStore.scrollPosition),
+            categoryScrollRefCurrent.addEventListener("scroll", handleScroll));
+
+        return () => {
+            categoryScrollRefCurrent &&
+                categoryScrollRefCurrent.removeEventListener(
+                    "scroll",
+                    handleScroll
+                );
+        };
+    }, []);
+
     return (
         <div>
             <Heading
                 title="Which of this best describe your place"
                 subtitle="Pick a category"
             />
-            <Body className="scrollbar-thumb-red-400 overflow-y-scroll scrollbar-thin scrollbar-thumb-rounded-lg -mr-4 scroll-smooth">
-                {firstAndSecondIcons.map((items, index) => (
-                    <div key={index} className="flex gap-x-4 mt-4">
-                        {items.map((item, index) => (
-                            <div
-                                key={index}
-                                className="border px-4 py-3 rounded-lg w-full"
-                            >
-                                <item.icon />
-                                <span>{item.iconName}</span>
-                            </div>
-                        ))}
-                    </div>
-                ))}
+            <Body className="">
+                <div
+                    ref={categoryScrollRef}
+                    className="scrollbar-thumb-red-400 overflow-y-scroll scrollbar-thin scrollbar-thumb-rounded-lg -mr-4 pr-2 scroll-smooth h-full"
+                >
+                    {firstAndSecondIcons.map((items, index) => (
+                        <div key={index} className="flex gap-x-4 mt-4">
+                            {items.map((item, index) => (
+                                <div
+                                    onClick={() => setValue(id, item)}
+                                    key={index}
+                                    className={`border px-4 py-3 rounded-lg w-full hover:bg-slate-400 active:bg-slate-500 ${
+                                        categoryValue &&
+                                        categoryValue.iconName ===
+                                            item.iconName &&
+                                        "bg-slate-500"
+                                    }`}
+                                >
+                                    <item.icon size={18} />
+                                    <span>{item.iconName}</span>
+                                </div>
+                            ))}
+                        </div>
+                    ))}
+                </div>
             </Body>
-
-            <Button
-                disabled={false}
-                // className="bg-red w-full bg-red-400 py-2 rounded-lg"
-                primaryLabel="next"
-            />
+            <Button />
         </div>
     );
 };

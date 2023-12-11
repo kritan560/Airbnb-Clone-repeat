@@ -1,7 +1,8 @@
 import { RxCross1 } from "react-icons/rx";
+import Button from "../button/Button";
 
 type ModalProps = {
-    body: React.JSX.Element;
+    body: React.JSX.Element | undefined;
 };
 
 const Modal: React.FC<ModalProps> = ({ body }) => {
@@ -12,15 +13,16 @@ const Modal: React.FC<ModalProps> = ({ body }) => {
             <div
                 className={`bg-white h-fixed w-fixed flex justify-center items-center rounded-lg relative`}
             >
-                <div className="absolute top-0 flex flex-col border-b gap-x-2 items-center py-4 w-full justify-center">
-                    <div>
-                        <div className="absolute left-4 text-sm font-semibold">
-                            <RxCross1 />
-                        </div>
-                        <p>Airbnb Your Home</p>
-                    </div>
+                <div className="absolute top-0 flex flex-col border-b gap-x-2 items-center py-4 w-full justify-center select-none">
+                    <RxCross1
+                        size={18}
+                        className="hover:cursor-pointer absolute left-6 text-sm font-semibold"
+                    />
+                    <p>Airbnb Your Home</p>
                 </div>
-                <div className="absolute inset-5 top-16">{body}</div>
+                <div className="absolute inset-5 top-16">
+                    {body}
+                </div>
             </div>
         </div>
     );

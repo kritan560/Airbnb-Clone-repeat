@@ -5,7 +5,7 @@ type HeadingProps = {
 
 const Heading: React.FC<HeadingProps> = ({ subtitle, title }) => {
     return (
-        <div className="">
+        <div className="select-none">
             <div className="font-semibold text-lg">{title}</div>
             <div className="text-sm text-slate-400">{subtitle}</div>
         </div>
