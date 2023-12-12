@@ -1,6 +1,5 @@
 import { MdAddPhotoAlternate } from "react-icons/md";
 import Body from "../../body/Body";
-import Button from "../../button/Button";
 import Heading from "../../heading/Heading";
 
 const PhotoModal = () => {
@@ -23,7 +22,7 @@ const PhotoModal = () => {
                     </div>
                 </div>
             </Body>
-            <Button />
+            {/* <Button /> */}
         </div>
     );
 };

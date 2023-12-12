@@ -1,6 +1,5 @@
 import { FieldValues, UseFormSetValue, UseFormWatch } from "react-hook-form";
 import Body from "../../body/Body";
-import Button from "../../button/Button";
 import Heading from "../../heading/Heading";
 import Amenities from "./Amenities";
 
@@ -46,7 +45,7 @@ const AmenitiesModal: React.FC<AmenititesModelProps> = ({
                     value={bedroomsCount}
                 />
             </Body>
-            <Button />
+            {/* <Button /> */}
         </div>
     );
 };

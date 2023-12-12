@@ -1,12 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
 import { FieldValues, UseFormSetValue } from "react-hook-form";
 import { FaMinusCircle, FaPlusCircle } from "react-icons/fa";
-import { FormValueType } from "../MainModal";
 
 type AmenitiesProps = {
     title: string;
     subtitle: string;
-    setValue: UseFormSetValue<FormValueType | FieldValues>;
+    setValue: UseFormSetValue<FieldValues>;
     value: number;
     id: string;
 };

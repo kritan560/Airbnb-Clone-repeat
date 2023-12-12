@@ -2,27 +2,15 @@ import ModalStore, { ModalEnumLength } from "@/app/store/modalStore";
 import React from "react";
 
 type ButtonProps = {
-    disabled?: boolean;
-    //     primaryAction?: () => void;
-    //     primaryLabel: string;
-    //     secondaryLabel?: string;
-    // secondaryAction?: () => void;
-    className?: string;
-    handleCheck? : () => void
+    isValid: boolean;
+    handleSubmit: () => void;
 };
 
-const Button: React.FC<ButtonProps> = ({
-    disabled,
-    // primaryAction,
-    // primaryLabel,
-    // secondaryAction,
-    // secondaryLabel,
-    className
-}) => {
+const Button: React.FC<ButtonProps> = ({ handleSubmit }) => {
     const modalStore = ModalStore();
 
     function handlePrimaryClick() {
-        modalStore.nextModal();
+        handleSubmit();
     }
 
     function handleSecondaryClick() {
@@ -36,10 +24,7 @@ const Button: React.FC<ButtonProps> = ({
             modalStore.currentModal <= ModalEnumLength ? (
                 <button
                     onClick={handleSecondaryClick}
-                    disabled={disabled}
-                    className={` ${
-                        disabled && "bg-slate-300"
-                    } bg-blue-400 w-full py-2 rounded-lg select-none`}
+                    className={`bg-blue-400 w-full py-2 rounded-lg select-none`}
                 >
                     {"Previous"}
                 </button>
@@ -48,10 +33,7 @@ const Button: React.FC<ButtonProps> = ({
             )}
             <button
                 onClick={handlePrimaryClick}
-                disabled={disabled}
-                className={` ${
-                    disabled && "bg-slate-300"
-                } bg-red-400 w-full py-2 rounded-lg select-none`}
+                className={`bg-red-400 w-full py-2 rounded-lg select-none`}
             >
                 {modalStore.currentModal === ModalEnumLength
                     ? "Create"

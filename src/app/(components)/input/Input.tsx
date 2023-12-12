@@ -1,34 +1,39 @@
-import { FieldValues, UseFormRegister, UseFormSetValue } from "react-hook-form";
+import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
 
 type InputProps = {
     label: string;
     value?: number;
-    setValue?: (value: string) => void;
     className?: string;
     type?: "textarea" | "text" | "number";
     register: UseFormRegister<FieldValues>;
+    error?: FieldErrors;
+    id: string;
 };
 
 const Input: React.FC<InputProps> = ({
     label,
-    setValue,
+    value,
     className,
     type,
-    value,
-    register
+    register,
+    error,
+    id
 }) => {
+    const er = error && error[id]?.message;
+
     return (
         <div className={`relative`}>
             {type == "text" && (
                 <input
-                    // onChange={(e) => setValue(e.target.value)}
-                    className={`w-full py-3 px-4 border rounded-md outline-none peer`}
+                    className={`w-full py-3 px-4 border rounded-md outline-none peer ${className} ${
+                        er && "border-red-500"
+                    }`}
                     type="text"
                     id=""
                     value={value}
-                    {...register("title", {
+                    {...register(id, {
                         required: {
-                            message: "this field is required",
+                            message: "this title field is required",
                             value: true
                         }
                     })}
@@ -36,23 +41,29 @@ const Input: React.FC<InputProps> = ({
             )}
             {type == "textarea" && (
                 <textarea
-                    // onChange={(e) => setValue(e.target.value)}
-                    className={`${className} w-full py-3 px-4 border rounded-md outline-none peer`}
+                    className={`${className} resize-none w-full py-3 px-4 border rounded-md outline-none peer ${
+                        er && "border-red-500"
+                    }`}
                     id=""
                     value={value}
-                    {...register("description", { required: true })}
+                    {...register(id, {
+                        required: {
+                            message: "this description field is required",
+                            value: true
+                        }
+                    })}
                 ></textarea>
             )}
             {type === "number" && (
                 <>
                     <input
-                        // onChange={(e) => setValue(e.target.value)}
-                        className={`w-full py-3 px-4 border rounded-md outline-none peer pl-8 mt-[2px]`}
+                        className={`w-full py-3 px-4 border rounded-md outline-none peer pl-8 mt-[2px] ${
+                            er && "border-red-500"
+                        }`}
                         type="number"
-                        // name=""
                         id=""
                         value={value}
-                        {...register("price", { required: true })}
+                        {...register(id, { required: true })}
                     />
                     <span className="absolute left-4 top-3 text-lg font-semibold">
                         $

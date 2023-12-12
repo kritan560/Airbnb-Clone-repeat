@@ -1,5 +1,4 @@
 import { RxCross1 } from "react-icons/rx";
-import Button from "../button/Button";
 
 type ModalProps = {
     body: React.JSX.Element | undefined;
@@ -20,9 +19,7 @@ const Modal: React.FC<ModalProps> = ({ body }) => {
                     />
                     <p>Airbnb Your Home</p>
                 </div>
-                <div className="absolute inset-5 top-16">
-                    {body}
-                </div>
+                <div className="absolute inset-5 top-16">{body}</div>
             </div>
         </div>
     );

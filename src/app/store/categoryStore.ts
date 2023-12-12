@@ -1,4 +1,3 @@
-import { RefObject, useRef } from "react";
 import { create } from "zustand";
 
 type CategoryType = {

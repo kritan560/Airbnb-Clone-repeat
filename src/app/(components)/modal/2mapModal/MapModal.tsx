@@ -1,21 +1,18 @@
 import React, { useMemo, useState } from "react";
 import Heading from "../../heading/Heading";
-import Button from "../../button/Button";
 import Body from "../../body/Body";
 import ReactSelect, { SingleValue } from "react-select";
 import useCountries from "@/app/hooks/useCountries";
 import dynamic from "next/dynamic";
 import { LatLngExpression } from "leaflet";
-import ModalStore from "@/app/store/modalStore";
 import { FieldValues, UseFormSetValue, UseFormWatch } from "react-hook-form";
-import { FormValueType } from "../MainModal";
 
 type CountryType = ReturnType<typeof useCountries> extends (infer U)[] ? U : "";
 
 type MapModalProps = {
     id: string;
-    setValue: UseFormSetValue<FieldValues | FormValueType>;
-    watch: UseFormWatch<FormValueType | FieldValues>;
+    setValue: UseFormSetValue<FieldValues>;
+    watch: UseFormWatch<FieldValues>;
 };
 
 const MapModal: React.FC<MapModalProps> = ({ id, setValue, watch }) => {
@@ -58,12 +55,7 @@ const MapModal: React.FC<MapModalProps> = ({ id, setValue, watch }) => {
                     <Map position={conuntryValue?.latLng as LatLngExpression} />
                 </div>
             </Body>
-            <Button
-                // primaryLabel="next"
-                // secondaryLabel="Previous"
-                // primaryAction={handlePrimaryClick}
-                // secondaryAction={handleSecondaryClick}
-            />
+            {/* <Button /> */}
         </div>
     );
 };

@@ -1,5 +1,4 @@
 import { IoDiamondSharp } from "react-icons/io5";
-import Button from "../../button/Button";
 import Heading from "../../heading/Heading";
 import Body from "../../body/Body";
 import { GiBoatFishing, GiDesert, GiJungle } from "react-icons/gi";
@@ -112,7 +111,7 @@ const CategoryModal: React.FC<CategoryModalProps> = ({
                     ))}
                 </div>
             </Body>
-            <Button />
+            {/* <Button  /> */}
         </div>
     );
 };

@@ -3,7 +3,7 @@ import "leaflet/dist/leaflet.css";
 import { Icon, LatLngExpression, Map as M } from "leaflet";
 import MarkerIcon from "leaflet/dist/images/marker-icon.png";
 import MarkerShadow from "leaflet/dist/images/marker-shadow.png";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 type MapProps = {
     position: LatLngExpression;

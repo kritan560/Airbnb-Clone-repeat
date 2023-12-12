@@ -1,28 +1,14 @@
-import {
-    FieldValues,
-    UseFormRegister,
-    UseFormSetValue,
-    UseFormWatch
-} from "react-hook-form";
+import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
 import Body from "../../body/Body";
-import Button from "../../button/Button";
 import Heading from "../../heading/Heading";
 import Input from "../../input/Input";
 
 type DescribeModalType = {
-    setValue: UseFormSetValue<FieldValues>;
-    watch: UseFormWatch<FieldValues>;
     register: UseFormRegister<FieldValues>;
+    error: FieldErrors;
 };
 
-const DescribeModal: React.FC<DescribeModalType> = ({
-    setValue,
-    watch,
-    register
-}) => {
-    const watchTitle = watch("title");
-    const watchDescription = watch("description");
-
+const DescribeModal: React.FC<DescribeModalType> = ({ register, error }) => {
     return (
         <div>
             <Heading
@@ -31,23 +17,24 @@ const DescribeModal: React.FC<DescribeModalType> = ({
             />
             <Body className="flex flex-col justify-center">
                 <Input
-                    label="Title"
+                    id="title"
                     type="text"
-                    // setValue={(e) => setValue("title", e)}
-                    // value={watchTitle}
+                    label="Title"
+                    className={``}
                     register={register}
+                    error={error}
                 />
                 <hr className="my-6" />
                 <Input
+                    id="description"
                     type="textarea"
                     label="Description"
-                    // setValue={(e) => setValue("description", e)}
-                    // value={watchDescription}
-                    className="h-32 "
+                    className={`h-32 ${""}`}
                     register={register}
+                    error={error}
                 />
             </Body>
-            <Button />
+            {/* <Button isValid={isValid} handleSubmit={handleSubmit} /> */}
         </div>
     );
 };
