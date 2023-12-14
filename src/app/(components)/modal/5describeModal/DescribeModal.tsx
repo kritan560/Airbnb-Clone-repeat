@@ -6,14 +6,16 @@ import Input from "../../input/Input";
 type DescribeModalType = {
     register: UseFormRegister<FieldValues>;
     error: FieldErrors;
+    title :string;
+    subtitle : string;
 };
 
-const DescribeModal: React.FC<DescribeModalType> = ({ register, error }) => {
+const DescribeModal: React.FC<DescribeModalType> = ({ register, error , title, subtitle}) => {
     return (
         <div>
             <Heading
-                title="How would you describe your place?"
-                subtitle="Short and sweet works the best"
+                title={title}
+                subtitle={subtitle}
             />
             <Body className="flex flex-col justify-center">
                 <Input

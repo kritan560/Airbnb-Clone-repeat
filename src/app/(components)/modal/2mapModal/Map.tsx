@@ -10,11 +10,11 @@ type MapProps = {
 };
 
 const Map: React.FC<MapProps> = ({ position }) => {
+    const center = [51.505, -0.09] as LatLngExpression;
     const icon = new Icon({
         shadowUrl: MarkerShadow.src,
         iconUrl: MarkerIcon.src
     });
-    const center = [51.505, -0.09] as LatLngExpression;
     const zoom = 12;
     const [map, setMap] = useState<M | null>();
 

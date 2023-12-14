@@ -14,7 +14,7 @@ import Button from "../button/Button";
 const MainModal = () => {
     const {
         handleSubmit,
-        formState: { errors, isValid, submitCount },
+        formState: { errors },
         register,
         watch,
         setValue
@@ -30,8 +30,6 @@ const MainModal = () => {
         mode: "all"
     });
 
-    console.log(submitCount);
-
     function submit(data: FieldValues) {
         if (modalStore.currentModal !== ModalEnumLength) {
             return modalStore.nextModal();
@@ -44,33 +42,74 @@ const MainModal = () => {
     let bodyContent;
     if (modalStore.currentModal === ModalEnum.CATEGORIES) {
         bodyContent = (
-            <CategoryModal id="category" setValue={setValue} watch={watch} />
+            <CategoryModal
+                id="category"
+                setValue={setValue}
+                watch={watch}
+                title={"Which of this best describe your place?"}
+                subtitle={"Pick a category"}
+            />
         );
     } else if (modalStore.currentModal === ModalEnum.MAP) {
-        bodyContent = <MapModal id="map" setValue={setValue} watch={watch} />;
+        bodyContent = (
+            <MapModal
+                id="map"
+                setValue={setValue}
+                watch={watch}
+                title="Where is Your place Located"
+                subtitle="Help guests find you!"
+            />
+        );
     } else if (modalStore.currentModal === ModalEnum.AMENITIES) {
-        bodyContent = <AmenitiesModal setValue={setValue} watch={watch} />;
+        bodyContent = (
+            <AmenitiesModal
+                setValue={setValue}
+                watch={watch}
+                title="Share some basic about your place"
+                subtitle="What amenities do you have?"
+            />
+        );
     } else if (modalStore.currentModal === ModalEnum.PHOTO) {
-        bodyContent = <PhotoModal />;
+        bodyContent = (
+            <PhotoModal
+                title={"Add Photo Of Your Place"}
+                subtitle={"Show Guests What Your place Look Like"}
+            />
+        );
     } else if (modalStore.currentModal === ModalEnum.DESCRIBE) {
-        bodyContent = <DescribeModal register={register} error={errors} />;
+        bodyContent = (
+            <DescribeModal
+                register={register}
+                error={errors}
+                title={"How would you describe your place?"}
+                subtitle={"Short and sweet description!"}
+            />
+        );
     } else if (modalStore.currentModal === ModalEnum.PRICE) {
-        bodyContent = <PriceModal watch={watch} register={register} />;
+        bodyContent = (
+            <PriceModal
+                watch={watch}
+                register={register}
+                title={"Now Set your Price $"}
+                subtitle={"How much do you charge per night?"}
+            />
+        );
     }
     return (
-        <div>
-            <Modal
-                body={
-                    <>
-                        {bodyContent}
-                        <Button
-                            handleSubmit={handleSubmit(submit)}
-                            isValid={isValid}
-                        />{" "}
-                    </>
-                }
-            />
-        </div>
+        <Modal
+            title="Airbnb Your Home"
+            modal={ModalStore}
+            body={
+                <>
+                    {bodyContent}
+                    <Button
+                        handleSubmit={handleSubmit(submit)}
+                        store={ModalStore}
+                        storeEnumLength={ModalEnumLength}
+                    />{" "}
+                </>
+            }
+        />
     );
 };
 export default MainModal;

@@ -52,7 +52,7 @@ const Amenities: React.FC<AmenitiesProps> = ({
                     <FaPlusCircle
                         size={28}
                         onClick={() => handleIncrement()}
-                        className="hover:cursor-pointer"
+                        className="hover:cursor-pointer transition active:text-slate-700 text-slate-900"
                     />
                     <div className="w-6 flex justify-center text-lg select-none">
                         {value}
@@ -60,7 +60,7 @@ const Amenities: React.FC<AmenitiesProps> = ({
                     <FaMinusCircle
                         size={28}
                         onClick={() => handleDecrement()}
-                        className="hover:cursor-pointer"
+                        className="hover:cursor-pointer transition active:text-slate-700 text-slate-900"
                     />
                 </div>
             </div>

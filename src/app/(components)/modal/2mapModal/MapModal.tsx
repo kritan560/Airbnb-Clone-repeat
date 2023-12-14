@@ -13,16 +13,24 @@ type MapModalProps = {
     id: string;
     setValue: UseFormSetValue<FieldValues>;
     watch: UseFormWatch<FieldValues>;
+    title: string;
+    subtitle: string;
 };
 
-const MapModal: React.FC<MapModalProps> = ({ id, setValue, watch }) => {
+const MapModal: React.FC<MapModalProps> = ({
+    id,
+    setValue,
+    watch,
+    title,
+    subtitle
+}) => {
     const [country, setCountry] = useState<SingleValue<CountryType>>();
 
-    // const Map = dynamic(() => import("./Map"), { ssr: false });
-    const Map = useMemo(
-        () => dynamic(() => import("./Map"), { ssr: false }),
-        [country]
-    );
+    const Map = dynamic(() => import("./Map"), { ssr: false });
+    // const Map = useMemo(
+    //     () => dynamic(() => import("./Map"), { ssr: false }),
+    //     [country]
+    // );
 
     const conuntryValue: CountryType = watch(id);
 
@@ -34,10 +42,7 @@ const MapModal: React.FC<MapModalProps> = ({ id, setValue, watch }) => {
 
     return (
         <div>
-            <Heading
-                subtitle="Help Guest Find You"
-                title="Where is your place located?"
-            />
+            <Heading subtitle={subtitle} title={title} />
             <Body className="">
                 <div className="flex flex-col gap-y-3">
                     <ReactSelect

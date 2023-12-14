@@ -1,8 +1,16 @@
 import { IoDiamondSharp } from "react-icons/io5";
 import Heading from "../../heading/Heading";
 import Body from "../../body/Body";
-import { GiBoatFishing, GiDesert, GiJungle } from "react-icons/gi";
-import { MdTempleHindu } from "react-icons/md";
+import {
+    GiBarn,
+    GiBoatFishing,
+    GiCaveEntrance,
+    GiDesert,
+    GiGoblinCamp,
+    GiJungle,
+    GiWaterMill
+} from "react-icons/gi";
+import { MdCarRepair, MdStadium, MdTempleHindu } from "react-icons/md";
 import {
     FaRegSnowflake,
     FaSchool,
@@ -19,30 +27,40 @@ type CategoryModalProps = {
     setValue: UseFormSetValue<FieldValues>;
     id: string;
     watch: UseFormWatch<FieldValues>;
+    title: string;
+    subtitle: string;
 };
+
+export const categoryIcons = [
+    { icon: FaRegSnowflake, iconName: "Artic" },
+    { icon: GiDesert, iconName: "Desert" },
+    { icon: MdTempleHindu, iconName: "Temple" },
+    { icon: FaSchool, iconName: "School" },
+    { icon: FaUniversity, iconName: "University" },
+    { icon: FaSkiing, iconName: "Skiing" },
+    { icon: GiBoatFishing, iconName: "Fishing" },
+    { icon: PiSwimmingPoolDuotone, iconName: "Swimming" },
+    { icon: LiaHotelSolid, iconName: "Hotels" },
+    { icon: IoDiamondSharp, iconName: "Luxury" },
+    { icon: GiWaterMill, iconName: "WaterMill" },
+    { icon: GiCaveEntrance, iconName: "Cave" },
+    { icon: GiBarn, iconName: "Barn" },
+    { icon: GiGoblinCamp, iconName: "Camping" },
+    { icon: MdStadium, iconName: "Stadium" },
+    { icon: MdCarRepair, iconName: "Car Repair" },
+    { icon: GiJungle, iconName: "Jungle Safari" }
+];
 
 const CategoryModal: React.FC<CategoryModalProps> = ({
     setValue,
     id,
-    watch
+    watch,
+    title,
+    subtitle
 }) => {
     type CategoryIcon = typeof categoryIcons extends (infer U)[]
         ? U
         : typeof categoryIcons;
-
-    const categoryIcons = [
-        { icon: FaRegSnowflake, iconName: "Artic" },
-        { icon: GiDesert, iconName: "Desert" },
-        { icon: MdTempleHindu, iconName: "Temple" },
-        { icon: FaSchool, iconName: "School" },
-        { icon: FaUniversity, iconName: "University" },
-        { icon: FaSkiing, iconName: "Skiing" },
-        { icon: GiBoatFishing, iconName: "Fishing" },
-        { icon: PiSwimmingPoolDuotone, iconName: "Swimming Pool" },
-        { icon: LiaHotelSolid, iconName: "Hotels" },
-        { icon: IoDiamondSharp, iconName: "Luxury" },
-        { icon: GiJungle, iconName: "Jungle Safari" }
-    ];
 
     let firstAndSecondIcons = [];
     for (let i = 0; i < categoryIcons.length; i += 2) {
@@ -81,14 +99,11 @@ const CategoryModal: React.FC<CategoryModalProps> = ({
 
     return (
         <div>
-            <Heading
-                title="Which of this best describe your place"
-                subtitle="Pick a category"
-            />
+            <Heading title={title} subtitle={subtitle} />
             <Body className="">
                 <div
                     ref={categoryScrollRef}
-                    className="scrollbar-thumb-red-400 overflow-y-scroll scrollbar-thin scrollbar-thumb-rounded-lg -mr-4 pr-2 scroll-smooth h-full"
+                    className="scrollbar-thumb-red-600 overflow-y-scroll scrollbar-thin scrollbar-thumb-rounded-lg -mr-4 pr-2 scroll-smooth h-full"
                 >
                     {firstAndSecondIcons.map((items, index) => (
                         <div key={index} className="flex gap-x-4 mt-4">
@@ -96,14 +111,14 @@ const CategoryModal: React.FC<CategoryModalProps> = ({
                                 <div
                                     onClick={() => setValue(id, item)}
                                     key={index}
-                                    className={`border px-4 py-3 rounded-lg w-full hover:bg-slate-400 active:bg-slate-500 ${
+                                    className={`border-2 px-4 py-3 rounded-lg w-full transition duration-100 hover:border-slate-400 active:border-slate-500 ${
                                         categoryValue &&
                                         categoryValue.iconName ===
                                             item.iconName &&
-                                        "bg-slate-500"
+                                        "border-slate-500"
                                     }`}
                                 >
-                                    <item.icon size={18} />
+                                    <item.icon size={22} />
                                     <span>{item.iconName}</span>
                                 </div>
                             ))}

@@ -6,11 +6,15 @@ import Amenities from "./Amenities";
 type AmenititesModelProps = {
     setValue: UseFormSetValue<FieldValues>;
     watch: UseFormWatch<FieldValues>;
+    title: string;
+    subtitle: string;
 };
 
 const AmenitiesModal: React.FC<AmenititesModelProps> = ({
     setValue,
-    watch
+    watch,
+    title,
+    subtitle
 }) => {
     const guestCount: number = watch("guests");
     const roomCount: number = watch("rooms");
@@ -18,10 +22,7 @@ const AmenitiesModal: React.FC<AmenititesModelProps> = ({
 
     return (
         <div>
-            <Heading
-                title="Share some basic about your place"
-                subtitle="What amenities do you have"
-            />
+            <Heading title={title} subtitle={subtitle} />
             <Body>
                 <Amenities
                     title="Guest"

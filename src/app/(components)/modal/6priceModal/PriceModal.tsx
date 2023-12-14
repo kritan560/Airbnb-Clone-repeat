@@ -6,9 +6,16 @@ import Input from "../../input/Input";
 type PriceModalProps = {
     watch: UseFormWatch<FieldValues>;
     register: UseFormRegister<FieldValues>;
+    title: string;
+    subtitle: string;
 };
 
-const PriceModal: React.FC<PriceModalProps> = ({ watch, register }) => {
+const PriceModal: React.FC<PriceModalProps> = ({
+    watch,
+    register,
+    title,
+    subtitle
+}) => {
     const watchPrice = watch("price");
 
     return (

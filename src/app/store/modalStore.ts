@@ -4,6 +4,9 @@ type ModalStoreType = {
     currentModal: number;
     nextModal: () => void;
     previousModal: () => void;
+    isOpen: boolean;
+    onOpen: () => void;
+    onClose: () => void;
 };
 
 export enum ModalEnum {
@@ -19,7 +22,7 @@ const ModalEnumNumber = Object.keys(ModalEnum)
     .map((item) => parseInt(item))
     .filter((num) => !isNaN(num));
 
-export const ModalEnumLength = ModalEnumNumber.length
+export const ModalEnumLength = ModalEnumNumber.length;
 
 const ModalStore = create<ModalStoreType>((set) => ({
     currentModal: 1,
@@ -36,7 +39,10 @@ const ModalStore = create<ModalStoreType>((set) => ({
                 state.currentModal == ModalEnum.CATEGORIES
                     ? state.currentModal - 0
                     : state.currentModal - 1
-        }))
+        })),
+    isOpen: false,
+    onOpen: () => set({ isOpen: true }),
+    onClose: () => set({ isOpen: false })
 }));
 
 export default ModalStore;

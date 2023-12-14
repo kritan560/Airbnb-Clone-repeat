@@ -1,13 +1,17 @@
-import ModalStore, { ModalEnumLength } from "@/app/store/modalStore";
 import React from "react";
 
 type ButtonProps = {
-    isValid: boolean;
     handleSubmit: () => void;
+    store: any;
+    storeEnumLength: number;
 };
 
-const Button: React.FC<ButtonProps> = ({ handleSubmit }) => {
-    const modalStore = ModalStore();
+const Button: React.FC<ButtonProps> = ({
+    handleSubmit,
+    store,
+    storeEnumLength
+}) => {
+    const modalStore = store();
 
     function handlePrimaryClick() {
         handleSubmit();
@@ -18,13 +22,13 @@ const Button: React.FC<ButtonProps> = ({ handleSubmit }) => {
     }
     return (
         <div
-            className={`absolute -bottom-2 gap-x-4 flex justify-center bg-red w-full py-2 rounded-lg`}
+            className={`absolute -bottom-2 gap-x-4 flex justify-center bg-red w-full py-2 rounded-lg font-semibold text-white`}
         >
             {modalStore.currentModal > 1 &&
-            modalStore.currentModal <= ModalEnumLength ? (
+            modalStore.currentModal <= storeEnumLength ? (
                 <button
                     onClick={handleSecondaryClick}
-                    className={`bg-blue-400 w-full py-2 rounded-lg select-none`}
+                    className={`bg-blue-600 transition active:bg-blue-500 w-full py-2 rounded-lg select-none`}
                 >
                     {"Previous"}
                 </button>
@@ -33,9 +37,9 @@ const Button: React.FC<ButtonProps> = ({ handleSubmit }) => {
             )}
             <button
                 onClick={handlePrimaryClick}
-                className={`bg-red-400 w-full py-2 rounded-lg select-none`}
+                className={`bg-red-600 transition active:bg-red-500 w-full py-2 rounded-lg select-none`}
             >
-                {modalStore.currentModal === ModalEnumLength
+                {modalStore.currentModal === storeEnumLength
                     ? "Create"
                     : "Next"}
             </button>
