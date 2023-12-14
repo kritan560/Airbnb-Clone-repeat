@@ -2,6 +2,7 @@ import { MdAddPhotoAlternate } from "react-icons/md";
 import Body from "../../body/Body";
 import Heading from "../../heading/Heading";
 import { CldUploadWidget } from "next-cloudinary";
+// NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME="dapm1y4jh"
 
 type PhotoProps = {
     title: string;
