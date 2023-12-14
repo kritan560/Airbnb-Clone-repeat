@@ -25,8 +25,8 @@ import CategoryStore from "@/app/store/categoryStore";
 
 type CategoryModalProps = {
     setValue: UseFormSetValue<FieldValues>;
-    id: string;
     watch: UseFormWatch<FieldValues>;
+    id: string;
     title: string;
     subtitle: string;
 };

@@ -74,6 +74,8 @@ const MainModal = () => {
             <PhotoModal
                 title={"Add Photo Of Your Place"}
                 subtitle={"Show Guests What Your place Look Like"}
+                setValue = {setValue}
+                watch = {watch}
             />
         );
     } else if (modalStore.currentModal === ModalEnum.DESCRIBE) {
@@ -106,7 +108,7 @@ const MainModal = () => {
                         handleSubmit={handleSubmit(submit)}
                         store={ModalStore}
                         storeEnumLength={ModalEnumLength}
-                    />{" "}
+                    /> 
                 </>
             }
         />

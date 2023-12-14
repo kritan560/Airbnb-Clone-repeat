@@ -2,44 +2,74 @@ import { MdAddPhotoAlternate } from "react-icons/md";
 import Body from "../../body/Body";
 import Heading from "../../heading/Heading";
 import { CldUploadWidget } from "next-cloudinary";
+import { useState } from "react";
+import Image from "next/image";
+import PhotoStore from "@/app/store/photoStore";
+import { FieldValues, UseFormSetValue, UseFormWatch } from "react-hook-form";
 // NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME="dapm1y4jh"
 
 type PhotoProps = {
     title: string;
     subtitle: string;
+    setValue: UseFormSetValue<FieldValues>;
+    watch: UseFormWatch<FieldValues>;
 };
 
-const PhotoModal: React.FC<PhotoProps> = ({ subtitle, title }) => {
-    function handleUpload(){
-        
+const PhotoModal: React.FC<PhotoProps> = ({
+    subtitle,
+    title,
+    setValue,
+    watch
+}) => {
+    const photoStore = PhotoStore();
+    const result = photoStore.photoSrc;
+
+    function handleUpload(data: any) {
+        photoStore.onPhotoChange(data.info.secure_url);
+        setValue("image", data.info.secure_url);
     }
+
     return (
         <div>
             <Heading title={title} subtitle={subtitle} />
             <Body>
                 <CldUploadWidget
+                    onUpload={handleUpload}
                     uploadPreset="okkk905j"
                     options={{ maxFiles: 1 }}
-                    onUpload={handleUpload}
                 >
                     {({ open }) => {
                         return (
-                            <>
-                                <div
-                                    onClick={() => open()}
-                                    className="border-4 border-dotted h-full rounded-md flex justify-center items-center hover:cursor-pointer"
-                                >
-                                    <div className="flex flex-col gap-y-1 items-center">
-                                        <MdAddPhotoAlternate
-                                            size={45}
-                                            className="text-slate-600"
+                            <div
+                                onClick={() => open()}
+                                className="border-4 border-dotted h-full rounded-md flex justify-center items-center hover:cursor-pointer overflow-hidden"
+                            >
+                                {!result && (
+                                    <>
+                                        <div className="flex flex-col gap-y-1 items-center">
+                                            <MdAddPhotoAlternate
+                                                size={45}
+                                                className="text-slate-600"
+                                            />
+                                            <span className="font-semibold text-sm text-slate-600">
+                                                Click to upload
+                                            </span>
+                                        </div>
+                                    </>
+                                )}
+                                {result && (
+                                    <>
+                                        <Image
+                                            src={result}
+                                            alt="house jpg"
+                                            height={400}
+                                            width={400}
+                                            className="rounded-md"
+                                            title="click to chage"
                                         />
-                                        <span className="font-semibold text-sm text-slate-600">
-                                            Click to upload
-                                        </span>
-                                    </div>
-                                </div>
-                            </>
+                                    </>
+                                )}
+                            </div>
                         );
                     }}
                 </CldUploadWidget>

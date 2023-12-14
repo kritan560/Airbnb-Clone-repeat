@@ -44,7 +44,7 @@ const Navbar = () => {
 
     return (
         <main>
-            <div className="flex justify-around items-center py-4 border-b">
+            <div className="flex justify-around items-center py-4 border-b w-full">
                 {/* logo */}
                 <div className="">
                     <Image
@@ -52,6 +52,7 @@ const Navbar = () => {
                         width={100}
                         height={100}
                         alt="logo"
+                        priority
                     />
                 </div>
                 {/* filter content */}
