@@ -30,7 +30,7 @@ const Dropdown: React.FC<DropdownProps> = ({ className }) => {
     bodyContent = (
         <div
             className={`${className} 
-            transition-all duration-300 
+            transition-all duration-300 z-30
             ${
                 dropdownStore.isOpen
                     ? "visible opacity-100"

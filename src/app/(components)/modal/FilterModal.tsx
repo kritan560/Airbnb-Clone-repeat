@@ -12,12 +12,7 @@ import AmenitiesModal from "./3amenitiesModal/AmenitiesModal";
 
 const FilterModal = () => {
     const filterModalStore = FilterModalStore();
-    let bodyContent;
-    const {
-        setValue,
-        watch,
-        handleSubmit,
-    } = useForm<FieldValues>({
+    const { setValue, watch, handleSubmit } = useForm<FieldValues>({
         mode: "all",
         defaultValues: {
             guests: 1,
@@ -33,6 +28,7 @@ const FilterModal = () => {
         console.log(data);
     }
 
+    let bodyContent;
     if (filterModalStore.currentModal === FilterModalEnum.MAP) {
         bodyContent = (
             <MapModal
