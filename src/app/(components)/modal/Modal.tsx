@@ -11,8 +11,8 @@ const Modal: React.FC<ModalProps> = ({ body, modal, title }) => {
     let bodyContent;
     bodyContent = (
         <div
-            className={`absolute inset-0 flex justify-center items-center duration-200 transition-all ease-in h-full bg-slate-800/70 ${
-                Store.isOpen ? "visible" : "invisible h-0"
+            className={`absolute inset-0 flex justify-center items-center transition-all duration-300 bg-slate-800/90 ${
+                Store.isOpen ? "visible opacity-100" : "invisible opacity-0"
             }`}
         >
             <div
