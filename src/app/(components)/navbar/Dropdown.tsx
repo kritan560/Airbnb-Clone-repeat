@@ -23,9 +23,6 @@ const Dropdown: React.FC<DropdownProps> = ({ className }) => {
     const dropdownStore = DropdownStore();
     let bodyContent;
 
-    // should open immediatly
-    // should close after a second
-
     // if dropDownStore is true
     bodyContent = (
         <div

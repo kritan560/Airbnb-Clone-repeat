@@ -7,6 +7,10 @@ type ModalStoreType = {
     isOpen: boolean;
     onOpen: () => void;
     onClose: () => void;
+    /**
+     * reset the currentModal to CATEGORIES
+     */
+    resetModal : () => void;
 };
 
 export enum ModalEnum {
@@ -42,7 +46,8 @@ const ModalStore = create<ModalStoreType>((set) => ({
         })),
     isOpen: false,
     onOpen: () => set({ isOpen: true }),
-    onClose: () => set({ isOpen: false })
+    onClose: () => set({ isOpen: false }),
+    resetModal : () => set({currentModal : ModalEnum.CATEGORIES })
 }));
 
 export default ModalStore;

@@ -60,7 +60,7 @@ const FilterModal = () => {
                         handleSubmit={handleSubmit(submit)}
                         store={FilterModalStore}
                         storeEnumLength={filterModalEnumLength}
-                    />{" "}
+                    />
                 </>
             }
         />

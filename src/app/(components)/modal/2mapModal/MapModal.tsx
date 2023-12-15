@@ -7,7 +7,7 @@ import dynamic from "next/dynamic";
 import { LatLngExpression } from "leaflet";
 import { FieldValues, UseFormSetValue, UseFormWatch } from "react-hook-form";
 
-type CountryType = ReturnType<typeof useCountries> extends (infer U)[] ? U : "";
+export type CountryType = ReturnType<typeof useCountries> extends (infer U)[] ? U : "";
 
 type MapModalProps = {
     id: string;
@@ -26,18 +26,22 @@ const MapModal: React.FC<MapModalProps> = ({
 }) => {
     const [country, setCountry] = useState<SingleValue<CountryType>>();
 
-    const Map = dynamic(() => import("./Map"), { ssr: false });
-    // const Map = useMemo(
-    //     () => dynamic(() => import("./Map"), { ssr: false }),
-    //     [country]
-    // );
+    // const Map = dynamic(() => import("./Map"), { ssr: false });
+    const Map = useMemo(
+        () => dynamic(() => import("./Map"), { ssr: false }),
+        [country]
+    );
 
     const conuntryValue: CountryType = watch(id);
 
     // handle country change
     function handleCountryChange(e: SingleValue<CountryType>) {
         setCountry(e);
-        setValue(id, e);
+        setValue(id, e, {
+            shouldDirty: true,
+            shouldTouch: true,
+            shouldValidate: true
+        });
     }
 
     return (

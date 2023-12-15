@@ -10,14 +10,19 @@ import PhotoModal from "./4photoModal.tsx/PhotoModal";
 import DescribeModal from "./5describeModal/DescribeModal";
 import PriceModal from "./6priceModal/PriceModal";
 import Button from "../button/Button";
+import axios from "axios";
+import toast from "react-hot-toast";
+import CategoryStore from "@/app/store/categoryStore";
+import { useRouter } from "next/navigation";
 
 const MainModal = () => {
     const {
         handleSubmit,
-        formState: { errors },
+        formState: { errors, isSubmitSuccessful, isValid },
         register,
         watch,
-        setValue
+        setValue,
+        reset
     } = useForm<FieldValues>({
         defaultValues: {
             guests: 1,
@@ -30,14 +35,34 @@ const MainModal = () => {
         mode: "all"
     });
 
+    const modalStore = ModalStore();
+    const categoryStore = CategoryStore();
+    const router = useRouter()
+
     function submit(data: FieldValues) {
         if (modalStore.currentModal !== ModalEnumLength) {
             return modalStore.nextModal();
         }
-        console.log(data);
+        
+        // clear all the form data and close modal if submit successful
+        if (isValid && isSubmitSuccessful) {
+            axios
+                .post("/api/modal", data)
+                .then(() => {
+                    reset();
+                    toast.success("data saved to DB", { duration: 5000 });
+                    categoryStore.setScrollPosition(0);
+                    modalStore.resetModal();
+                    router.refresh() 
+                })
+                .catch((err) => {
+                    console.error(err), toast.error("something went wrong");
+                })
+                .finally(() => {
+                    modalStore.onClose();
+                });
+        }
     }
-
-    const modalStore = ModalStore();
 
     let bodyContent;
     if (modalStore.currentModal === ModalEnum.CATEGORIES) {
@@ -74,8 +99,8 @@ const MainModal = () => {
             <PhotoModal
                 title={"Add Photo Of Your Place"}
                 subtitle={"Show Guests What Your place Look Like"}
-                setValue = {setValue}
-                watch = {watch}
+                setValue={setValue}
+                watch={watch}
             />
         );
     } else if (modalStore.currentModal === ModalEnum.DESCRIBE) {
@@ -108,7 +133,7 @@ const MainModal = () => {
                         handleSubmit={handleSubmit(submit)}
                         store={ModalStore}
                         storeEnumLength={ModalEnumLength}
-                    /> 
+                    />
                 </>
             }
         />

@@ -4,7 +4,6 @@ import Heading from "../../heading/Heading";
 import { CldUploadWidget } from "next-cloudinary";
 import { useState } from "react";
 import Image from "next/image";
-import PhotoStore from "@/app/store/photoStore";
 import { FieldValues, UseFormSetValue, UseFormWatch } from "react-hook-form";
 // NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME="dapm1y4jh"
 
@@ -21,11 +20,9 @@ const PhotoModal: React.FC<PhotoProps> = ({
     setValue,
     watch
 }) => {
-    const photoStore = PhotoStore();
-    const result = photoStore.photoSrc;
+    const result = watch("image");
 
     function handleUpload(data: any) {
-        photoStore.onPhotoChange(data.info.secure_url);
         setValue("image", data.info.secure_url);
     }
 
@@ -41,7 +38,7 @@ const PhotoModal: React.FC<PhotoProps> = ({
                     {({ open }) => {
                         return (
                             <div
-                                onClick={() => open()}
+                                onClick={() => open && open()}
                                 className="border-4 border-dotted h-full rounded-md flex justify-center items-center hover:cursor-pointer overflow-hidden"
                             >
                                 {!result && (

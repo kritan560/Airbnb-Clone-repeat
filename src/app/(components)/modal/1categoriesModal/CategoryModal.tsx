@@ -51,6 +51,10 @@ export const categoryIcons = [
     { icon: GiJungle, iconName: "Jungle Safari" }
 ];
 
+export type CategoryIcon = typeof categoryIcons extends (infer U)[]
+    ? U
+    : typeof categoryIcons;
+
 const CategoryModal: React.FC<CategoryModalProps> = ({
     setValue,
     id,
@@ -58,9 +62,6 @@ const CategoryModal: React.FC<CategoryModalProps> = ({
     title,
     subtitle
 }) => {
-    type CategoryIcon = typeof categoryIcons extends (infer U)[]
-        ? U
-        : typeof categoryIcons;
 
     let firstAndSecondIcons = [];
     for (let i = 0; i < categoryIcons.length; i += 2) {
@@ -103,7 +104,7 @@ const CategoryModal: React.FC<CategoryModalProps> = ({
             <Body className="">
                 <div
                     ref={categoryScrollRef}
-                    className="scrollbar-thumb-red-600 overflow-y-scroll scrollbar-thin scrollbar-thumb-rounded-lg -mr-4 pr-2 scroll-smooth h-full"
+                    className="scrollbar-thumb-red-600 overflow-y-scroll scrollbar-thin scrollbar-thumb-rounded-lg -mr-4 pr-2 scroll-smooth h-full select-none"
                 >
                     {firstAndSecondIcons.map((items, index) => (
                         <div key={index} className="flex gap-x-4 mt-4">
@@ -111,7 +112,7 @@ const CategoryModal: React.FC<CategoryModalProps> = ({
                                 <div
                                     onClick={() => setValue(id, item)}
                                     key={index}
-                                    className={`border-2 px-4 py-3 rounded-lg w-full transition duration-100 hover:border-slate-400 active:border-slate-500 ${
+                                    className={`border-2 px-4 py-3 rounded-lg w-full transition duration-100 hover:border-slate-400 hover:cursor-pointer active:border-slate-500 ${
                                         categoryValue &&
                                         categoryValue.iconName ===
                                             item.iconName &&
