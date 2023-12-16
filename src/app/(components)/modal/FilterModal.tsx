@@ -54,6 +54,8 @@ const FilterModal = () => {
             <DateRangeModal
                 title={"when do you plan to go?"}
                 subtitle={"make sure everyone on Board"}
+                setValue={setValue}
+                watch={watch}
             />
         );
     }
