@@ -9,6 +9,7 @@ import MapModal from "./2mapModal/MapModal";
 import { FieldValues, useForm } from "react-hook-form";
 import Button from "../button/Button";
 import AmenitiesModal from "./3amenitiesModal/AmenitiesModal";
+import DateRangeModal from "./7_dateRangeModal/DateRangeModal";
 
 const FilterModal = () => {
     const filterModalStore = FilterModalStore();
@@ -46,6 +47,13 @@ const FilterModal = () => {
                 subtitle="Find your perfect place!"
                 title="More Information"
                 watch={watch}
+            />
+        );
+    } else if (filterModalStore.currentModal === FilterModalEnum.DATE) {
+        bodyContent = (
+            <DateRangeModal
+                title={"when do you plan to go?"}
+                subtitle={"make sure everyone on Board"}
             />
         );
     }

@@ -37,23 +37,26 @@ const MainModal = () => {
 
     const modalStore = ModalStore();
     const categoryStore = CategoryStore();
-    const router = useRouter()
+    const router = useRouter();
 
     function submit(data: FieldValues) {
         if (modalStore.currentModal !== ModalEnumLength) {
             return modalStore.nextModal();
         }
-        
+
+        // converting the price string -> int
+        const datas = { ...data, price: parseInt(data.price) };
+
         // clear all the form data and close modal if submit successful
         if (isValid && isSubmitSuccessful) {
             axios
-                .post("/api/modal", data)
+                .post("/api/modal", datas)
                 .then(() => {
-                    reset();
                     toast.success("data saved to DB", { duration: 5000 });
+                    reset();
                     categoryStore.setScrollPosition(0);
                     modalStore.resetModal();
-                    router.refresh() 
+                    router.refresh();
                 })
                 .catch((err) => {
                     console.error(err), toast.error("something went wrong");

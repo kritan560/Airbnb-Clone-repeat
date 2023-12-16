@@ -20,10 +20,7 @@ const PriceModal: React.FC<PriceModalProps> = ({
 
     return (
         <div>
-            <Heading
-                title="Set Your Price"
-                subtitle="How much do you charge per night?"
-            />
+            <Heading title={title} subtitle={subtitle} />
             <Body>
                 <Input
                     id="price"
@@ -31,7 +28,7 @@ const PriceModal: React.FC<PriceModalProps> = ({
                     label="Price"
                     value={watchPrice}
                     register={register}
-                />
+                /> 
             </Body>
             {/* <Button /> */}
         </div>

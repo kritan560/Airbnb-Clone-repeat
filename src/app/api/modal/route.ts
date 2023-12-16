@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { CategoryIcon } from "@/app/(components)/modal/1categoriesModal/CategoryModal";
 import { CountryType } from "@/app/(components)/modal/2mapModal/MapModal";
-import prisma from "@/prisma/PrismaDB";
+import prisma from "../../../../prisma/PrismaDB";
 
 type RequestType = {
     category: CategoryIcon;

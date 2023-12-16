@@ -1,8 +1,9 @@
 "use client";
 
 import { ModelData } from "@prisma/client";
-import { categoryIcons } from "./(components)/modal/1categoriesModal/CategoryModal";
+import { categoryIcons } from "../modal/1categoriesModal/CategoryModal";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 type HomepageProps = {
     modalsFromDB: ModelData[];
@@ -14,14 +15,15 @@ export default function Homepage({ modalsFromDB }: HomepageProps) {
         firstToFourth.push(modalsFromDB.slice(i, i + 5));
     }
 
-    console.log(firstToFourth);
+    const router = useRouter();
+
     return (
         <>
             {/* scroll bar */}
-            <div className="grid grid-rows-1 grid-flow-col gap-x-10 whitespace-nowrap scrollbar-thumb-red-600 scrollbar-thin scrollbar-thumb-rounded-md overflow-x-scroll select-none z-0">
+            <div className="grid grid-rows-1 grid-flow-col gap-x-10 whitespace-nowrap scrollbar-thumb-red-600 scrollbar-thin scrollbar-thumb-rounded-md overflow-x-scroll select-none z-0 pb-3 pt-1 hover:cursor-pointer">
                 {categoryIcons.map((category) => (
-                    <div
-                        className="flex flex-col space-y-1 mt-1 justify-center items-center text-gray-500 hover:cursor-pointer group hover:text-gray-800 active:text-gray-700"
+                    <div 
+                        className="flex flex-col space-y-1 justify-center items-center text-gray-500 hover:cursor-pointer group hover:text-gray-800 active:text-gray-700"
                         key={category.icon}
                     >
                         {
@@ -39,14 +41,18 @@ export default function Homepage({ modalsFromDB }: HomepageProps) {
             {/* modals from db */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-x-8 gap-y-6 mt-12">
                 {modalsFromDB.map((item) => (
-                    <div className="group hover:cursor-pointer">
-                        <div className="overflow-hidden aspect-square rounded-lg mb-1">
+                    <div
+                    key={item.id}
+                        className="group hover:cursor-pointer"
+                        onClick={() => router.push(`homepage/${item.id}`)}
+                    >
+                        <div className="overflow-hidden rounded-lg mb-1">
                             <Image
                                 src={item.image}
                                 width={500}
                                 height={500}
                                 alt="image"
-                                className="w-full aspect-square transition group-hover:scale-110"
+                                className="w-full aspect-square transition group-hover:scale-110 group-active:scale-105"
                             />
                         </div>
                         <div className="font-semibold">{item.map}</div>

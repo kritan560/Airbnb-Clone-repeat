@@ -2,7 +2,7 @@ import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
 
 type InputProps = {
     label: string;
-    value?: number;
+    value?: string | number;
     className?: string;
     type?: "textarea" | "text" | "number";
     register: UseFormRegister<FieldValues>;
@@ -30,7 +30,7 @@ const Input: React.FC<InputProps> = ({
                         er && "border-red-500"
                     }`}
                     type="number"
-                    id=""
+                    id={id}
                     value={value}
                     {...register(id, { required: true })}
                 />
@@ -46,7 +46,7 @@ const Input: React.FC<InputProps> = ({
                     er && "border-red-500"
                 }`}
                 type="text"
-                id=""
+                id={id}
                 value={value}
                 {...register(id, {
                     required: {
@@ -62,7 +62,7 @@ const Input: React.FC<InputProps> = ({
                 className={`${className} resize-none w-full py-3 px-4 border rounded-md outline-none peer ${
                     er && "border-red-500"
                 }`}
-                id=""
+                id={id}
                 value={value}
                 {...register(id, {
                     required: {

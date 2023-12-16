@@ -8,12 +8,14 @@ import Dropdown from "./Dropdown";
 import DropdownStore from "@/app/store/dropdownStore";
 import { useEffect, useRef } from "react";
 import FilterModalStore from "@/app/store/filterModalStore";
+import { useRouter } from "next/navigation";
 
 const Navbar = () => {
     const modalStore = ModalStore();
     const dropdownStore = DropdownStore();
     const dropDownToggleRef = useRef<HTMLDivElement>(null);
     const filterModalStore = FilterModalStore();
+    const router = useRouter();
 
     const handleModalOpen = () => {
         return modalStore.onOpen();
@@ -46,7 +48,7 @@ const Navbar = () => {
         <main>
             <div className="flex justify-around items-center py-4 border-b w-full">
                 {/* logo */}
-                <div className="">
+                <div className="hover:cursor-pointer" onClick={() => router.push("/")}>
                     <Image
                         src={"/images/logo.png"}
                         width={100}
@@ -75,7 +77,7 @@ const Navbar = () => {
                 {/* hamburger and airbnb logo */}
                 <div className="flex gap-x-6 items-center">
                     <p
-                        className="hover:cursor-pointer text-slate-600 text-sm font-semibold py-3 transition px-4 rounded-full hover:bg-slate-300"
+                        className="hover:cursor-pointer text-slate-600 text-sm font-semibold py-3 transition px-4 rounded-full hover:bg-slate-300 active:bg-slate-400"
                         onClick={handleModalOpen}
                     >
                         Airbnb Your Home

@@ -11,7 +11,7 @@ const Modal: React.FC<ModalProps> = ({ body, modal, title }) => {
     let bodyContent;
     bodyContent = (
         <div
-            className={`absolute inset-0 flex justify-center items-center transition-all duration-300 bg-slate-800/90 overflow-y-scroll z-30 ${
+            className={`inset-0 flex justify-center items-center transition-all duration-300 bg-slate-800/70 overflow-y-clip fixed z-30 ${
                 Store.isOpen ? "h-full" : "h-0"
             }`}
         >
