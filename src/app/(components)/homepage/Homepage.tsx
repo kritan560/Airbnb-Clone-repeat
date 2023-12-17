@@ -10,7 +10,8 @@ import {
     useSearchParams
 } from "next/navigation";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import ScrollBarStore from "@/app/store/scrollBarStore";
 
 type HomepageProps = {
     modalsFromDB: ModelData[];
@@ -18,28 +19,17 @@ type HomepageProps = {
 
 export default function Homepage({ modalsFromDB }: HomepageProps) {
     const router = useRouter();
-    const url = useSearchParams();
-    const params = useParams();
-    const pathname = usePathname();
-    console.log(url.get("category"), "url");
-    console.log(params, "params");
-    console.log(pathname, "pathname");
-    const [item, setItem] = useState<string>();
+    const scrollBarStore = ScrollBarStore();
+    const item = scrollBarStore.scrollBar;
+    // const [item, setItem] = useState<string>();
+
     function uniqueItem(item: string) {
         router.push(`homepage/${item}`);
     }
 
     function handleScrollItemClick(category: string) {
-        setItem(category);
-        // axios
-        //     .post("/api/category", { category: category })
-        //     .then((res) => {
-        //         console.log(res);
-        //     })
-        //     .catch((err) => {
-        //         console.log(err);
-        //     });
-        router.push(`/?category=${category}`)
+        scrollBarStore.setScrollBar(category);
+        router.push(`/?category=${category}`);
     }
 
     return (
@@ -71,6 +61,7 @@ export default function Homepage({ modalsFromDB }: HomepageProps) {
                     </div>
                 ))}
             </div>
+
             {/* modals from db */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-x-8 gap-y-6 mt-12">
                 {modalsFromDB.map((item) => (

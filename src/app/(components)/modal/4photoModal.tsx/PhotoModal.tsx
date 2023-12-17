@@ -38,7 +38,9 @@ const PhotoModal: React.FC<PhotoProps> = ({
                     {({ open }) => {
                         return (
                             <div
-                                onClick={() => open && open()}
+                                onClick={() =>
+                                    open !== undefined ? open() : ""
+                                }
                                 className="border-4 border-dotted h-full rounded-md flex justify-center items-center hover:cursor-pointer overflow-hidden"
                             >
                                 {!result && (

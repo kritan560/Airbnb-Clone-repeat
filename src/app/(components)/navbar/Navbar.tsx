@@ -9,6 +9,7 @@ import DropdownStore from "@/app/store/dropdownStore";
 import { useEffect, useRef } from "react";
 import FilterModalStore from "@/app/store/filterModalStore";
 import { useRouter } from "next/navigation";
+import ScrollBarStore from "@/app/store/scrollBarStore";
 
 const Navbar = () => {
     const modalStore = ModalStore();
@@ -44,11 +45,23 @@ const Navbar = () => {
         document.addEventListener("click", handleDropDownClose);
     }, []);
 
+    // the underline under selected scrollbar items
+    const scrollBarStore = ScrollBarStore();
+    function handleLogoClick() {
+        router.push("/");
+        scrollBarStore.setScrollBar(undefined);
+    }
+
+    // display numbers in filter navbar
+    const guest = filterModalStore.guest;
+    const days = filterModalStore.days;
+    const location = filterModalStore.location;
+
     return (
         <main>
             <div className="flex justify-around items-center py-4 border-b w-full">
                 {/* logo */}
-                <div className="hover:cursor-pointer" onClick={() => router.push("/")}>
+                <div className="hover:cursor-pointer" onClick={handleLogoClick}>
                     <Image
                         src={"/images/logo.png"}
                         width={100}
@@ -62,12 +75,20 @@ const Navbar = () => {
                     className="flex items-center gap-x-3 border rounded-full pl-4 pr-1 py-1 hover:cursor-pointer hover:shadow-md shadow-sm text-sm font-semibold text-slate-600 transition"
                     onClick={handleFilterModal}
                 >
-                    <span>AnyWhere</span>
+                    <span>{location ? location : "AnyWhere"}</span>
                     <span>|</span>
-                    <span>Any Week</span>
+                    <span>
+                        <span className={`${days && "mr-1"}`}>{days}</span>
+                        {days ? "Week" : "Any Week"}
+                    </span>
                     <span>|</span>
                     <div className="flex gap-x-3 items-center">
-                        <span>Add Guests</span>
+                        <span>
+                            <span className={`${guest && "mr-1"}`}>
+                                {guest}
+                            </span>
+                            {days ? "Guests" : "Add Guest"}
+                        </span>
                         <IoSearchCircleSharp
                             size={38}
                             className="text-red-600"

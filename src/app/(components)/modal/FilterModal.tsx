@@ -10,6 +10,7 @@ import { FieldValues, useForm } from "react-hook-form";
 import Button from "../button/Button";
 import AmenitiesModal from "./3amenitiesModal/AmenitiesModal";
 import DateRangeModal from "./7_dateRangeModal/DateRangeModal";
+import { differenceInCalendarDays, differenceInDays } from "date-fns";
 
 const FilterModal = () => {
     const filterModalStore = FilterModalStore();
@@ -26,7 +27,14 @@ const FilterModal = () => {
         if (filterModalStore.currentModal !== filterModalEnumLength) {
             return filterModalStore.nextModal();
         }
-        console.log(data);
+        filterModalStore.setGuest(data.guests);
+        filterModalStore.setLocation(data.maps ? data.maps.value : undefined);
+        const days = differenceInCalendarDays(
+            data.calendar.selection.endDate,
+            data.calendar.selection.startDate
+        );
+        filterModalStore.setDays(days);
+        filterModalStore.onClose();
     }
 
     let bodyContent;

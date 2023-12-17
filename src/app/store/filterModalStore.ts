@@ -4,9 +4,17 @@ type FilterModalType = {
     isOpen: boolean;
     onOpen: () => void;
     onClose: () => void;
+
     currentModal: number;
     nextModal: () => void;
     previousModal: () => void;
+
+    guest: number | undefined;
+    location: string | undefined;
+    days: number | undefined;
+    setGuest: (guest: number | undefined) => void;
+    setLocation: (location: string | undefined) => void;
+    setDays: (days: number | undefined) => void;
 };
 
 export enum FilterModalEnum {
@@ -23,9 +31,10 @@ export const filterModalEnumLength = filterModalNumbers.length;
 
 const FilterModalStore = create<FilterModalType>((set) => ({
     isOpen: false,
-    currentModal: 1,
     onOpen: () => set({ isOpen: true }),
     onClose: () => set({ isOpen: false }),
+
+    currentModal: 1,
     nextModal: () =>
         set((state) => ({
             currentModal:
@@ -39,7 +48,14 @@ const FilterModalStore = create<FilterModalType>((set) => ({
                 state.currentModal === FilterModalEnum.MAP
                     ? state.currentModal - 0
                     : state.currentModal - 1
-        }))
+        })),
+
+    guest: undefined,
+    days: undefined,
+    location: undefined,
+    setDays: (value) => set({ days: value }),
+    setLocation: (value) => set({ location: value }),
+    setGuest: (value) => set({ guest: value })
 }));
 
 export default FilterModalStore;
