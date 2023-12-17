@@ -1,5 +1,6 @@
 "use client";
 
+import FilterModalStore from "@/app/store/filterModalStore";
 import ScrollBarStore from "@/app/store/scrollBarStore";
 import { useRouter } from "next/navigation";
 import React from "react";
@@ -8,9 +9,13 @@ const NoMatchFound = () => {
     const router = useRouter();
 
     const scrollBarStore = ScrollBarStore();
+    const filterModalStore = FilterModalStore()
     function removeFilters() {
         router.push("/");
         scrollBarStore.setScrollBar(undefined);
+        filterModalStore.setDays(undefined)
+        filterModalStore.setLocation(undefined)
+        filterModalStore.setGuest(undefined)
     }
 
     return (

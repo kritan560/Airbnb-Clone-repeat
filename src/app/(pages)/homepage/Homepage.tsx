@@ -1,7 +1,6 @@
 "use client";
 
 import { ModelData } from "@prisma/client";
-import { categoryIcons } from "../modal/1categoriesModal/CategoryModal";
 import Image from "next/image";
 import {
     useParams,
@@ -12,6 +11,7 @@ import {
 import axios from "axios";
 import { useEffect, useState } from "react";
 import ScrollBarStore from "@/app/store/scrollBarStore";
+import { categoryIcons } from "@/app/(components)/modal/1categoriesModal/CategoryModal";
 
 type HomepageProps = {
     modalsFromDB: ModelData[];

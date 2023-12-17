@@ -1,6 +1,6 @@
 import prisma from "../../prisma/PrismaDB";
-import Homepage from "./(components)/homepage/Homepage";
 import NoMatchFound from "./(components)/noMatchFound/NoMatchFound";
+import Homepage from "./(pages)/homepage/Homepage";
 
 type PageProps = {
     searchParams: { category: string };
