@@ -6,27 +6,58 @@ import Body from "../body/Body";
 import Modal from "./Modal";
 import LoginStore from "@/app/store/loginStore";
 import Input from "../input/Input";
-import { useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import Button from "../button/Button";
 import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import SignUpStore from "@/app/store/signupStore";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 const LoginModal = () => {
     let bodyContent;
-    const {
-        register,
-        formState: { errors },
-        handleSubmit
-    } = useForm();
-
-    function submit(data: any) {
-        console.log(data)
-        console.log("clicked");
-    }
 
     const loginStore = LoginStore();
     const signupStore = SignUpStore();
+
+    const {
+        register,
+        formState: { errors },
+        handleSubmit,
+        watch,
+        reset
+    } = useForm<FieldValues>({
+        defaultValues: {
+            email: "",
+            password: ""
+        }
+    });
+
+    const email = watch("email");
+    const password = watch("password");
+
+    function submit(data: any) {
+        console.log(data);
+        console.log("clicked");
+        axios
+            .post("/api/auth/login", data)
+            .then((res) => {
+                console.log(res.data);
+                if (
+                    res.data.foundUser == true &&
+                    res.data.passwordMatch == true
+                ) {
+                    toast.success("user logged in success");
+                    reset();
+                    loginStore.onClose();
+                }
+            })
+            .catch((err) => {
+                console.error(err);
+            })
+            .finally(() => {});
+    }
+
     function handleSignupClick() {
         loginStore.onClose();
         signupStore.onOpen();
@@ -42,6 +73,7 @@ const LoginModal = () => {
                     register={register}
                     error={errors}
                     type="email"
+                    value={email}
                 />
                 <Input
                     id="password"
@@ -49,6 +81,7 @@ const LoginModal = () => {
                     register={register}
                     error={errors}
                     type="password"
+                    value={password}
                 />
                 <Button
                     primaryLabel="Login"

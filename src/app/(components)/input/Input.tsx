@@ -48,7 +48,7 @@ const Input: React.FC<InputProps> = ({
                 value={value}
                 {...register(id, {
                     required: {
-                        message: "this title field is required",
+                        message: "this text field is required",
                         value: true
                     }
                 })}
@@ -64,7 +64,7 @@ const Input: React.FC<InputProps> = ({
                 value={value}
                 {...register(id, {
                     required: {
-                        message: "this title field is required",
+                        message: "this password field is required",
                         value: true
                     }
                 })}

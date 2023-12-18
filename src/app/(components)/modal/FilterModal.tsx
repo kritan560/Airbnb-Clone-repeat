@@ -14,7 +14,7 @@ import { differenceInCalendarDays, differenceInDays } from "date-fns";
 
 const FilterModal = () => {
     const filterModalStore = FilterModalStore();
-    const { setValue, watch, handleSubmit } = useForm<FieldValues>({
+    const { setValue, watch, handleSubmit, reset } = useForm<FieldValues>({
         mode: "all",
         defaultValues: {
             guests: 1,
@@ -35,6 +35,7 @@ const FilterModal = () => {
         );
         filterModalStore.setDays(days);
         filterModalStore.onClose();
+        reset()
     }
 
     let bodyContent;

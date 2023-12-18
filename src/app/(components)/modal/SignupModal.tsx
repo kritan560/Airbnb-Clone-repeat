@@ -5,7 +5,7 @@ import Heading from "../heading/Heading";
 import Body from "../body/Body";
 import Modal from "./Modal";
 import Input from "../input/Input";
-import { useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import Button from "../button/Button";
 import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
@@ -23,8 +23,20 @@ const SignupModal = () => {
         register,
         formState: { errors, isSubmitSuccessful, isValid },
         handleSubmit,
-        reset
-    } = useForm();
+        reset,
+        watch
+    } = useForm<FieldValues>({
+        mode: "all",
+        defaultValues: {
+            email: "",
+            name: "",
+            password: ""
+        }
+    });
+
+    const email = watch("email");
+    const name = watch("name");
+    const password = watch("password");
 
     function submit(data: any) {
         console.log(data);
@@ -34,17 +46,16 @@ const SignupModal = () => {
             .then((res) => {
                 if (res.data.userCreated == true) {
                     toast.success("New User Created");
+                    if (isSubmitSuccessful && isValid) {
+                        reset();
+                        signupStore.onClose();
+                    }
                 } else if (res.data.userCreated == false) {
                     toast.error("User already exists in DB");
                 }
             })
             .catch((err) => console.error(err))
-            .finally(() => {
-                if (isSubmitSuccessful && isValid) {
-                    signupStore.onClose();
-                    reset();
-                }
-            });
+            .finally(() => {});
     }
 
     function handleLoginClick() {
@@ -62,6 +73,7 @@ const SignupModal = () => {
                     register={register}
                     error={errors}
                     type="email"
+                    value={email}
                 />
                 <Input
                     id="name"
@@ -69,6 +81,7 @@ const SignupModal = () => {
                     register={register}
                     error={errors}
                     type="text"
+                    value={name}
                 />
                 <Input
                     id="password"
@@ -76,6 +89,7 @@ const SignupModal = () => {
                     register={register}
                     error={errors}
                     type="password"
+                    value={password}
                 />
                 <Button
                     primaryLabel="Continue"
