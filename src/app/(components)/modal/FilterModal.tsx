@@ -67,6 +67,11 @@ const FilterModal = () => {
             />
         );
     }
+
+    function handleSecondaryAction() {
+        filterModalStore.previousModal();
+    }
+
     return (
         <Modal
             modal={FilterModalStore}
@@ -75,9 +80,21 @@ const FilterModal = () => {
                 <>
                     {bodyContent}
                     <Button
-                        handleSubmit={handleSubmit(submit)}
-                        store={FilterModalStore}
-                        storeEnumLength={filterModalEnumLength}
+                        currentModal={filterModalStore.currentModal}
+                        stayBottom
+                        primaryLabel={
+                            filterModalStore.currentModal ==
+                            filterModalEnumLength
+                                ? "Create"
+                                : "Next"
+                        }
+                        secondaryLabel="Previous"
+                        primaryAction={handleSubmit(submit)}
+                        secondaryAction={handleSecondaryAction}
+                        class={{
+                            bgSecondaryStyle:
+                                "bg-inherit border-2 active:bg-inherit active:border-gray-900 border-gray-500 hover:border-gray-700 text-black"
+                        }}
                     />
                 </>
             }

@@ -1,6 +1,1 @@
-. there are many variables names that was used for quick data store which doesn't meet the clear variable name. rename those variables
-
-. when clicked onscroll item (for e.g categories) show only categories content on page.
-
-. there are also path name that dosen't fully satisfy the path. rename those path.
-
+. SignUP model : form data is not reset when submit successfully

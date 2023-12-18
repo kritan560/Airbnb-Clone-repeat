@@ -1,6 +1,9 @@
 import DropdownStore from "@/app/store/dropdownStore";
 import ModalStore from "@/app/store/modalStore";
 import { useEffect, useState } from "react";
+import LoginModal from "../modal/LoginModal";
+import LoginStore from "@/app/store/loginStore";
+import SignUpStore from "@/app/store/signupStore";
 
 type DropdownProps = {
     className?: string;
@@ -15,19 +18,35 @@ const dropDowns = [
     "Logout"
 ];
 
+const userNotLoggedIn = ["Login", "SignUp"];
+
 const Dropdown: React.FC<DropdownProps> = ({ className }) => {
     const modalStore = ModalStore();
+    const loginStore = LoginStore();
+    const signupStore = SignUpStore();
+
     function handleModalOpen() {
         modalStore.onOpen();
     }
     const dropdownStore = DropdownStore();
     let bodyContent;
 
+    function handleDropdownMenuClick(dropdown: string) {
+        if (dropdown == "Airbnb My Home") {
+            handleModalOpen();
+        } else if (dropdown == "Login") {
+            loginStore.onOpen();
+        }
+        else if(dropdown == 'SignUp'){
+            signupStore.onOpen()
+        }
+    }
+
     // if dropDownStore is true
     bodyContent = (
         <div
             className={`${className} 
-            transition-all duration-300 z-30
+            transition-all z-30
             ${
                 dropdownStore.isOpen
                     ? "visible opacity-100"
@@ -47,13 +66,39 @@ const Dropdown: React.FC<DropdownProps> = ({ className }) => {
                     ${index == dropDowns.length - 1 && "rounded-b-md"}   
                     `}
                     >
-                        <div
-                            onClick={
-                                dropdown == "Airbnb My Home"
-                                    ? handleModalOpen
-                                    : () => {}
-                            }
-                        >
+                        <div onClick={() => handleDropdownMenuClick(dropdown)}>
+                            {dropdown}
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+
+    bodyContent = (
+        <div
+            className={`${className} 
+            transition-all z-30
+            ${
+                dropdownStore.isOpen
+                    ? "visible opacity-100"
+                    : "invisible opacity-0"
+            }
+            `}
+        >
+            <div
+                className={`flex bg-white border-b border-l border-r shadow-sm rounded-md flex-col whitespace-nowrap`}
+            >
+                {userNotLoggedIn.map((dropdown, index) => (
+                    <div
+                        key={index}
+                        className={`hover:bg-slate-200 px-5 py-3 hover:cursor-pointer text-sm font-semibold text-slate-600 hover:text-slate-800 transition
+                    ${index == 0 && "rounded-t-md"}
+                    ${dropdown == "Logout" && "border-t"}
+                    ${index == userNotLoggedIn.length - 1 && "rounded-b-md"}   
+                    `}
+                    >
+                        <div onClick={() => handleDropdownMenuClick(dropdown)}>
                             {dropdown}
                         </div>
                     </div>

@@ -1,47 +1,58 @@
 import React from "react";
+import { IconType } from "react-icons";
 
 type ButtonProps = {
-    handleSubmit: () => void;
-    store: any;
-    storeEnumLength: number;
+    primaryLabel: string; // this should not be optional
+    primaryAction: () => void; // this should not be optional
+    currentModal?: number;
+    stayBottom?: boolean; // will make button absolute bottom. relative to modal.
+    class?: { bgSecondaryStyle?: string; bgPrimaryStyle?: string };
+    icon?: IconType;
+    iconSize?: number;
+    secondaryLabel?: string;
+    secondaryAction?: () => void;
 };
 
 const Button: React.FC<ButtonProps> = ({
-    handleSubmit,
-    store,
-    storeEnumLength
+    stayBottom,
+    icon: Icon,
+    primaryAction,
+    primaryLabel,
+    secondaryAction,
+    secondaryLabel,
+    class: Style,
+    currentModal = 1,
+    iconSize = 20
 }) => {
-    const modalStore = store();
-
-    function handlePrimaryClick() {
-        handleSubmit();
-    }
-
-    function handleSecondaryClick() {
-        modalStore.previousModal();
-    }
     return (
         <div
-            className={`absolute -bottom-2 gap-x-4 flex justify-center bg-red w-full py-2 rounded-lg font-semibold text-white`}
+            className={`${
+                stayBottom && "absolute -bottom-2"
+            } gap-x-4 flex justify-center bg-red w-full rounded-lg font-semibold text-white`}
         >
-            {modalStore.currentModal > 1 &&
-            modalStore.currentModal <= storeEnumLength ? (
+            {secondaryAction && currentModal > 1 ? (
                 <button
-                    onClick={handleSecondaryClick}
-                    className={`bg-blue-600 transition active:bg-blue-500 w-full py-2 rounded-lg select-none`}
+                    onClick={secondaryAction}
+                    className={`bg-blue-600 transition active:bg-blue-500 w-full py-2 rounded-lg select-none
+                    ${Style?.bgSecondaryStyle}
+                    `}
                 >
-                    {"Previous"}
+                    {secondaryLabel}
                 </button>
             ) : (
                 ""
             )}
             <button
-                onClick={handlePrimaryClick}
-                className={`bg-red-600 transition active:bg-red-500 w-full py-2 rounded-lg select-none`}
+                onClick={primaryAction}
+                className={`bg-red-600 transition active:bg-red-500 w-full py-2 rounded-lg select-none 
+                ${Style?.bgPrimaryStyle}`}
             >
-                {modalStore.currentModal === storeEnumLength
-                    ? "Create"
-                    : "Next"}
+                <div className="flex gap-x-3 justify-center relative">
+                    <span className="absolute left-4">
+                        {Icon && <Icon size={iconSize} />}
+                    </span>
+                    {primaryLabel}
+                </div>
             </button>
         </div>
     );

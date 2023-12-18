@@ -14,6 +14,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import CategoryStore from "@/app/store/categoryStore";
 import { useRouter } from "next/navigation";
+import { Gi3DGlasses } from "react-icons/gi";
 
 const MainModal = () => {
     const {
@@ -125,6 +126,11 @@ const MainModal = () => {
             />
         );
     }
+
+    function handleSecondaryAction() {
+        modalStore.previousModal();
+    }
+
     return (
         <Modal
             title="Airbnb Your Home"
@@ -133,9 +139,23 @@ const MainModal = () => {
                 <>
                     {bodyContent}
                     <Button
-                        handleSubmit={handleSubmit(submit)}
-                        store={ModalStore}
-                        storeEnumLength={ModalEnumLength}
+                        // handleSubmit={handleSubmit(submit)}
+                        // store={ModalStore}
+                        // storeEnumLength={ModalEnumLength}
+                        stayBottom
+                        primaryAction={handleSubmit(submit)}
+                        primaryLabel={
+                            modalStore.currentModal === ModalEnumLength
+                                ? "Create"
+                                : "Next"
+                        }
+                        secondaryAction={handleSecondaryAction}
+                        secondaryLabel="Previous"
+                        class={{
+                            bgSecondaryStyle:
+                                "bg-inherit border-2 active:bg-inherit active:border-gray-900 border-gray-500 hover:border-gray-700 text-black"
+                        }}
+                        currentModal={modalStore.currentModal}
                     />
                 </>
             }
