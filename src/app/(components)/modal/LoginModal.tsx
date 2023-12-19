@@ -13,12 +13,16 @@ import { FcGoogle } from "react-icons/fc";
 import SignUpStore from "@/app/store/signupStore";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { UserState } from "@/app/enumStore/userStateEnum";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const LoginModal = () => {
     let bodyContent;
 
     const loginStore = LoginStore();
     const signupStore = SignUpStore();
+    const router = useRouter();
 
     const {
         register,
@@ -39,23 +43,37 @@ const LoginModal = () => {
     function submit(data: any) {
         console.log(data);
         console.log("clicked");
-        axios
-            .post("/api/auth/login", data)
-            .then((res) => {
-                console.log(res.data);
-                if (
-                    res.data.foundUser == true &&
-                    res.data.passwordMatch == true
-                ) {
-                    toast.success("user logged in success");
-                    reset();
-                    loginStore.onClose();
-                }
-            })
-            .catch((err) => {
-                console.error(err);
-            })
-            .finally(() => {});
+        // axios
+        //     .post("/api/auth/login", data)
+        //     .then((res) => {
+        //         console.log(res.data);
+        //         if (res.data.code == UserState.LOGIN_SUCCESS) {
+        //             toast.success("user logged in success");
+        //             reset();
+        //             loginStore.onClose();
+        //         } else if (res.data.code == UserState.PASSWORD_NOT_MATCH) {
+        //             toast.error("password did not match");
+        //         }
+        //     })
+        //     .catch((err) => {
+        //         console.error(err);
+        //     })
+        //     .finally(() => {});
+        signIn("credentials", {
+            callbackUrl: "/",
+            redirect: false,
+            email,
+            password
+        }).then((callback) => {
+            if (callback?.ok) {
+                toast.success("User logged in success");
+                reset();
+                loginStore.onClose();
+                router.refresh();
+            } else if (callback?.error) {
+                toast.error(callback.error);
+            }
+        });
     }
 
     function handleSignupClick() {
@@ -96,7 +114,9 @@ const LoginModal = () => {
                     }}
                     icon={FcGoogle}
                     iconSize={25}
-                    primaryAction={() => {}}
+                    primaryAction={() =>
+                        signIn("google", { callbackUrl: "/", redirect: false })
+                    }
                 />
                 <Button
                     primaryLabel="Login with Github"
@@ -106,7 +126,9 @@ const LoginModal = () => {
                     }}
                     icon={FaGithub}
                     iconSize={25}
-                    primaryAction={() => {}}
+                    primaryAction={() =>
+                        signIn("github", { callbackUrl: "/", redirect: false })
+                    }
                 />
                 <div className="">
                     <span>First time using Airbnb?</span>

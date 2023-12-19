@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import prisma from "../../../../../prisma/PrismaDB";
 import { compare } from "bcrypt";
+import { UserState } from "@/app/enumStore/userStateEnum";
 
 export async function POST(request: Request, response: Response) {
     const { email, password } = await request.json();
@@ -10,8 +11,7 @@ export async function POST(request: Request, response: Response) {
     if (!isUser) {
         return NextResponse.json({
             message: "User does not exist in DB",
-            foundUser: false,
-            passwordMatch: false
+            code : UserState.USER_NOT_EXISTS
         });
     }
 
@@ -20,8 +20,7 @@ export async function POST(request: Request, response: Response) {
     if (!plainPassword) {
         return NextResponse.json({
             message: "provide the password",
-            foundUser: true,
-            passwordMatch: false
+            code : UserState.PASSWORD_NOT_FOUND
         });
     }
     const isCheckedPassword = await compare(password, plainPassword);
@@ -30,16 +29,14 @@ export async function POST(request: Request, response: Response) {
     if (!isCheckedPassword) {
         return NextResponse.json({
             message: "password do not match",
-            foundUser: true,
-            passwordMatch: false
+            code : UserState.PASSWORD_NOT_MATCH
         });
     }
 
     const user = isUser;
 
     return NextResponse.json({
-        foundUser: true,
-        passwordMatch: true,
-        message: "login Success"
+        message: "login Success",
+        code : UserState.LOGIN_SUCCESS
     });
 }

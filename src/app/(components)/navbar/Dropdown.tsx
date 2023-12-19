@@ -1,12 +1,13 @@
 import DropdownStore from "@/app/store/dropdownStore";
 import ModalStore from "@/app/store/modalStore";
-import { useEffect, useState } from "react";
 import LoginModal from "../modal/LoginModal";
 import LoginStore from "@/app/store/loginStore";
 import SignUpStore from "@/app/store/signupStore";
+import { signOut } from "next-auth/react";
 
 type DropdownProps = {
     className?: string;
+    currentUser?: any;
 };
 
 const dropDowns = [
@@ -20,7 +21,7 @@ const dropDowns = [
 
 const userNotLoggedIn = ["Login", "SignUp"];
 
-const Dropdown: React.FC<DropdownProps> = ({ className }) => {
+const Dropdown: React.FC<DropdownProps> = ({ className, currentUser }) => {
     const modalStore = ModalStore();
     const loginStore = LoginStore();
     const signupStore = SignUpStore();
@@ -28,24 +29,27 @@ const Dropdown: React.FC<DropdownProps> = ({ className }) => {
     function handleModalOpen() {
         modalStore.onOpen();
     }
+
     const dropdownStore = DropdownStore();
     let bodyContent;
 
-    function handleDropdownMenuClick(dropdown: string) {
+    async function handleDropdownMenuClick(dropdown: string) {
         if (dropdown == "Airbnb My Home") {
             handleModalOpen();
         } else if (dropdown == "Login") {
             loginStore.onOpen();
-        }
-        else if(dropdown == 'SignUp'){
-            signupStore.onOpen()
+        } else if (dropdown == "SignUp") {
+            signupStore.onOpen();
+        } else if (dropdown == "Logout") {
+            await signOut();
         }
     }
 
     // if dropDownStore is true
-    bodyContent = (
-        <div
-            className={`${className} 
+    if (currentUser) {
+        return (bodyContent = (
+            <div
+                className={`${className} 
             transition-all z-30
             ${
                 dropdownStore.isOpen
@@ -53,27 +57,32 @@ const Dropdown: React.FC<DropdownProps> = ({ className }) => {
                     : "invisible opacity-0"
             }
             `}
-        >
-            <div
-                className={`flex bg-white border-b border-l border-r shadow-sm rounded-md flex-col whitespace-nowrap`}
             >
-                {dropDowns.map((dropdown, index) => (
-                    <div
-                        key={index}
-                        className={`hover:bg-slate-200 px-5 py-3 hover:cursor-pointer text-sm font-semibold text-slate-600 hover:text-slate-800 transition
+                <div
+                    className={`flex bg-white border-b border-l border-r shadow-sm rounded-md flex-col whitespace-nowrap`}
+                >
+                    {dropDowns.map((dropdown, index) => (
+                        <div
+                            key={index}
+                            className={`hover:bg-slate-200 px-5 py-3 hover:cursor-pointer text-sm font-semibold text-slate-600 hover:text-slate-800 transition
                     ${index == 0 && "rounded-t-md"}
                     ${dropdown == "Logout" && "border-t"}
                     ${index == dropDowns.length - 1 && "rounded-b-md"}   
                     `}
-                    >
-                        <div onClick={() => handleDropdownMenuClick(dropdown)}>
-                            {dropdown}
+                        >
+                            <div
+                                onClick={() =>
+                                    handleDropdownMenuClick(dropdown)
+                                }
+                            >
+                                {dropdown}
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
             </div>
-        </div>
-    );
+        ));
+    }
 
     bodyContent = (
         <div

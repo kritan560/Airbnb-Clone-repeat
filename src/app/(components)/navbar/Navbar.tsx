@@ -6,19 +6,28 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import ModalStore from "@/app/store/modalStore";
 import Dropdown from "./Dropdown";
 import DropdownStore from "@/app/store/dropdownStore";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import FilterModalStore from "@/app/store/filterModalStore";
 import { useRouter } from "next/navigation";
 import ScrollBarStore from "@/app/store/scrollBarStore";
+import SignUpStore from "@/app/store/signupStore";
 
-const Navbar = () => {
+type NavbarProps = {
+    currentUser?: any;
+};
+
+const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
     const modalStore = ModalStore();
     const dropdownStore = DropdownStore();
     const dropDownToggleRef = useRef<HTMLDivElement>(null);
     const filterModalStore = FilterModalStore();
     const router = useRouter();
+    const signupStore = SignUpStore();
 
     const handleModalOpen = () => {
+        if (!currentUser) {
+            return signupStore.onOpen();
+        }
         return modalStore.onOpen();
     };
 
@@ -119,13 +128,20 @@ const Navbar = () => {
                     >
                         <GiHamburgerMenu className="" />
                         <Image
-                            src={"/images/placeholder.jpg"}
+                            src={
+                                currentUser?.image
+                                    ? currentUser.image
+                                    : "/images/placeholder.jpg"
+                            }
                             width={30}
                             height={30}
                             alt="placeholder"
                             className="rounded-full"
                         />
-                        <Dropdown className="absolute top-10 left-0 hover:shadow-md" />
+                        <Dropdown
+                            currentUser={currentUser}
+                            className="absolute top-10 left-0 hover:shadow-md"
+                        />
                     </div>
                 </div>
             </div>

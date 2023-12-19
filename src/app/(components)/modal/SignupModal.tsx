@@ -13,6 +13,8 @@ import SignUpStore from "@/app/store/signupStore";
 import LoginStore from "@/app/store/loginStore";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { UserState } from "@/app/enumStore/userStateEnum";
+import { signIn } from "next-auth/react";
 
 const SignupModal = () => {
     let bodyContent;
@@ -44,13 +46,13 @@ const SignupModal = () => {
         axios
             .post("/api/auth/signup", data)
             .then((res) => {
-                if (res.data.userCreated == true) {
+                if (res.data.code == UserState.NEW_USER_CREATED) {
                     toast.success("New User Created");
                     if (isSubmitSuccessful && isValid) {
                         reset();
                         signupStore.onClose();
                     }
-                } else if (res.data.userCreated == false) {
+                } else if (res.data.code == UserState.USER_ALREADY_EXISTS) {
                     toast.error("User already exists in DB");
                 }
             })
@@ -104,7 +106,9 @@ const SignupModal = () => {
                     }}
                     icon={FcGoogle}
                     iconSize={25}
-                    primaryAction={() => {}}
+                    primaryAction={() =>
+                        signIn("google", { callbackUrl: "/", redirect: false })
+                    }
                 />
                 <Button
                     primaryLabel="Continue with Github"
@@ -114,7 +118,9 @@ const SignupModal = () => {
                     }}
                     icon={FaGithub}
                     iconSize={25}
-                    primaryAction={() => {}}
+                    primaryAction={() =>
+                        signIn("github", { callbackUrl: "/", redirect: false })
+                    }
                 />
                 <div className="">
                     <span>Already have an account?</span>

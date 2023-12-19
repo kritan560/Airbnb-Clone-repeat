@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useId, useMemo, useState } from "react";
 import Heading from "../../heading/Heading";
 import Body from "../../body/Body";
 import ReactSelect, { SingleValue } from "react-select";
@@ -7,7 +7,9 @@ import dynamic from "next/dynamic";
 import { LatLngExpression } from "leaflet";
 import { FieldValues, UseFormSetValue, UseFormWatch } from "react-hook-form";
 
-export type CountryType = ReturnType<typeof useCountries> extends (infer U)[] ? U : "";
+export type CountryType = ReturnType<typeof useCountries> extends (infer U)[]
+    ? U
+    : "";
 
 type MapModalProps = {
     id: string;
@@ -37,11 +39,7 @@ const MapModal: React.FC<MapModalProps> = ({
     // handle country change
     function handleCountryChange(e: SingleValue<CountryType>) {
         setCountry(e);
-        setValue(id, e, {
-            shouldDirty: true,
-            shouldTouch: true,
-            shouldValidate: true
-        });
+        setValue(id, e);
     }
 
     return (
@@ -50,7 +48,10 @@ const MapModal: React.FC<MapModalProps> = ({
             <Body className="">
                 <div className="flex flex-col gap-y-3">
                     <ReactSelect
+                        instanceId={useId()} // you need this instanceId without it give react-select-4-live-region warning error
                         className="z-[9999]"
+                        isClearable
+                        placeholder="AnyWhere"
                         options={useCountries()}
                         value={conuntryValue}
                         onChange={(e) => handleCountryChange(e)}

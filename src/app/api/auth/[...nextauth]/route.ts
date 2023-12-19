@@ -14,6 +14,10 @@ const handler = NextAuth({
             clientId: process.env.GITHUB_ID as string,
             clientSecret: process.env.GITHUB_SECRET as string
         }),
+        Google({
+            clientId: process.env.GOOGLE_ID as string,
+            clientSecret: process.env.GOOGLE_SECRET as string
+        }),
         Credentials({
             name: "Credentilas",
             credentials: {
@@ -48,8 +52,8 @@ const handler = NextAuth({
     ],
     debug: process.env.NODE_ENV !== "production",
     session: { strategy: "jwt" },
-    secret: process.env.NEXTAUTH_SECRET
-    // pages: {  }
+    secret: process.env.NEXTAUTH_SECRET,
+    pages: { signIn: "/" }
 });
 
 export { handler as GET, handler as POST };

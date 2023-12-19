@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import prisma from "../../../../../prisma/PrismaDB";
 import { hash } from "bcrypt";
+import { UserState } from "@/app/enumStore/userStateEnum";
 
 export async function POST(request: Request, response: Response) {
     const { email, name, password } = await request.json();
@@ -24,11 +25,11 @@ export async function POST(request: Request, response: Response) {
     } else if (emailExists.email) {
         return NextResponse.json({
             message: "User Already Exists in DB",
-            userCreated: false
+            code: UserState.USER_ALREADY_EXISTS
         });
     }
     return NextResponse.json({
         message: "New user signUp success",
-        userCreated: true
+        code: UserState.NEW_USER_CREATED
     });
 }
