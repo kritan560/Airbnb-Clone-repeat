@@ -6,7 +6,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import ModalStore from "@/app/store/modalStore";
 import Dropdown from "./Dropdown";
 import DropdownStore from "@/app/store/dropdownStore";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import FilterModalStore from "@/app/store/filterModalStore";
 import { useRouter } from "next/navigation";
 import ScrollBarStore from "@/app/store/scrollBarStore";
@@ -33,7 +33,10 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
 
     const handleDropDownToggle = () => {
         if (dropdownStore.isOpen) {
-            dropdownStore.onClose();
+            // settimeout is used to complete the animation in dropdown
+            setTimeout(() => {
+                dropdownStore.onClose();
+            }, 170);
         } else if (!dropdownStore.isOpen) {
             dropdownStore.onOpen();
         }
@@ -69,9 +72,11 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
     const days = filterModalStore.days;
     const location = filterModalStore.location;
 
+    // when logged in with social network use those image
+
     return (
         <>
-            <div className="flex justify-around items-center py-4 border-b">
+            <div className="flex justify-between items-center py-4 border-b px-20">
                 {/* logo */}
                 <div className="hover:cursor-pointer" onClick={handleLogoClick}>
                     <Image
@@ -134,11 +139,11 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
                             width={30}
                             height={30}
                             alt="placeholder"
-                            className="rounded-full"
+                            className="rounded-full shadow border border-gray-600"
                         />
                         <Dropdown
                             currentUser={currentUser}
-                            className="absolute top-10 left-0 hover:shadow-md"
+                            className="absolute top-10 -left-8 hover:shadow-md"
                         />
                     </div>
                 </div>

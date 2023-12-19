@@ -1,3 +1,9 @@
 . SignUP model : form data is not reset when submit successfully (done)
-. render something when original thing did not finished render in hamburder menu profile pic
-. dropdown with user and without user can be rendered in same div element.
+. render something when original thing did not finished render in hamburder menu profile pic 
+    (can't find a way to render suspence component in NextJs)
+. dropdown with user and without user can be rendered in same div element. (done)
+
+... Tomarrow ...
+. track user creation of airbnb
+. create listing - detail page 
+. revise prisma modal releationship

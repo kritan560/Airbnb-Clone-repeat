@@ -15,11 +15,13 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { UserState } from "@/app/enumStore/userStateEnum";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const SignupModal = () => {
     let bodyContent;
     const loginStore = LoginStore();
     const signupStore = SignUpStore();
+    const router = useRouter();
 
     const {
         register,
@@ -46,10 +48,19 @@ const SignupModal = () => {
             .then((res) => {
                 if (res.data.code == UserState.NEW_USER_CREATED) {
                     toast.success("New User Created");
-                    if (isSubmitSuccessful && isValid) {
-                        reset();
-                        signupStore.onClose();
-                    }
+                    signIn("credentials", {
+                        callbackUrl: "/",
+                        redirect: false,
+                        email,
+                        password
+                    }).then((callback) => {
+                        if (callback?.ok) {
+                            router.refresh();
+                            toast.success("User logged in");
+                        }
+                    });
+                    reset();
+                    signupStore.onClose();
                 } else if (res.data.code == UserState.USER_ALREADY_EXISTS) {
                     toast.error("User already exists in DB");
                 }
