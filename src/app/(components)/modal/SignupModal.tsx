@@ -41,8 +41,6 @@ const SignupModal = () => {
     const password = watch("password");
 
     function submit(data: any) {
-        console.log(data);
-        console.log("clicked");
         axios
             .post("/api/auth/signup", data)
             .then((res) => {

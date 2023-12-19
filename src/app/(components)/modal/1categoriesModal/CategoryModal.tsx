@@ -96,7 +96,7 @@ const CategoryModal: React.FC<CategoryModalProps> = ({
                     handleScroll
                 );
         };
-    }, []);
+    }, [categoryStore.scrollPosition]);
 
     return (
         <div>

@@ -44,7 +44,7 @@ const Map: React.FC<MapProps> = ({ position }) => {
                 </Marker>
             </MapContainer>
         ),
-        []
+        [center, icon, position]
     );
 
     return (

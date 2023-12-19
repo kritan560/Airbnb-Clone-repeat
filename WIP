@@ -1,1 +1,3 @@
-. SignUP model : form data is not reset when submit successfully
+. SignUP model : form data is not reset when submit successfully (done)
+. render something when original thing did not finished render in hamburder menu profile pic
+. dropdown with user and without user can be rendered in same div element.

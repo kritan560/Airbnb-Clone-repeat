@@ -31,14 +31,16 @@ export default async function RootLayout({
     const currentUser = await getCurrentUser();
     return (
         <html lang="en">
-            <body className={nunito.className}>
-                <Toaster />
-                <Navbar currentUser={currentUser} />
-                <MainModal />
-                <FilterModal />
-                <LoginModal />
-                <SignupModal />
-                <div className="px-24 py-6">{children}</div>
+            <body className={`${nunito.className} bg-gray-700`}>
+                <div className="rounded-lg bg-white fixed inset-0 overflow-y-auto scrollbar-thumb-red-600 scrollbar-thin scrollbar-thumb-rounded-full">
+                    <Toaster />
+                    <Navbar currentUser={currentUser} />
+                    <MainModal />
+                    <FilterModal />
+                    <LoginModal />
+                    <SignupModal />
+                    <div className="px-24 py-6">{children}</div>
+                </div>
             </body>
         </html>
     );

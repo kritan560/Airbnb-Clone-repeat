@@ -25,7 +25,6 @@ const DateRangeModal: React.FC<DateRangeModalProps> = ({
     };
     const watchRanges = watch("calendar");
     function handleSelect(ranges: any) {
-        console.log(ranges);
         // {
         //   selection: {
         //     startDate: [native Date Object],

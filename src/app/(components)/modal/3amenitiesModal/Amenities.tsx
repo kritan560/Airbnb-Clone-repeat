@@ -20,24 +20,20 @@ const Amenities: React.FC<AmenitiesProps> = ({
     const [count, setCount] = useState(value);
 
     const handleIncrement = useCallback(() => {
-        {
-            setCount(count + 1);
-        }
-    }, [value]);
+        setCount(count + 1);
+    }, [value, count]);
 
     const handleDecrement = useCallback(() => {
-        {
-            if (count <= 0) {
-                setCount(count - 0);
-            } else if (count > 0) {
-                setCount(count - 1);
-            }
+        if (count <= 0) {
+            setCount(count - 0);
+        } else if (count > 0) {
+            setCount(count - 1);
         }
     }, [value]);
 
     useEffect(() => {
         setFromValue(id, count);
-    }, [count]);
+    }, [count, id]);
 
     return (
         <div>

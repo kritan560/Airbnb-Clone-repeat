@@ -41,12 +41,9 @@ const LoginModal = () => {
     const password = watch("password");
 
     function submit(data: any) {
-        console.log(data);
-        console.log("clicked");
         // axios
         //     .post("/api/auth/login", data)
         //     .then((res) => {
-        //         console.log(res.data);
         //         if (res.data.code == UserState.LOGIN_SUCCESS) {
         //             toast.success("user logged in success");
         //             reset();

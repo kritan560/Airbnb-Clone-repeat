@@ -4,6 +4,14 @@ import LoginModal from "../modal/LoginModal";
 import LoginStore from "@/app/store/loginStore";
 import SignUpStore from "@/app/store/signupStore";
 import { signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { SlPlane } from "react-icons/sl";
+import { MdFavorite } from "react-icons/md";
+import { FaHome } from "react-icons/fa";
+import { TbReservedLine } from "react-icons/tb";
+import { VscSymbolProperty } from "react-icons/vsc";
+import { IoIosLogIn, IoIosLogOut } from "react-icons/io";
+import { IoPersonAddOutline } from "react-icons/io5";
 
 type DropdownProps = {
     className?: string;
@@ -11,20 +19,24 @@ type DropdownProps = {
 };
 
 const dropDowns = [
-    "My Trips",
-    "My Favorites",
-    "My Reservations",
-    "My Properties",
-    "Airbnb My Home",
-    "Logout"
+    { logo: SlPlane, name: "My Trips" },
+    { logo: MdFavorite, name: "My Favorites" },
+    { logo: TbReservedLine, name: "My Reservations" },
+    { logo: VscSymbolProperty, name: "My Properties" },
+    { logo: FaHome, name: "Airbnb My Home" },
+    { logo: IoIosLogOut, name: "Logout" }
 ];
 
-const userNotLoggedIn = ["Login", "SignUp"];
+const userNotLoggedIn = [
+    { logo: IoIosLogIn, name: "Login" },
+    { logo: IoPersonAddOutline, name: "SignUp" }
+];
 
 const Dropdown: React.FC<DropdownProps> = ({ className, currentUser }) => {
     const modalStore = ModalStore();
     const loginStore = LoginStore();
     const signupStore = SignUpStore();
+    const router = useRouter();
 
     function handleModalOpen() {
         modalStore.onOpen();
@@ -34,14 +46,29 @@ const Dropdown: React.FC<DropdownProps> = ({ className, currentUser }) => {
     let bodyContent;
 
     async function handleDropdownMenuClick(dropdown: string) {
-        if (dropdown == "Airbnb My Home") {
-            handleModalOpen();
-        } else if (dropdown == "Login") {
-            loginStore.onOpen();
-        } else if (dropdown == "SignUp") {
-            signupStore.onOpen();
-        } else if (dropdown == "Logout") {
-            await signOut();
+        if (dropdown === "Airbnb My Home") {
+            return handleModalOpen();
+        }
+        if (dropdown === "Login") {
+            return loginStore.onOpen();
+        }
+        if (dropdown === "SignUp") {
+            return signupStore.onOpen();
+        }
+        if (dropdown === "Logout") {
+            return await signOut();
+        }
+        if (dropdown === "My Trips") {
+            return router.push("/trips");
+        }
+        if (dropdown === "My Favorites") {
+            return router.push("/favorites");
+        }
+        if (dropdown === "My Reservations") {
+            return router.push("/reservations");
+        }
+        if (dropdown === "My Properties") {
+            return router.push("/properties");
         }
     }
 
@@ -63,19 +90,19 @@ const Dropdown: React.FC<DropdownProps> = ({ className, currentUser }) => {
                 >
                     {dropDowns.map((dropdown, index) => (
                         <div
+                            onClick={async () => {
+                                await handleDropdownMenuClick(dropdown.name);
+                            }}
                             key={index}
                             className={`hover:bg-slate-200 px-5 py-3 hover:cursor-pointer text-sm font-semibold text-slate-600 hover:text-slate-800 transition
                     ${index == 0 && "rounded-t-md"}
-                    ${dropdown == "Logout" && "border-t"}
+                    ${dropdown.name == "Logout" && "border-t"}
                     ${index == dropDowns.length - 1 && "rounded-b-md"}   
                     `}
                         >
-                            <div
-                                onClick={() =>
-                                    handleDropdownMenuClick(dropdown)
-                                }
-                            >
-                                {dropdown}
+                            <div className="flex gap-x-2 items-center">
+                                <dropdown.logo size={17} />
+                                {dropdown.name}
                             </div>
                         </div>
                     ))}
@@ -100,16 +127,18 @@ const Dropdown: React.FC<DropdownProps> = ({ className, currentUser }) => {
             >
                 {userNotLoggedIn.map((dropdown, index) => (
                     <div
+                        onClick={() => handleDropdownMenuClick(dropdown.name)}
                         key={index}
                         className={`hover:bg-slate-200 px-5 py-3 hover:cursor-pointer text-sm font-semibold text-slate-600 hover:text-slate-800 transition
                     ${index == 0 && "rounded-t-md"}
-                    ${dropdown == "Logout" && "border-t"}
+                    ${dropdown.name == "Logout" && "border-t"}
                     ${index == userNotLoggedIn.length - 1 && "rounded-b-md"}   
                     `}
                     >
-                        <div onClick={() => handleDropdownMenuClick(dropdown)}>
-                            {dropdown}
-                        </div>
+                        <div className="flex gap-x-2 items-center">
+                                <dropdown.logo size={17} />
+                                {dropdown.name}
+                            </div>
                     </div>
                 ))}
             </div>

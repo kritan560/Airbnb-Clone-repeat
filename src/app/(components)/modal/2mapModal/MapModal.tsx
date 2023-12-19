@@ -31,7 +31,7 @@ const MapModal: React.FC<MapModalProps> = ({
     // const Map = dynamic(() => import("./Map"), { ssr: false });
     const Map = useMemo(
         () => dynamic(() => import("./Map"), { ssr: false }),
-        [country]
+        []
     );
 
     const conuntryValue: CountryType = watch(id);

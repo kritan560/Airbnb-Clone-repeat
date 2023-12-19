@@ -42,9 +42,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
     // when clicked on document except dropDownToggleRef close the dropdown
     const handleDropDownClose = (e: MouseEvent) => {
         if (!dropDownToggleRef.current?.contains(e.target as Node)) {
-            setTimeout(() => {
-                dropdownStore.onClose();
-            }, 100);
+            dropdownStore.onClose();
         }
     };
 
