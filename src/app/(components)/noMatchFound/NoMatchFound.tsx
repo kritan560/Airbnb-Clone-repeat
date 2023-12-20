@@ -10,6 +10,7 @@ const NoMatchFound = () => {
 
     const scrollBarStore = ScrollBarStore();
     const filterModalStore = FilterModalStore()
+    
     function removeFilters() {
         router.push("/");
         scrollBarStore.setScrollBar(undefined);

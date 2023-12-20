@@ -7,7 +7,7 @@ import FilterModal from "./(components)/modal/FilterModal";
 import { Toaster } from "react-hot-toast";
 import LoginModal from "./(components)/modal/LoginModal";
 import SignupModal from "./(components)/modal/SignupModal";
-import getCurrentUser from "./(serverSession)/getCurrentUser";
+import getCurrentUser from "./(actions)/getCurrentUser";
 
 const nunito = Nunito({ subsets: ["latin"] });
 

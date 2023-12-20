@@ -5,7 +5,7 @@ type ParamsId = {
 };
 
 const page = async ({ params }: ParamsId) => {
-    const list = await prisma.modelData.findUnique({
+    const list = await prisma.listing.findUnique({
         where: { id: params.id }
     });
     return <div>{list?.category}</div>;

@@ -4,6 +4,4 @@
 . dropdown with user and without user can be rendered in same div element. (done)
 
 ... Tomarrow ...
-. track user creation of airbnb
-. create listing - detail page 
-. revise prisma modal releationship
+. add to fav / remove from fav without refresh ( i think using global state for fav works!!)

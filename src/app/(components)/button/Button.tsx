@@ -11,6 +11,8 @@ type ButtonProps = {
     iconSize?: number;
     secondaryLabel?: string;
     secondaryAction?: () => void;
+    btnSm?: boolean;
+    textSize?: "thin" | "normal" | "semibold";
 };
 
 const Button: React.FC<ButtonProps> = ({
@@ -22,7 +24,9 @@ const Button: React.FC<ButtonProps> = ({
     secondaryLabel,
     class: Style,
     currentModal = 1,
-    iconSize = 20
+    iconSize = 20,
+    btnSm = false,
+    textSize = "normal"
 }) => {
     return (
         <div
@@ -33,8 +37,13 @@ const Button: React.FC<ButtonProps> = ({
             {secondaryAction && currentModal > 1 ? (
                 <button
                     onClick={secondaryAction}
-                    className={`bg-blue-600 transition active:bg-blue-500 w-full py-2 rounded-lg select-none
+                    className={`bg-blue-600 transition active:bg-blue-500 w-full 
+                    rounded-lg select-none
+                    ${btnSm ? "py-[2px]" : "py-2"}
                     ${Style?.bgSecondaryStyle}
+                    ${textSize == "thin" && "font-thin"}
+                    ${textSize == "normal" && "font-normal"}
+                    ${textSize == "semibold" && "font-semibold"}
                     `}
                 >
                     {secondaryLabel}
@@ -44,8 +53,14 @@ const Button: React.FC<ButtonProps> = ({
             )}
             <button
                 onClick={primaryAction}
-                className={`bg-red-600 transition active:bg-red-500 w-full py-2 rounded-lg select-none 
-                ${Style?.bgPrimaryStyle}`}
+                className={`bg-red-600 transition active:bg-red-500 w-full 
+                rounded-lg select-none 
+                ${btnSm ? "py-[2px]" : "py-2"}
+                ${Style?.bgPrimaryStyle}
+                ${textSize == "thin" && "font-thin"}
+                ${textSize == "normal" && "font-normal"}
+                ${textSize == "semibold" && "font-semibold"}
+                `}
             >
                 <div className="flex gap-x-3 justify-center relative">
                     <span className="absolute left-4">

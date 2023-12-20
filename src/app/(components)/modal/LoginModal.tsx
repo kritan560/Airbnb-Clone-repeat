@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import Heading from "../heading/Heading";
 import Body from "../body/Body";
 import Modal from "./Modal";
@@ -11,9 +11,7 @@ import Button from "../button/Button";
 import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import SignUpStore from "@/app/store/signupStore";
-import axios from "axios";
 import toast from "react-hot-toast";
-import { UserState } from "@/app/enumStore/userStateEnum";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
@@ -29,7 +27,8 @@ const LoginModal = () => {
         formState: { errors },
         handleSubmit,
         watch,
-        reset
+        reset,
+        setFocus
     } = useForm<FieldValues>({
         defaultValues: {
             email: "",
@@ -37,25 +36,14 @@ const LoginModal = () => {
         }
     });
 
+    useEffect(() => {
+        setFocus("email");
+    }, [loginStore.isOpen]);
+
     const email = watch("email");
     const password = watch("password");
 
     function submit(data: any) {
-        // axios
-        //     .post("/api/auth/login", data)
-        //     .then((res) => {
-        //         if (res.data.code == UserState.LOGIN_SUCCESS) {
-        //             toast.success("user logged in success");
-        //             reset();
-        //             loginStore.onClose();
-        //         } else if (res.data.code == UserState.PASSWORD_NOT_MATCH) {
-        //             toast.error("password did not match");
-        //         }
-        //     })
-        //     .catch((err) => {
-        //         console.error(err);
-        //     })
-        //     .finally(() => {});
         signIn("credentials", {
             callbackUrl: "/",
             redirect: false,
@@ -68,6 +56,7 @@ const LoginModal = () => {
                 loginStore.onClose();
                 router.refresh();
             } else if (callback?.error) {
+                setFocus("password");
                 toast.error(callback.error);
             }
         });

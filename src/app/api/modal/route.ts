@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { CategoryIcon } from "@/app/(components)/modal/1categoriesModal/CategoryModal";
 import { CountryType } from "@/app/(components)/modal/2mapModal/MapModal";
 import prisma from "../../../../prisma/PrismaDB";
+import getCurrentUser from "@/app/(actions)/getCurrentUser";
 
 type RequestType = {
     category: CategoryIcon;
@@ -10,6 +11,10 @@ type RequestType = {
 };
 
 export async function POST(request: Request, response: Response) {
+    const user = await getCurrentUser();
+    if (!user) {
+        return NextResponse.error();
+    }
     const {
         guests,
         rooms,
@@ -21,7 +26,7 @@ export async function POST(request: Request, response: Response) {
         map,
         image
     } = (await request.json()) as RequestType;
-    const modalData = await prisma.modelData.create({
+    const modalData = await prisma.listing.create({
         data: {
             bedrooms: bedrooms,
             category: category.iconName,
@@ -31,7 +36,8 @@ export async function POST(request: Request, response: Response) {
             map: map.value,
             price: price,
             rooms: rooms,
-            title: title
+            title: title,
+            userId: user.id
         }
     });
     return NextResponse.json(modalData);

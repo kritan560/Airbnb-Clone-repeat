@@ -3,7 +3,7 @@ import prisma from "../../../../prisma/PrismaDB";
 
 export async function POST(request: Request, response: Response) {
     const { category } = await request.json();
-    const categories = await prisma.modelData.findMany({
+    const categories = await prisma.listing.findMany({
         where: {
             category: category
         }

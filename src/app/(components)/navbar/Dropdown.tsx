@@ -11,6 +11,7 @@ import { TbReservedLine } from "react-icons/tb";
 import { VscSymbolProperty } from "react-icons/vsc";
 import { IoIosLogIn, IoIosLogOut } from "react-icons/io";
 import { IoPersonAddOutline } from "react-icons/io5";
+import { AiOutlinePropertySafety } from "react-icons/ai";
 
 type DropdownProps = {
     className?: string;
@@ -52,7 +53,7 @@ const Dropdown: React.FC<DropdownProps> = ({ className, currentUser }) => {
         },
         {
             logo: (
-                <VscSymbolProperty
+                <AiOutlinePropertySafety
                     size={18}
                     className={`${Style.class} text-slate-800`}
                 />

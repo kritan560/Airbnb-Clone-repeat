@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import Heading from "../heading/Heading";
 import Body from "../body/Body";
 import Modal from "./Modal";
@@ -28,15 +28,19 @@ const SignupModal = () => {
         formState: { errors, isSubmitSuccessful, isValid },
         handleSubmit,
         reset,
-        watch
+        watch,
+        setFocus
     } = useForm<FieldValues>({
-        mode: "all",
         defaultValues: {
             email: "",
             name: "",
             password: ""
         }
     });
+
+    useEffect(() => {
+        setFocus("email");
+    }, [signupStore.isOpen]);
 
     const email = watch("email");
     const name = watch("name");
