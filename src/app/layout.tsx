@@ -8,6 +8,8 @@ import { Toaster } from "react-hot-toast";
 import LoginModal from "./(components)/modal/LoginModal";
 import SignupModal from "./(components)/modal/SignupModal";
 import getCurrentUser from "./(actions)/getCurrentUser";
+import { Providers } from "./provider";
+import DeleteConfirmationModal from "./(components)/modal/DeleteConfirmationModal";
 
 const nunito = Nunito({ subsets: ["latin"] });
 
@@ -30,17 +32,20 @@ export default async function RootLayout({
 }) {
     const currentUser = await getCurrentUser();
     return (
-        <html lang="en">
+        <html lang="en" suppressHydrationWarning>
             <body className={`${nunito.className} bg-gray-700`}>
-                <div className="rounded-lg bg-white fixed inset-0 overflow-y-auto scrollbar-thumb-red-600 scrollbar-thin scrollbar-thumb-rounded-full">
-                    <Toaster />
-                    <Navbar currentUser={currentUser} />
-                    <MainModal />
-                    <FilterModal />
-                    <LoginModal />
-                    <SignupModal />
-                    <div className="px-24 py-6">{children}</div>
-                </div>
+                <Providers>
+                    <div className="rounded-lg bg-white fixed inset-0 overflow-y-auto scrollbar-thumb-red-600 scrollbar-thin scrollbar-thumb-rounded-full">
+                        <Toaster />
+                        <Navbar currentUser={currentUser} />
+                        <MainModal />
+                        <FilterModal />
+                        <LoginModal />
+                        <SignupModal />
+                        <DeleteConfirmationModal />
+                        <div className="px-24 py-6">{children}</div>
+                    </div>
+                </Providers>
             </body>
         </html>
     );

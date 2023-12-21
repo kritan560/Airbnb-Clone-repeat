@@ -21,6 +21,7 @@ const config: Config = {
             }
         }
     },
-    plugins: [require("tailwind-scrollbar")({ nocompatible: true })]
+    plugins: [require("tailwind-scrollbar")({ nocompatible: true })],
+    darkMode: "class"  // this tells tailwind we are manually changing the modesk
 };
 export default config;

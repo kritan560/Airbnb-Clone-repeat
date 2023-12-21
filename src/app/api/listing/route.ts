@@ -26,7 +26,7 @@ export async function POST(request: Request, response: Response) {
         map,
         image
     } = (await request.json()) as RequestType;
-    const modalData = await prisma.listing.create({
+    const listings = await prisma.listing.create({
         data: {
             bedrooms: bedrooms,
             category: category.iconName,
@@ -40,5 +40,5 @@ export async function POST(request: Request, response: Response) {
             userId: user.id
         }
     });
-    return NextResponse.json(modalData);
+    return NextResponse.json(listings);
 }

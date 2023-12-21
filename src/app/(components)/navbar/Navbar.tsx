@@ -11,6 +11,7 @@ import FilterModalStore from "@/app/store/filterModalStore";
 import { useRouter } from "next/navigation";
 import ScrollBarStore from "@/app/store/scrollBarStore";
 import SignUpStore from "@/app/store/signupStore";
+import ThemeSwitch from "../theme/ThemeSwitch";
 
 type NavbarProps = {
     currentUser?: any;
@@ -76,7 +77,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
 
     return (
         <>
-            <div className="flex justify-between items-center py-4 border-b px-20">
+            <div className="flex justify-between items-center py-4 border-b px-20 dark:bg-blue-400">
                 {/* logo */}
                 <div className="hover:cursor-pointer" onClick={handleLogoClick}>
                     <Image
@@ -141,6 +142,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
                             alt="placeholder"
                             className="rounded-full shadow border border-gray-600"
                         />
+                        {/* <ThemeSwitch /> */}
                         <Dropdown
                             currentUser={currentUser}
                             className="absolute top-10 -left-8 hover:shadow-md"

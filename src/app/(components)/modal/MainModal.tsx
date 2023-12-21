@@ -51,7 +51,7 @@ const MainModal = () => {
         // clear all the form data and close modal if submit successful
         if (isValid && isSubmitSuccessful) {
             axios
-                .post("/api/modal", datas)
+                .post("/api/listing", datas)
                 .then(() => {
                     toast.success("data saved to DB", { duration: 5000 });
                     reset();

@@ -1,12 +1,13 @@
 import { NextResponse } from "next/server";
 import prisma from "../../../../prisma/PrismaDB";
 import getCurrentUser from "@/app/(actions)/getCurrentUser";
+import { FavoriteEnum, UserState } from "@/app/enumStore/userStateEnum";
 
 export async function POST(request: Request, response: Response) {
     const { itemId } = await request.json();
     const user = await getCurrentUser();
     if (!user) {
-        return null;
+        return NextResponse.json({ code: UserState.USER_NOT_EXISTS });
     }
 
     // check if there already an existing favorite listing for particular id
@@ -26,7 +27,7 @@ export async function POST(request: Request, response: Response) {
             where: { id: user.id },
             data: { favoritesIds: newData }
         });
-        return NextResponse.json('remove when clicked again')
+        return NextResponse.json({ code: FavoriteEnum.FAVORITE_REMOVED });
     }
 
     // assign the favorite listing
@@ -37,5 +38,5 @@ export async function POST(request: Request, response: Response) {
         data: { favoritesIds: { push: itemId } }
     });
 
-    return NextResponse.json("favorite response");
+    return NextResponse.json({ code: FavoriteEnum.FAVORITE_ASSIGNED });
 }

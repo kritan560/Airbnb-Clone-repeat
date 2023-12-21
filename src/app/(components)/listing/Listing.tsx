@@ -7,6 +7,10 @@ import { useRouter } from "next/navigation";
 import React, { Suspense } from "react";
 import { GoHeartFill } from "react-icons/go";
 import Button from "../button/Button";
+import { FaRegHeart } from "react-icons/fa";
+import toast from "react-hot-toast";
+import { FavoriteEnum } from "@/app/enumStore/userStateEnum";
+import DeleteConfirmStore from "@/app/store/deleteConfirmStore";
 
 type ListingProps = {
     listings: ListingType[];
@@ -20,63 +24,85 @@ const Listing: React.FC<ListingProps> = ({
     favorites
 }) => {
     const router = useRouter();
+    const deleteConfirmStore = DeleteConfirmStore();
 
     function handleHeartClick(itemId: string) {
+        // make the listing favorite to specific user
         axios
             .post("/api/favorite", { itemId })
             .then((res) => {
                 router.refresh();
+                if (res.data.code == FavoriteEnum.FAVORITE_ASSIGNED) {
+                    toast("favorited", { icon: "😊" });
+                } else if (res.data.code == FavoriteEnum.FAVORITE_REMOVED) {
+                    toast("favorite removed", { icon: "😔" });
+                }
             })
             .catch((err) => console.error(err));
     }
 
-    function uniqueItem(item: string) {
-        router.push(`homepage/${item}`);
+    function uniqueItem(listing: string) {
+        router.push(`homepage/${listing}`);
     }
 
-    const primaryAction = () => {};
+    const primaryAction = (id: string) => {
+        deleteConfirmStore.id = id;
+        deleteConfirmStore.onOpen();
+    };
+
     const primaryLabel = buttonNeeded ? buttonNeeded.buttonlabel : "";
 
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-x-8 gap-y-6 mt-12">
-            {listings.map((item) => (
-                <div key={item.id} className="hover:cursor-pointer group">
+            {listings.map((listing) => (
+                <div key={listing.id} className="hover:cursor-pointer group">
                     <div className="overflow-hidden rounded-lg mb-1 relative">
                         <Image
-                            src={item.image}
+                            src={listing.image}
                             width={500}
                             height={500}
                             alt="image"
                             className={`w-full aspect-square transition group-hover:scale-110 group-active:scale-105`}
-                            onClick={() => uniqueItem(item.id)}
+                            onClick={() => uniqueItem(listing.id)}
                         />
-                        <GoHeartFill
-                            onClick={() => handleHeartClick(item.id)}
-                            // heart logo should be red when favorited.
-                            className={`absolute top-2 left-3 
+                        <div
+                            className="group/heart"
+                            onClick={() => handleHeartClick(listing.id)}
+                        >
+                            <GoHeartFill
+                                className={` absolute top-2 left-3
+                                group-active/heart:scale-95 group-hover/heart:scale-[1.15] transition
                             ${
                                 favorites?.some(
-                                    (listItem) => listItem == item.id
+                                    (listItem) => listItem == listing.id
                                 )
                                     ? "fill-red-600"
                                     : "fill-slate-500"
-                            }
-                             active:scale-95 hover:scale-[1.15]`}
-                            size={25}
-                        />
+                            }`}
+                                size={25}
+                            />
+                            <FaRegHeart
+                                size={26}
+                                className={
+                                    "fill-slate-200 absolute top-2 left-3 group-active/heart:scale-95 group-hover/heart:scale-[1.15] transition"
+                                }
+                            />
+                        </div>
                     </div>
-                    <div onClick={() => uniqueItem(item.id)} className="">
-                        <div className="font-semibold">{item.map}</div>
-                        <div className="font-light">{item.category}</div>
+                    <div onClick={() => uniqueItem(listing.id)} className="">
+                        <div className="font-semibold">{listing.map}</div>
+                        <div className="font-light">{listing.category}</div>
                         <div>
-                            <span className="font-semibold">${item.price}</span>
+                            <span className="font-semibold">
+                                ${listing.price}
+                            </span>
                             <span className="font-light ml-2">per Night</span>
                         </div>
                     </div>
                     {buttonNeeded && (
                         <Button
                             primaryLabel={primaryLabel}
-                            primaryAction={primaryAction}
+                            primaryAction={() => primaryAction(listing.id)}
                             btnSm={true}
                             textSize="thin"
                         />

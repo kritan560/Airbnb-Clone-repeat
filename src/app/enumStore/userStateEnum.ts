@@ -7,3 +7,14 @@ export enum UserState {
     PASSWORD_NOT_FOUND,
     LOGIN_SUCCESS
 }
+
+export enum FavoriteEnum {
+    FAVORITE_REMOVED,
+    FAVORITE_ASSIGNED ,
+
+}
+
+export enum ListingEnum{
+    LISTING_REMOVED ,
+    
+}
