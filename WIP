@@ -3,6 +3,7 @@
 
 !! After project is completed.
 . 🔃 image skeleton 
+. 🔃 create not-found page.
 
 . ✅ can't tick heart when user is not logged it. ( rediret to login page )
 . ✅ when logout (should navigate to homepage. without a refresh)
@@ -11,6 +12,5 @@
 . ✅ ['/trips', '/properties', '/reservations', '/favorites'] this route should be protected.
 . ✅ when protected route is hit login modal is not open . ensure login modal open
 . ✅ when logged in (login via social auth) the route should redirect to callbackUrl route. if callbackUrl is present (done)
-. 🔃 logging in from listing detail page will redirect to '/' (should redirect or refresh the current lisinng detail page)
-    . used js-cookie but did not work (remove the package)
-. 🔃 create not-found page.
+. ✅ logging in from listing detail page will redirect to '/' (should redirect or refresh the current lisinng detail page)
+. ✅ show no item found message if no items are found

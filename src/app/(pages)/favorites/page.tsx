@@ -11,11 +11,13 @@ const Favorites = async () => {
 
     return (
         <div>
-            <Heading
+            <Listing
+                listings={listings}
+                favorites={favListing}
                 title="Favorites"
-                subtitle="List of favorite places you have selected"
+                headingLabel="Add Some Hearts"
+                subtitle="Some of the favorites place you have selected!!!"
             />
-            <Listing listings={listings} favorites={favListing} />
         </div>
     );
 };

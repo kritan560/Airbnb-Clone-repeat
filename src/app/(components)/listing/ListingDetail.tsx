@@ -52,7 +52,7 @@ const ListingDetail: React.FC<ListingDetailProps> = ({
         const user = await getCurrentUser();
         if (!user) {
             toast.error("opps! Please login");
-            router.push(`?callbackUrl=${pathName}`)
+            // router.push(`?detail=${pathName}`)
             return loginStore.onOpen();
         }
 

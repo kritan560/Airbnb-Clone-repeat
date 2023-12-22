@@ -5,29 +5,39 @@ import ScrollBarStore from "@/app/store/scrollBarStore";
 import { useRouter } from "next/navigation";
 import React from "react";
 
-const NoMatchFound = () => {
+type NoMatchFoundProps = {
+    buttonLabel?: string;
+    headingLabel?: string;
+    buttonAction?: () => void;
+};
+
+const NoMatchFound: React.FC<NoMatchFoundProps> = ({
+    headingLabel = "Try changing the filters",
+    buttonLabel = "Remove All Filters",
+    buttonAction
+}) => {
     const router = useRouter();
 
     const scrollBarStore = ScrollBarStore();
-    const filterModalStore = FilterModalStore()
-    
+    const filterModalStore = FilterModalStore();
+
     function removeFilters() {
         router.push("/");
         scrollBarStore.setScrollBar(undefined);
-        filterModalStore.setDays(undefined)
-        filterModalStore.setLocation(undefined)
-        filterModalStore.setGuest(undefined)
+        filterModalStore.setDays(undefined);
+        filterModalStore.setLocation(undefined);
+        filterModalStore.setGuest(undefined);
     }
 
     return (
         <div className="flex justify-center items-center flex-col gap-y-4">
             <h1 className="text-3xl font-bold">No Match Found</h1>
-            <h4 className="text-lg font-semibold">Try changing the filters</h4>
+            <h4 className="text-lg font-semibold">{headingLabel}</h4>
             <button
                 className="py-2 px-4 border-2 rounded-md border-gray-600 hover:border-gray-600/50"
-                onClick={removeFilters}
+                onClick={buttonAction ? buttonAction : removeFilters}
             >
-                Remove all Filters
+                {buttonLabel}
             </button>
         </div>
     );

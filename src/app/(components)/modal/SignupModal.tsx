@@ -56,7 +56,7 @@ const SignupModal = () => {
                 if (res.data.code == UserState.NEW_USER_CREATED) {
                     toast.success("New User Created");
                     signIn("credentials", {
-                        callbackUrl: "/",
+                        callbackUrl: pathName,
                         redirect: false,
                         email,
                         password
@@ -64,11 +64,7 @@ const SignupModal = () => {
                         if (callback?.ok) {
                             router.refresh();
                             toast.success("User logged in");
-                        } else if (pathName) {
-                            router.push(pathName);
-                            router.refresh();
-                            return;
-                        }
+                        } 
                     });
                     reset();
                     signupStore.onClose();
@@ -87,7 +83,7 @@ const SignupModal = () => {
 
     async function handleGoogleSignIn() {
         const signInData = await signIn("google", {
-            callbackUrl: "/",
+            callbackUrl: pathName,
             redirect: false
         });
         if (callbackRedirectURL) {
@@ -100,7 +96,7 @@ const SignupModal = () => {
 
     async function handleGithubSignIn() {
         const signInData = await signIn("github", {
-            callbackUrl: "/",
+            callbackUrl: pathName,
             redirect: false
         });
 

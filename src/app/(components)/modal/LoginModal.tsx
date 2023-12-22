@@ -49,7 +49,7 @@ const LoginModal = () => {
 
     function submit(data: any) {
         signIn("credentials", {
-            callbackUrl: "/",
+            callbackUrl: pathName,
             redirect: false,
             email,
             password
@@ -61,10 +61,6 @@ const LoginModal = () => {
 
                 // if there is a callbackUrl | pathName defined in titlebar
                 if (callbackRedirectURL) {
-                    router.push(callbackRedirectURL);
-                    router.refresh();
-                    return;
-                } else if (callbackRedirectURL) {
                     router.push(callbackRedirectURL);
                     router.refresh();
                     return;
@@ -87,7 +83,7 @@ const LoginModal = () => {
 
     async function handleGoogleSignIn() {
         const signInData = await signIn("google", {
-            callbackUrl: "/",
+            callbackUrl: pathName,
             redirect: false
         });
         if (callbackRedirectURL) {
@@ -100,7 +96,7 @@ const LoginModal = () => {
 
     async function handleGithubSignIn() {
         const signInData = await signIn("github", {
-            callbackUrl: "/",
+            callbackUrl: pathName,
             redirect: false
         });
 

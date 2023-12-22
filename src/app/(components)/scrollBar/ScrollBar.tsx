@@ -40,6 +40,7 @@ const ScrollBar = () => {
                             className="group-hover:scale-125 transition"
                         />
                     </div>
+
                     {/* underline ... */}
                     <span className="text-sm font-semibold">
                         {category.iconName}

@@ -52,7 +52,19 @@ const handler = NextAuth({
     debug: process.env.NODE_ENV !== "production",
     session: { strategy: "jwt" },
     secret: process.env.NEXTAUTH_SECRET,
-    pages: { signIn: "/login" }
+    pages: { signIn: "/login" },
+    // callbacks: {
+    //     async redirect({ url, baseUrl }) {
+    //         console.log(url, 'url...')
+    //         console.log(baseUrl, 'baseUrl...')
+    //         // Allows relative callback URLs
+    //         if (url.startsWith("/")) return `${baseUrl}${url}`;
+    //         // Allows callback URLs on the same origin
+    //         else if (new URL(url).origin === baseUrl) return url;
+    //         console.log(localStorage.getItem('detail'),'!!!!!!!!!!')
+    //         return baseUrl;
+    //     }
+    // }
 });
 
 export { handler as GET, handler as POST };

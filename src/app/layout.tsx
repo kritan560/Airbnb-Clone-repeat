@@ -10,6 +10,7 @@ import SignupModal from "./(components)/modal/SignupModal";
 import getCurrentUser from "./(actions)/getCurrentUser";
 import { Providers } from "./provider";
 import DeleteConfirmationModal from "./(components)/modal/DeleteConfirmationModal";
+import { Suspense } from "react";
 
 const nunito = Nunito({ subsets: ["latin"] });
 
@@ -40,8 +41,10 @@ export default async function RootLayout({
                         <Navbar currentUser={currentUser} />
                         <MainModal />
                         <FilterModal />
-                        <LoginModal />
-                        <SignupModal />
+                        <Suspense>
+                            <LoginModal />
+                            <SignupModal />
+                        </Suspense>
                         <DeleteConfirmationModal />
                         <div className="px-24 py-6">{children}</div>
                     </div>

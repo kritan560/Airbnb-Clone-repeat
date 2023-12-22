@@ -1,7 +1,12 @@
 import React from "react";
+import TripsPage from "./TripsPage";
 
 const Trips = async () => {
-    return <div>trips</div>;
+    return (
+        <div>
+            <TripsPage />
+        </div>
+    );
 };
 
 export default Trips;
