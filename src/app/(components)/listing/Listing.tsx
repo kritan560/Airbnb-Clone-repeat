@@ -11,6 +11,8 @@ import { FaRegHeart } from "react-icons/fa";
 import toast from "react-hot-toast";
 import { FavoriteEnum } from "@/app/enumStore/userStateEnum";
 import DeleteConfirmStore from "@/app/store/deleteConfirmStore";
+import getCurrentUser from "@/app/(actions)/getCurrentUser";
+import LoginStore from "@/app/store/loginStore";
 
 type ListingProps = {
     listings: ListingType[];
@@ -25,8 +27,15 @@ const Listing: React.FC<ListingProps> = ({
 }) => {
     const router = useRouter();
     const deleteConfirmStore = DeleteConfirmStore();
+    const loginStore = LoginStore();
 
-    function handleHeartClick(itemId: string) {
+    async function handleHeartClick(itemId: string) {
+        const user = await getCurrentUser();
+        if (!user) {
+            toast.error("opps! Please login");
+            return loginStore.onOpen();
+        }
+
         // make the listing favorite to specific user
         axios
             .post("/api/favorite", { itemId })

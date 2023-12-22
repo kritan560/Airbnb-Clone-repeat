@@ -8,7 +8,6 @@ import { SlPlane } from "react-icons/sl";
 import { MdFavorite } from "react-icons/md";
 import { FaHome } from "react-icons/fa";
 import { TbReservedLine } from "react-icons/tb";
-import { VscSymbolProperty } from "react-icons/vsc";
 import { IoIosLogIn, IoIosLogOut } from "react-icons/io";
 import { IoPersonAddOutline } from "react-icons/io5";
 import { AiOutlinePropertySafety } from "react-icons/ai";
@@ -119,7 +118,12 @@ const Dropdown: React.FC<DropdownProps> = ({ className, currentUser }) => {
             return signupStore.onOpen();
         }
         if (dropdown === `Logout (${currentUser ? currentUser.name : ""})`) {
-            return await signOut();
+            const logoutData = await signOut({
+                redirect: false,
+                callbackUrl: "/"
+            });
+            router.push(logoutData.url);
+            return router.refresh();
         }
         if (dropdown === "My Trips") {
             return router.push("/trips");

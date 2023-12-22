@@ -1,7 +1,7 @@
 import getCurrentUser from "@/app/(actions)/getCurrentUser";
 import { NextResponse } from "next/server";
 import prisma from "../../../../../prisma/PrismaDB";
-import { ListingEnum } from "@/app/enumStore/userStateEnum";
+import { ListingEnum, UserState } from "@/app/enumStore/userStateEnum";
 
 type ParamsType = {
     listingId: string;
@@ -13,7 +13,7 @@ export async function DELETE(
 ) {
     const user = await getCurrentUser();
     if (!user) {
-        return null;
+        return NextResponse.json({ code: UserState.USER_NOT_EXISTS });
     }
     const userId = user.id;
     const listingId = params.listingId;

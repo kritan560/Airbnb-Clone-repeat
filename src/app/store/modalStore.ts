@@ -10,7 +10,11 @@ type ModalStoreType = {
     /**
      * reset the currentModal to CATEGORIES
      */
-    resetModal : () => void;
+    resetModal: () => void;
+
+    shouldCrossVisible: boolean;
+    onOpenCross: () => void;
+    onCloseCross: () => void;
 };
 
 export enum ModalEnum {
@@ -47,7 +51,12 @@ const ModalStore = create<ModalStoreType>((set) => ({
     isOpen: false,
     onOpen: () => set({ isOpen: true }),
     onClose: () => set({ isOpen: false }),
-    resetModal : () => set({currentModal : ModalEnum.CATEGORIES })
+    resetModal: () => set({ currentModal: ModalEnum.CATEGORIES }),
+
+    // this will make the cross visible
+    shouldCrossVisible: true,
+    onOpenCross: () => set({ shouldCrossVisible: true }),
+    onCloseCross: () => set({ shouldCrossVisible: false })
 }));
 
 export default ModalStore;

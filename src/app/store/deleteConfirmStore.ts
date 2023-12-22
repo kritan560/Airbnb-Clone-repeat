@@ -1,14 +1,14 @@
 import { create } from "zustand";
 
 type DeletetConfirmType = {
-    id: string | number | null;
+    id: string ;
     isOpen: boolean;
     onOpen: () => void;
     onClose: () => void;
 };
 
 const DeleteConfirmStore = create<DeletetConfirmType>((set) => ({
-    id: null,
+    id: '',
     isOpen: false,
     onOpen: () => set({ isOpen: true }),
     onClose: () => set({ isOpen: false })

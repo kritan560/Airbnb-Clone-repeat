@@ -37,8 +37,8 @@ const DeleteConfirmationModal = () => {
     bodyContent = (
         <>
             <Heading
-                title="Delete Listing?"
-                subtitle="Are you sure you want to delete the listing"
+                title="Delete Property?"
+                subtitle="Are you sure you want to delete your property?"
             />
             <Body className="flex h-fit gap-x-4 ">
                 <Button

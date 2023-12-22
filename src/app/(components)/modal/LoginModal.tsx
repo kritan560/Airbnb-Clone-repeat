@@ -13,7 +13,8 @@ import { FcGoogle } from "react-icons/fc";
 import SignUpStore from "@/app/store/signupStore";
 import toast from "react-hot-toast";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import ModalStore from "@/app/store/modalStore";
 
 const LoginModal = () => {
     let bodyContent;
@@ -21,6 +22,9 @@ const LoginModal = () => {
     const loginStore = LoginStore();
     const signupStore = SignUpStore();
     const router = useRouter();
+    const callbackURL = useSearchParams();
+    const callbackRedirectURL = callbackURL.get("callbackUrl");
+    const pathName = usePathname();
 
     const {
         register,
@@ -54,6 +58,20 @@ const LoginModal = () => {
                 toast.success("User logged in success");
                 reset();
                 loginStore.onClose();
+
+                // if there is a callbackUrl | pathName defined in titlebar
+                if (callbackRedirectURL) {
+                    router.push(callbackRedirectURL);
+                    router.refresh();
+                    return;
+                } else if (callbackRedirectURL) {
+                    router.push(callbackRedirectURL);
+                    router.refresh();
+                    return;
+                }
+
+                // if there is no callbackUrl defined redirect to homepage
+                router.push(callback.url ? callback.url : "/");
                 router.refresh();
             } else if (callback?.error) {
                 setFocus("password");
@@ -65,6 +83,32 @@ const LoginModal = () => {
     function handleSignupClick() {
         loginStore.onClose();
         signupStore.onOpen();
+    }
+
+    async function handleGoogleSignIn() {
+        const signInData = await signIn("google", {
+            callbackUrl: "/",
+            redirect: false
+        });
+        if (callbackRedirectURL) {
+            router.push(callbackRedirectURL);
+            return;
+        }
+
+        router.push(signInData?.url ? signInData.url : "/");
+    }
+
+    async function handleGithubSignIn() {
+        const signInData = await signIn("github", {
+            callbackUrl: "/",
+            redirect: false
+        });
+
+        if (callbackRedirectURL) {
+            router.push(callbackRedirectURL);
+            return;
+        }
+        router.push(signInData?.url ? signInData.url : "/");
     }
 
     bodyContent = (
@@ -100,9 +144,7 @@ const LoginModal = () => {
                     }}
                     icon={FcGoogle}
                     iconSize={25}
-                    primaryAction={() =>
-                        signIn("google", { callbackUrl: "/", redirect: false })
-                    }
+                    primaryAction={() => handleGoogleSignIn()}
                 />
                 <Button
                     primaryLabel="Login with Github"
@@ -112,9 +154,7 @@ const LoginModal = () => {
                     }}
                     icon={FaGithub}
                     iconSize={25}
-                    primaryAction={() =>
-                        signIn("github", { callbackUrl: "/", redirect: false })
-                    }
+                    primaryAction={() => handleGithubSignIn()}
                 />
                 <div className="">
                     <span>First time using Airbnb?</span>

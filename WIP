@@ -1,7 +1,16 @@
-. SignUP model : form data is not reset when submit successfully (done)
 . render something when original thing did not finished render in hamburder menu profile pic 
     (can't find a way to render suspence component in NextJs)
-. dropdown with user and without user can be rendered in same div element. (done)
 
-... Tomarrow ...
-. add to fav / remove from fav without refresh ( i think using global state for fav works!!)
+!! After project is completed.
+. 🔃 image skeleton 
+
+. ✅ can't tick heart when user is not logged it. ( rediret to login page )
+. ✅ when logout (should navigate to homepage. without a refresh)
+. ✅ you should be able to view the detail page without login.
+. ✅ should open login modal when detail page heart is clicked if user is not logged in
+. ✅ ['/trips', '/properties', '/reservations', '/favorites'] this route should be protected.
+. ✅ when protected route is hit login modal is not open . ensure login modal open
+. ✅ when logged in (login via social auth) the route should redirect to callbackUrl route. if callbackUrl is present (done)
+. 🔃 logging in from listing detail page will redirect to '/' (should redirect or refresh the current lisinng detail page)
+    . used js-cookie but did not work (remove the package)
+. 🔃 create not-found page.

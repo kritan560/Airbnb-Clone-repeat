@@ -15,13 +15,16 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { UserState } from "@/app/enumStore/userStateEnum";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const SignupModal = () => {
     let bodyContent;
     const loginStore = LoginStore();
     const signupStore = SignUpStore();
     const router = useRouter();
+    const callbackURL = useSearchParams();
+    const callbackRedirectURL = callbackURL.get("callbackUrl");
+    const pathName = usePathname();
 
     const {
         register,
@@ -61,6 +64,10 @@ const SignupModal = () => {
                         if (callback?.ok) {
                             router.refresh();
                             toast.success("User logged in");
+                        } else if (pathName) {
+                            router.push(pathName);
+                            router.refresh();
+                            return;
                         }
                     });
                     reset();
@@ -76,6 +83,33 @@ const SignupModal = () => {
     function handleLoginClick() {
         loginStore.onOpen();
         signupStore.onClose();
+    }
+
+    async function handleGoogleSignIn() {
+        const signInData = await signIn("google", {
+            callbackUrl: "/",
+            redirect: false
+        });
+        if (callbackRedirectURL) {
+            router.push(callbackRedirectURL);
+            return;
+        }
+
+        router.push(signInData?.url ? signInData.url : "/");
+    }
+
+    async function handleGithubSignIn() {
+        const signInData = await signIn("github", {
+            callbackUrl: "/",
+            redirect: false
+        });
+
+        if (callbackRedirectURL) {
+            router.push(callbackRedirectURL);
+            return;
+        }
+
+        router.push(signInData?.url ? signInData.url : "/");
     }
 
     bodyContent = (
@@ -119,9 +153,7 @@ const SignupModal = () => {
                     }}
                     icon={FcGoogle}
                     iconSize={25}
-                    primaryAction={() =>
-                        signIn("google", { callbackUrl: "/", redirect: false })
-                    }
+                    primaryAction={() => handleGoogleSignIn()}
                 />
                 <Button
                     primaryLabel="Continue with Github"
@@ -131,9 +163,7 @@ const SignupModal = () => {
                     }}
                     icon={FaGithub}
                     iconSize={25}
-                    primaryAction={() =>
-                        signIn("github", { callbackUrl: "/", redirect: false })
-                    }
+                    primaryAction={() => handleGithubSignIn()}
                 />
                 <div className="">
                     <span>Already have an account?</span>

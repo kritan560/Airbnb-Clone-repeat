@@ -52,7 +52,7 @@ const handler = NextAuth({
     debug: process.env.NODE_ENV !== "production",
     session: { strategy: "jwt" },
     secret: process.env.NEXTAUTH_SECRET,
-    pages: { signIn: "/" }
+    pages: { signIn: "/login" }
 });
 
 export { handler as GET, handler as POST };
