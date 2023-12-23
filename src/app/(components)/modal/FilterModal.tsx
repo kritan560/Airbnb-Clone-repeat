@@ -12,6 +12,9 @@ import AmenitiesModal from "./3amenitiesModal/AmenitiesModal";
 import DateRangeModal from "./7_dateRangeModal/DateRangeModal";
 import { differenceInCalendarDays, differenceInDays } from "date-fns";
 import Heading from "../heading/Heading";
+import { useState } from "react";
+import { RangeKeyDict } from "react-date-range";
+import Body from "../body/Body";
 
 const FilterModal = () => {
     const filterModalStore = FilterModalStore();
@@ -39,6 +42,26 @@ const FilterModal = () => {
         reset();
     }
 
+    const [state, setState] = useState([
+        {
+            startDate: new Date(),
+            endDate: new Date(),
+            key: "selection"
+        }
+    ]);
+
+    function handleChange({ selection }: RangeKeyDict) {
+        console.log(state);
+        console.log(selection);
+        setState([
+            {
+                startDate: selection.startDate as Date,
+                endDate: selection.endDate as Date,
+                key: selection.key as string
+            }
+        ]);
+    }
+
     let bodyContent;
     if (filterModalStore.currentModal === FilterModalEnum.MAP) {
         bodyContent = (
@@ -64,12 +87,18 @@ const FilterModal = () => {
             <>
                 {/* heading comp is kept here to prevent scroll */}
                 <Heading
-                    subtitle={"make sure everyone on Board"}
+                    subtitle={"make sure everyone on Board !!!"}
                     title={"when do you plan to go?"}
                 />
 
-                <div className="w-full h-fit overflow-y-scroll scrollbar-thumb-red-600 scrollbar scrollbar-w-[6px] scrollbar-thumb-rounded-full">
-                    <DateRangeModal setValue={setValue} watch={watch} />
+                <div className="w-full overflow-y-scroll scrollbar-thumb-red-600 scrollbar scrollbar-w-[6px] scrollbar-thumb-rounded-full h-fit">
+                    {/* body comp is kept here to define to match the heights */}
+                    <Body>
+                        <DateRangeModal
+                            handleChange={handleChange}
+                            state={state}
+                        />
+                    </Body>
                 </div>
             </>
         );

@@ -2,7 +2,7 @@
 
 import { Listing, User } from "@prisma/client";
 import Image from "next/image";
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import Heading from "../heading/Heading";
 import Body from "../body/Body";
 import DateRangeModal from "../modal/7_dateRangeModal/DateRangeModal";
@@ -17,8 +17,9 @@ import { FavoriteEnum } from "@/app/enumStore/userStateEnum";
 import toast from "react-hot-toast";
 import getCurrentUser from "@/app/(actions)/getCurrentUser";
 import LoginStore from "@/app/store/loginStore";
-import { useForm } from "react-hook-form";
 import Button from "../button/Button";
+import { RangeKeyDict } from "react-date-range";
+import { differenceInCalendarDays } from "date-fns";
 
 type ListingDetailProps = {
     listing: Listing;
@@ -34,13 +35,16 @@ const ListingDetail: React.FC<ListingDetailProps> = ({
     const router = useRouter();
     const countries = useCountries();
     const loginStore = LoginStore();
-    const { watch, setValue } = useForm();
-    const DateRangeModal = dynamic(
-        () => import("../modal/7_dateRangeModal/DateRangeModal"),
-        { ssr: false }
+    const DateRangeModal = useMemo(
+        () =>
+            dynamic(() => import("../modal/7_dateRangeModal/DateRangeModal"), {
+                ssr: false
+            }),
+        [listing]
     );
-    const Body = dynamic(() => import("../body/Body"), { ssr: false });
-    const Heading = dynamic(() => import("../heading/Heading"), { ssr: false });
+    // when you load the content dynamically the change in some component would refresh the whole component causing the refresh of the component. to stop the refresh of the component remove the dynamic comonent and use the regular import of the component
+    // const Body = dynamic(() => import("../body/Body"), { ssr: false });
+    // const Heading = dynamic(() => import("../heading/Heading"), { ssr: false });
 
     // importing dynamic map with memo
     // used this because (maps often gets refresh when dates is changed)
@@ -49,10 +53,40 @@ const ListingDetail: React.FC<ListingDetailProps> = ({
         []
     );
 
+    const [totalPrice, setTotalPrice] = useState(0);
+    const [totalDays, setTotalDays] = useState(0);
+    const [state, setState] = useState([
+        {
+            startDate: new Date(),
+            endDate: new Date(),
+            key: "selection"
+        }
+    ]);
+
+    function handleChange({ selection }: RangeKeyDict) {
+        console.log(state);
+        console.log(selection);
+        setState([
+            {
+                startDate: selection.startDate as Date,
+                endDate: selection.endDate as Date,
+                key: selection.key as string
+            }
+        ]);
+        const startDate = selection.startDate
+            ? selection.startDate
+            : new Date();
+        const endDate = selection.endDate ? selection.endDate : new Date();
+        const diff = differenceInCalendarDays(endDate, startDate) + 1;
+        setTotalPrice(diff * listing.price);
+        setTotalDays(diff);
+    }
+
     // getting the listing icons
     const icon = categoryIcons.find(
         (item) => item.iconName == listing.category
     );
+
     if (!icon) return;
     const { icon: Icon, iconName } = icon;
 
@@ -65,7 +99,6 @@ const ListingDetail: React.FC<ListingDetailProps> = ({
         const user = await getCurrentUser();
         if (!user) {
             toast.error("Opps! Please login");
-            // router.push(`?detail=${pathName}`)
             return loginStore.onOpen();
         }
 
@@ -92,7 +125,6 @@ const ListingDetail: React.FC<ListingDetailProps> = ({
                         src={listing.image}
                         fill
                         alt="listing detail image"
-                        // objectFit="cover"
                         style={{ objectFit: "cover" }}
                         className="rounded-lg"
                         quality={20}
@@ -196,18 +228,32 @@ const ListingDetail: React.FC<ListingDetailProps> = ({
                         </p>
                         <hr />
                         <div className="p-0">
-                            <DateRangeModal setValue={setValue} watch={watch} />
+                            <DateRangeModal
+                                handleChange={handleChange}
+                                state={state}
+                            />
                         </div>
+
                         {/* reserve button */}
                         <Button
                             primaryAction={() => {}}
                             primaryLabel="Reserve"
                             class={{ bgPrimaryStyle: "mx-4" }}
                         />
-                        {/* total cost */}
+
+                        {/* total Days*/}
                         <div className="flex justify-between mx-4 mt-8 font-bold text-xl">
+                            <p>Days</p>
+                            <p>
+                                {totalDays || 1}{" "}
+                                {totalDays > 1 ? "Days" : "Day"}
+                            </p>
+                        </div>
+
+                        {/* total cost */}
+                        <div className="flex justify-between mx-4 font-bold text-xl">
                             <p>Total</p>
-                            <p>$12323</p>
+                            <p>${totalPrice || listing.price}</p>
                         </div>
                     </div>
                 </div>
