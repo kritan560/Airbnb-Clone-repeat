@@ -11,6 +11,7 @@ import Button from "../button/Button";
 import AmenitiesModal from "./3amenitiesModal/AmenitiesModal";
 import DateRangeModal from "./7_dateRangeModal/DateRangeModal";
 import { differenceInCalendarDays, differenceInDays } from "date-fns";
+import Heading from "../heading/Heading";
 
 const FilterModal = () => {
     const filterModalStore = FilterModalStore();
@@ -35,7 +36,7 @@ const FilterModal = () => {
         );
         filterModalStore.setDays(days);
         filterModalStore.onClose();
-        reset()
+        reset();
     }
 
     let bodyContent;
@@ -60,12 +61,17 @@ const FilterModal = () => {
         );
     } else if (filterModalStore.currentModal === FilterModalEnum.DATE) {
         bodyContent = (
-            <DateRangeModal
-                title={"when do you plan to go?"}
-                subtitle={"make sure everyone on Board"}
-                setValue={setValue}
-                watch={watch}
-            />
+            <>
+                {/* heading comp is kept here to prevent scroll */}
+                <Heading
+                    subtitle={"make sure everyone on Board"}
+                    title={"when do you plan to go?"}
+                />
+
+                <div className="w-full h-fit overflow-y-scroll scrollbar-thumb-red-600 scrollbar scrollbar-w-[6px] scrollbar-thumb-rounded-full">
+                    <DateRangeModal setValue={setValue} watch={watch} />
+                </div>
+            </>
         );
     }
 

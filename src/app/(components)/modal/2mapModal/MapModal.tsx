@@ -29,6 +29,7 @@ const MapModal: React.FC<MapModalProps> = ({
     const [country, setCountry] = useState<SingleValue<CountryType>>();
 
     // const Map = dynamic(() => import("./Map"), { ssr: false });
+    // using useMemo so that map won't refresh when there is content changes.
     const Map = useMemo(
         () => dynamic(() => import("./Map"), { ssr: false }),
         []
@@ -65,7 +66,6 @@ const MapModal: React.FC<MapModalProps> = ({
                     <Map position={conuntryValue?.latLng as LatLngExpression} />
                 </div>
             </Body>
-            {/* <Button /> */}
         </div>
     );
 };

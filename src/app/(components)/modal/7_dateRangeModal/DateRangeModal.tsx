@@ -6,47 +6,41 @@ import { DateRange } from "react-date-range";
 import { FieldValues, UseFormSetValue, UseFormWatch } from "react-hook-form";
 
 type DateRangeModalProps = {
-    title: string;
-    subtitle: string;
     setValue: UseFormSetValue<FieldValues>;
     watch: UseFormWatch<FieldValues>;
 };
 
-const DateRangeModal: React.FC<DateRangeModalProps> = ({
-    subtitle,
-    title,
-    setValue,
-    watch
-}) => {
+const DateRangeModal: React.FC<DateRangeModalProps> = ({ setValue, watch }) => {
     const selectionRange = {
         startDate: new Date(),
         endDate: new Date(),
         key: "selection"
     };
+
     const watchRanges = watch("calendar");
+
     function handleSelect(ranges: any) {
-        // {
-        //   selection: {
-        //     startDate: [native Date Object],
-        //     endDate: [native Date Object],
-        //   }
-        // }
         setValue("calendar", ranges);
     }
+
     return (
         <div>
-            <Heading subtitle={subtitle} title={title} />
-            <Body>
-                <div className="flex justify-center">
+            <div>
+                <div className="">
                     <DateRange
+                        // className="w-full"
                         fixedHeight
                         ranges={[
                             watchRanges ? watchRanges.selection : selectionRange
                         ]}
+                        showDateDisplay={false}
                         onChange={handleSelect}
+                        date={new Date()}
+                        minDate={new Date()}
+                        direction="vertical"
                     />
                 </div>
-            </Body>
+            </div>
         </div>
     );
 };

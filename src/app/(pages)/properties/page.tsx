@@ -1,8 +1,6 @@
-import React, { Suspense } from "react";
+import React from "react";
 import prisma from "../../../../prisma/PrismaDB";
 import getCurrentUser from "@/app/(actions)/getCurrentUser";
-import Listing from "@/app/(components)/listing/Listing";
-import Heading from "@/app/(components)/heading/Heading";
 import PropertiesPage from "./PropertiesPage";
 
 const Properties = async () => {
@@ -14,9 +12,7 @@ const Properties = async () => {
 
     return (
         <>
-            <Suspense fallback={<>loading...</>}>
-                <PropertiesPage listings={listings} favListings={favListings} />
-            </Suspense>
+            <PropertiesPage listings={listings} favListings={favListings} />
         </>
     );
 };

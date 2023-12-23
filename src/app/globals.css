@@ -2,16 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+/* leaflet-container */
 .leaflet-container {
     height: 240px;
 }
+
+/* react-date-range */
 .rdrMonth {
     width: 100% !important;
 }
-.rdrMonthAndYearWrapper {
-    height: 30px;
-}
+
 .rdrCalendarWrapper {
-    width: 410px !important;
-    font-size: 11px !important;
+    width: 100% !important;
+    font-size: 16px !important ;
 }

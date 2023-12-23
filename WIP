@@ -4,6 +4,7 @@
 !! After project is completed.
 . 🔃 image skeleton 
 . 🔃 create not-found page.
+. 🔃 make some links and buttons disabled when api is fetching in background
 
 . ✅ can't tick heart when user is not logged it. ( rediret to login page )
 . ✅ when logout (should navigate to homepage. without a refresh)
@@ -14,3 +15,6 @@
 . ✅ when logged in (login via social auth) the route should redirect to callbackUrl route. if callbackUrl is present (done)
 . ✅ logging in from listing detail page will redirect to '/' (should redirect or refresh the current lisinng detail page)
 . ✅ show no item found message if no items are found
+. 🔃 create you have been logged out toast
+:: Remove the suspence from pages ::
+the main suspence is in layoutpage so you can remove it from page.tsx
