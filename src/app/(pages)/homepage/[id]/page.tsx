@@ -31,6 +31,8 @@ const page = async ({ params }: ParamsId) => {
     // favorite listing of current LoggedIn User
     const favListing = currentUser?.favoritesIds;
 
+    // get the current user Reservations
+
     return (
         <>
             <ListingDetail

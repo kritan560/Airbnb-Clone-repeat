@@ -1,8 +1,6 @@
-import Heading from "@/app/(components)/heading/Heading";
-import React from "react";
-import Listing from "@/app/(components)/listing/Listing";
-import { getFavorites } from "@/app/(actions)/getFavorites";
 import getCurrentUser from "@/app/(actions)/getCurrentUser";
+import { getFavorites } from "@/app/(actions)/getFavorites";
+import Listing from "@/app/(components)/listing/Listing";
 
 const Favorites = async () => {
     const listings = await getFavorites();
@@ -15,7 +13,7 @@ const Favorites = async () => {
                 listings={listings}
                 favorites={favListing}
                 title="Favorites"
-                headingLabel="Add Some Hearts"
+                noMatchFoundheadingLabel="Add Some Hearts"
                 subtitle="Some of the favorites place you have selected!!!"
             />
         </div>

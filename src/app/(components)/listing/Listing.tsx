@@ -1,31 +1,32 @@
 "use client";
 
+import getCurrentUser from "@/app/(actions)/getCurrentUser";
+import { FavoriteEnum } from "@/app/enumStore/userStateEnum";
+import DeleteConfirmStore from "@/app/store/deleteConfirmStore";
+import LoginStore from "@/app/store/loginStore";
 import { Listing as ListingType } from "@prisma/client";
 import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React, { Suspense } from "react";
+import React from "react";
+import toast from "react-hot-toast";
+import { FaRegHeart } from "react-icons/fa";
 import { GoHeartFill } from "react-icons/go";
 import Button from "../button/Button";
-import { FaRegHeart } from "react-icons/fa";
-import toast from "react-hot-toast";
-import { FavoriteEnum } from "@/app/enumStore/userStateEnum";
-import DeleteConfirmStore from "@/app/store/deleteConfirmStore";
-import getCurrentUser from "@/app/(actions)/getCurrentUser";
-import LoginStore from "@/app/store/loginStore";
 import Heading from "../heading/Heading";
 import NoMatchFound from "../noMatchFound/NoMatchFound";
-import Body from "../body/Body";
 
 type ListingProps = {
     listings: ListingType[];
-    buttonNeeded?: { buttonlabel: string };
+    buttonNeeded?: boolean;
+    buttonLabel?: string;
+    buttonAction?: (id: string) => void;
     favorites?: string[] | undefined;
     title?: string;
     subtitle?: string;
-    buttonLabel?: string;
-    headingLabel?: string;
-    buttonAction?: () => void;
+    noMatchFoundbuttonLabel?: string;
+    noMatchFoundheadingLabel?: string;
+    noMatchFoundButtonAction?: () => void;
 };
 
 const Listing: React.FC<ListingProps> = ({
@@ -34,9 +35,11 @@ const Listing: React.FC<ListingProps> = ({
     favorites,
     subtitle = "",
     title = "",
-    buttonLabel = "Goto Homepage",
-    headingLabel = "Visit the homepage to view listings",
-    buttonAction
+    noMatchFoundbuttonLabel = "",
+    noMatchFoundheadingLabel = "",
+    noMatchFoundButtonAction,
+    buttonAction = () => {},
+    buttonLabel
 }) => {
     const router = useRouter();
     const deleteConfirmStore = DeleteConfirmStore();
@@ -72,8 +75,6 @@ const Listing: React.FC<ListingProps> = ({
         deleteConfirmStore.onOpen();
     };
 
-    const primaryLabel = buttonNeeded ? buttonNeeded.buttonlabel : "";
-
     let bodyContent;
 
     if (listings.length <= 0) {
@@ -82,9 +83,9 @@ const Listing: React.FC<ListingProps> = ({
                 {listings.length <= 0 && (
                     <div className="mt-10">
                         <NoMatchFound
-                            buttonLabel={buttonLabel}
-                            headingLabel={headingLabel}
-                            buttonAction={buttonAction}
+                            buttonLabel={noMatchFoundbuttonLabel}
+                            headingLabel={noMatchFoundheadingLabel}
+                            buttonAction={noMatchFoundButtonAction}
                         />
                     </div>
                 )}
@@ -152,10 +153,12 @@ const Listing: React.FC<ListingProps> = ({
                             </div>
                             {buttonNeeded && (
                                 <Button
-                                    primaryLabel={primaryLabel}
-                                    primaryAction={() =>
-                                        primaryAction(listing.id)
+                                    primaryLabel={
+                                        buttonLabel || "give me a Name"
                                     }
+                                    primaryAction={() => {
+                                        buttonAction(listing.id);
+                                    }}
                                     btnSm={true}
                                     textSize="thin"
                                 />

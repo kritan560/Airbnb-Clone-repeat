@@ -9,12 +9,15 @@
 . ✅ can't tick heart when user is not logged it. ( rediret to login page )
 . ✅ when logout (should navigate to homepage. without a refresh)
 . ✅ you should be able to view the detail page without login.
-. ✅ should open login modal when detail page heart is clicked if user is not logged in
+. ✅ should open login modal when heart is clicked if user is not logged in
 . ✅ ['/trips', '/properties', '/reservations', '/favorites'] this route should be protected.
 . ✅ when protected route is hit login modal is not open . ensure login modal open
 . ✅ when logged in (login via social auth) the route should redirect to callbackUrl route. if callbackUrl is present (done)
 . ✅ logging in from listing detail page will redirect to '/' (should redirect or refresh the current lisinng detail page)
 . ✅ show no item found message if no items are found
 . 🔃 create you have been logged out toast
+. ✅ create a reservations. (you need to db push prisma)
+. 🔃 see if you can create dynamic types for axios post data.
+. 🔃 after creating reservations the dateRange will be unselectable.
 :: Remove the suspence from pages ::
 the main suspence is in layoutpage so you can remove it from page.tsx

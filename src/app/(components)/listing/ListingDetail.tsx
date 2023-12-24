@@ -1,30 +1,33 @@
 "use client";
 
-import { Listing, User } from "@prisma/client";
-import Image from "next/image";
-import React, { useMemo, useState } from "react";
-import Heading from "../heading/Heading";
-import Body from "../body/Body";
-import DateRangeModal from "../modal/7_dateRangeModal/DateRangeModal";
-import { categoryIcons } from "../modal/1categoriesModal/CategoryModal";
-import useCountries from "@/app/hooks/useCountries";
-import dynamic from "next/dynamic";
-import { GoHeartFill } from "react-icons/go";
-import { FaRegHeart } from "react-icons/fa";
-import axios from "axios";
-import { useRouter } from "next/navigation";
-import { FavoriteEnum } from "@/app/enumStore/userStateEnum";
-import toast from "react-hot-toast";
 import getCurrentUser from "@/app/(actions)/getCurrentUser";
+import { FavoriteEnum } from "@/app/enumStore/userStateEnum";
+import useCountries from "@/app/hooks/useCountries";
 import LoginStore from "@/app/store/loginStore";
-import Button from "../button/Button";
-import { RangeKeyDict } from "react-date-range";
+import { Listing, User } from "@prisma/client";
+import axios from "axios";
 import { differenceInCalendarDays } from "date-fns";
+import dynamic from "next/dynamic";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import React, { useMemo, useState } from "react";
+import { RangeKeyDict } from "react-date-range";
+import toast from "react-hot-toast";
+import { FaRegHeart } from "react-icons/fa";
+import { GoHeartFill } from "react-icons/go";
+import Body from "../body/Body";
+import Button from "../button/Button";
+import Heading from "../heading/Heading";
+import { categoryIcons } from "../modal/1categoriesModal/CategoryModal";
+import DateRangeModal from "../modal/7_dateRangeModal/DateRangeModal";
 
 type ListingDetailProps = {
     listing: Listing;
     currentUser: User;
     favorites?: string[] | undefined;
+    startDay?: Date;
+    endDay?: Date;
+    totalPrice?: number;
 };
 
 const ListingDetail: React.FC<ListingDetailProps> = ({
@@ -35,13 +38,7 @@ const ListingDetail: React.FC<ListingDetailProps> = ({
     const router = useRouter();
     const countries = useCountries();
     const loginStore = LoginStore();
-    const DateRangeModal = useMemo(
-        () =>
-            dynamic(() => import("../modal/7_dateRangeModal/DateRangeModal"), {
-                ssr: false
-            }),
-        [listing]
-    );
+
     // when you load the content dynamically the change in some component would refresh the whole component causing the refresh of the component. to stop the refresh of the component remove the dynamic comonent and use the regular import of the component
     // const Body = dynamic(() => import("../body/Body"), { ssr: false });
     // const Heading = dynamic(() => import("../heading/Heading"), { ssr: false });
@@ -50,7 +47,7 @@ const ListingDetail: React.FC<ListingDetailProps> = ({
     // used this because (maps often gets refresh when dates is changed)
     const Map = useMemo(
         () => dynamic(() => import("../modal/2mapModal/Map"), { ssr: false }),
-        []
+        [loginStore.isOpen]
     );
 
     const [totalPrice, setTotalPrice] = useState(0);
@@ -62,25 +59,6 @@ const ListingDetail: React.FC<ListingDetailProps> = ({
             key: "selection"
         }
     ]);
-
-    function handleChange({ selection }: RangeKeyDict) {
-        console.log(state);
-        console.log(selection);
-        setState([
-            {
-                startDate: selection.startDate as Date,
-                endDate: selection.endDate as Date,
-                key: selection.key as string
-            }
-        ]);
-        const startDate = selection.startDate
-            ? selection.startDate
-            : new Date();
-        const endDate = selection.endDate ? selection.endDate : new Date();
-        const diff = differenceInCalendarDays(endDate, startDate) + 1;
-        setTotalPrice(diff * listing.price);
-        setTotalDays(diff);
-    }
 
     // getting the listing icons
     const icon = categoryIcons.find(
@@ -114,6 +92,40 @@ const ListingDetail: React.FC<ListingDetailProps> = ({
                 }
             })
             .catch((err) => console.error(err));
+    }
+
+    async function handleReserveClick(listingId: string, userId: string) {
+        const currentLoggedInUser = await getCurrentUser();
+        const currentLoggedInUserId = currentLoggedInUser?.id;
+        const date = state.pop();
+        router.prefetch("/reservations");
+        axios
+            .post("/api/reservation", {
+                listingId,
+                currentLoggedInUserId,
+                startDate: date?.startDate,
+                endDate: date?.endDate,
+                totalPrice: totalPrice
+            })
+            .then((res) => console.log(res.data))
+            .catch((err) => console.error(err));
+    }
+
+    function handleChange({ selection }: RangeKeyDict) {
+        setState([
+            {
+                startDate: selection.startDate as Date,
+                endDate: selection.endDate as Date,
+                key: selection.key as string
+            }
+        ]);
+        const startDate = selection.startDate
+            ? selection.startDate
+            : new Date();
+        const endDate = selection.endDate ? selection.endDate : new Date();
+        const diff = differenceInCalendarDays(endDate, startDate) + 1;
+        setTotalPrice(diff * listing.price);
+        setTotalDays(diff);
     }
 
     return (
@@ -234,15 +246,8 @@ const ListingDetail: React.FC<ListingDetailProps> = ({
                             />
                         </div>
 
-                        {/* reserve button */}
-                        <Button
-                            primaryAction={() => {}}
-                            primaryLabel="Reserve"
-                            class={{ bgPrimaryStyle: "mx-4" }}
-                        />
-
                         {/* total Days*/}
-                        <div className="flex justify-between mx-4 mt-8 font-bold text-xl">
+                        <div className="flex justify-between mx-4 font-bold text-xl">
                             <p>Days</p>
                             <p>
                                 {totalDays || 1}{" "}
@@ -255,6 +260,15 @@ const ListingDetail: React.FC<ListingDetailProps> = ({
                             <p>Total</p>
                             <p>${totalPrice || listing.price}</p>
                         </div>
+
+                        {/* reserve button */}
+                        <Button
+                            primaryAction={() => {
+                                handleReserveClick(listing.id, currentUser.id);
+                            }}
+                            primaryLabel="Reserve"
+                            class={{ bgPrimaryStyle: "mx-4" }}
+                        />
                     </div>
                 </div>
             </Body>

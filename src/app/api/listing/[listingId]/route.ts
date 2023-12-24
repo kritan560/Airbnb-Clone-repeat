@@ -1,7 +1,7 @@
 import getCurrentUser from "@/app/(actions)/getCurrentUser";
+import { ListingEnum, UserState } from "@/app/enumStore/userStateEnum";
 import { NextResponse } from "next/server";
 import prisma from "../../../../../prisma/PrismaDB";
-import { ListingEnum, UserState } from "@/app/enumStore/userStateEnum";
 
 type ParamsType = {
     listingId: string;

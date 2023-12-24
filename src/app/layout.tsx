@@ -1,16 +1,15 @@
 import type { Metadata } from "next";
 import { Nunito } from "next/font/google";
-import "./globals.css";
-import Navbar from "./(components)/navbar/Navbar";
-import MainModal from "./(components)/modal/MainModal";
-import FilterModal from "./(components)/modal/FilterModal";
-import { Toaster } from "react-hot-toast";
-import LoginModal from "./(components)/modal/LoginModal";
-import SignupModal from "./(components)/modal/SignupModal";
-import getCurrentUser from "./(actions)/getCurrentUser";
-import { Providers } from "./provider";
-import DeleteConfirmationModal from "./(components)/modal/DeleteConfirmationModal";
 import { Suspense } from "react";
+import { Toaster } from "react-hot-toast";
+import getCurrentUser from "./(actions)/getCurrentUser";
+import FilterModal from "./(components)/modal/FilterModal";
+import LoginModal from "./(components)/modal/LoginModal";
+import MainModal from "./(components)/modal/MainModal";
+import SignupModal from "./(components)/modal/SignupModal";
+import Navbar from "./(components)/navbar/Navbar";
+import "./globals.css";
+import { Providers } from "./provider";
 
 const nunito = Nunito({ subsets: ["latin"] });
 
@@ -45,7 +44,6 @@ export default async function RootLayout({
                             <LoginModal />
                             <SignupModal />
                         </Suspense>
-                        <DeleteConfirmationModal />
                         <div className="px-24 py-6">{children}</div>
                     </div>
                 </Providers>

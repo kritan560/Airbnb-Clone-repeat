@@ -1,6 +1,5 @@
-import React from "react";
-import prisma from "../../../../prisma/PrismaDB";
 import getCurrentUser from "@/app/(actions)/getCurrentUser";
+import prisma from "../../../../prisma/PrismaDB";
 import PropertiesPage from "./PropertiesPage";
 
 const Properties = async () => {
