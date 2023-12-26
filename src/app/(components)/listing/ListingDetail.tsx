@@ -6,7 +6,7 @@ import useCountries from "@/app/hooks/useCountries";
 import LoginStore from "@/app/store/loginStore";
 import { Listing, User } from "@prisma/client";
 import axios from "axios";
-import { differenceInCalendarDays } from "date-fns";
+import { differenceInCalendarDays, eachDayOfInterval } from "date-fns";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -20,20 +20,24 @@ import Button from "../button/Button";
 import Heading from "../heading/Heading";
 import { categoryIcons } from "../modal/1categoriesModal/CategoryModal";
 import DateRangeModal from "../modal/7_dateRangeModal/DateRangeModal";
+import { Si1001Tracklists } from "react-icons/si";
 
 type ListingDetailProps = {
     listing: Listing;
     currentUser: User;
-    favorites?: string[] | undefined;
-    startDay?: Date;
-    endDay?: Date;
-    totalPrice?: number;
+    disableRanges: Date[];
+    totalprice: number;
+    totalDays: number;
+    favorites: string[] | undefined;
 };
 
 const ListingDetail: React.FC<ListingDetailProps> = ({
     listing,
     currentUser,
-    favorites
+    favorites,
+    disableRanges,
+    totalprice: TOTALPRICE,
+    totalDays: TOTALDAYS
 }) => {
     const router = useRouter();
     const countries = useCountries();
@@ -97,35 +101,43 @@ const ListingDetail: React.FC<ListingDetailProps> = ({
     async function handleReserveClick(listingId: string, userId: string) {
         const currentLoggedInUser = await getCurrentUser();
         const currentLoggedInUserId = currentLoggedInUser?.id;
-        const date = state.pop();
-        router.prefetch("/reservations");
+        const date = state[0];
+        console.log(date.startDate, "startDate");
+        console.log(date.endDate, "endDate");
         axios
             .post("/api/reservation", {
                 listingId,
                 currentLoggedInUserId,
                 startDate: date?.startDate,
                 endDate: date?.endDate,
-                totalPrice: totalPrice
+                totalPrice: totalPrice,
+                totalDays: totalDays
             })
-            .then((res) => console.log(res.data))
+            .then((res) => {
+                router.prefetch("/reservations");
+                console.log(res.data);
+                router.refresh();
+                setState([]);
+            })
             .catch((err) => console.error(err));
     }
 
     function handleChange({ selection }: RangeKeyDict) {
-        setState([
-            {
-                startDate: selection.startDate as Date,
-                endDate: selection.endDate as Date,
-                key: selection.key as string
-            }
-        ]);
         const startDate = selection.startDate
             ? selection.startDate
             : new Date();
         const endDate = selection.endDate ? selection.endDate : new Date();
+        setState([
+            {
+                startDate: startDate,
+                endDate: endDate,
+                key: selection.key as string
+            }
+        ]);
         const diff = differenceInCalendarDays(endDate, startDate) + 1;
         setTotalPrice(diff * listing.price);
         setTotalDays(diff);
+        console.log(diff);
     }
 
     return (
@@ -233,7 +245,7 @@ const ListingDetail: React.FC<ListingDetailProps> = ({
 
                     {/* the calender to display */}
                     <div className="w-[40%] flex flex-col gap-y-4 border-2 py-4 rounded-lg">
-                        {/* pernight */}
+                        {/* per night */}
                         <p className="font-bold text-xl px-4">
                             ${listing.price}{" "}
                             <span className="font-light text-base">Night</span>
@@ -243,22 +255,29 @@ const ListingDetail: React.FC<ListingDetailProps> = ({
                             <DateRangeModal
                                 handleChange={handleChange}
                                 state={state}
+                                disableDates={disableRanges}
                             />
                         </div>
 
                         {/* total Days*/}
                         <div className="flex justify-between mx-4 font-bold text-xl">
                             <p>Days</p>
-                            <p>
-                                {totalDays || 1}{" "}
-                                {totalDays > 1 ? "Days" : "Day"}
-                            </p>
+                            <div>
+                                <span>
+                                    {totalDays + TOTALDAYS < 1
+                                        ? 1
+                                        : totalDays + TOTALDAYS}
+                                </span>
+                                <span className="ml-1">
+                                    {totalDays + TOTALDAYS > 1 ? "Days" : "Day"}
+                                </span>
+                            </div>
                         </div>
 
                         {/* total cost */}
                         <div className="flex justify-between mx-4 font-bold text-xl">
                             <p>Total</p>
-                            <p>${totalPrice || listing.price}</p>
+                            <p>${totalPrice + TOTALPRICE || listing.price}</p>
                         </div>
 
                         {/* reserve button */}

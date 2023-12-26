@@ -1,9 +1,8 @@
-
 // import Body from "../../body/Body";
 // import Heading from "../../heading/Heading";
+import { DateRange, RangeKeyDict } from "react-date-range";
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
-import { DateRange, RangeKeyDict } from "react-date-range";
 
 type DateRangeModalProps = {
     handleChange: ({ selection }: RangeKeyDict) => void;
@@ -12,11 +11,13 @@ type DateRangeModalProps = {
         endDate: Date;
         key: string;
     }[];
+    disableDates?: Date[];
 };
 
 const DateRangeModal: React.FC<DateRangeModalProps> = ({
     handleChange,
-    state
+    state,
+    disableDates
 }) => {
     return (
         <div>
@@ -30,6 +31,7 @@ const DateRangeModal: React.FC<DateRangeModalProps> = ({
                         date={new Date()}
                         minDate={new Date()}
                         direction="vertical"
+                        disabledDates={disableDates}
                     />
                 </div>
             </div>

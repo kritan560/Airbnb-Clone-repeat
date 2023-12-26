@@ -20,7 +20,7 @@ const Reservations = async () => {
     const currentUserReservationListing = await prisma.listing.findMany({
         where: { id: { in: currentUserReservationListingId } }
     });
-    // console.log(currentUserReservationListing);
+    console.log(currentUserReservationListing);
 
     return <ReservationPage listings={currentUserReservationListing} />;
 };

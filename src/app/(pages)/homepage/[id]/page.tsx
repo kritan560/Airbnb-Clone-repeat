@@ -1,7 +1,7 @@
+import getCurrentUser from "@/app/(actions)/getCurrentUser";
 import ListingDetail from "@/app/(components)/listing/ListingDetail";
 import prisma from "../../../../../prisma/PrismaDB";
-import getCurrentUser from "@/app/(actions)/getCurrentUser";
-import dynamic from "next/dynamic";
+import { eachDayOfInterval } from "date-fns";
 
 type ParamsId = {
     params: { id: string };
@@ -25,8 +25,39 @@ const page = async ({ params }: ParamsId) => {
     });
     if (!ListingUser) return null;
 
-    // get the current LoggedIn User
+    // get the current LoggedIn User and current reservation for listing
     const currentUser = await getCurrentUser();
+    const currentUserReservation = await prisma.reservation.findMany({
+        where: { userId: currentUser?.id, listingId: list.id }
+    });
+
+    // total Price Calculation
+    const totalPriceArray: number[] = [];
+    currentUserReservation.forEach((reservation) =>
+        totalPriceArray.push(reservation.totalPrice)
+    );
+    let totalPrice = 0;
+    totalPriceArray.forEach((tp) => (totalPrice += tp));
+    console.log(totalPrice);
+
+    // total Days Calculation
+    const totalDaysArray: number[] = [];
+    currentUserReservation.forEach((reservation) =>
+        totalDaysArray.push(reservation.totalDays)
+    );
+    let totalDays = 0;
+    totalDaysArray.forEach((td) => (totalDays += td));
+    console.log(totalDays);
+
+    // calculating the disabled dates
+    const intervals: Date[] = [];
+    currentUserReservation.forEach((reservation) => {
+        const interval = eachDayOfInterval({
+            start: reservation.startDate,
+            end: reservation.endDate
+        });
+        interval.forEach((int) => intervals.push(int));
+    });
 
     // favorite listing of current LoggedIn User
     const favListing = currentUser?.favoritesIds;
@@ -39,6 +70,9 @@ const page = async ({ params }: ParamsId) => {
                 listing={list}
                 currentUser={ListingUser}
                 favorites={favListing}
+                disableRanges={intervals}
+                totalprice={totalPrice}
+                totalDays={totalDays}
             />
         </>
     );

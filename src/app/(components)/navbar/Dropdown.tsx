@@ -1,16 +1,17 @@
 import DropdownStore from "@/app/store/dropdownStore";
-import ModalStore from "@/app/store/modalStore";
 import LoginStore from "@/app/store/loginStore";
+import ModalStore from "@/app/store/modalStore";
+import ScrollBarStore from "@/app/store/scrollBarStore";
 import SignUpStore from "@/app/store/signupStore";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { SlPlane } from "react-icons/sl";
-import { MdFavorite } from "react-icons/md";
+import { AiOutlinePropertySafety } from "react-icons/ai";
 import { FaHome } from "react-icons/fa";
-import { TbReservedLine } from "react-icons/tb";
 import { IoIosLogIn, IoIosLogOut } from "react-icons/io";
 import { IoPersonAddOutline } from "react-icons/io5";
-import { AiOutlinePropertySafety } from "react-icons/ai";
+import { MdFavorite } from "react-icons/md";
+import { SlPlane } from "react-icons/sl";
+import { TbReservedLine } from "react-icons/tb";
 
 type DropdownProps = {
     className?: string;
@@ -22,6 +23,7 @@ const Style = {
 };
 
 const Dropdown: React.FC<DropdownProps> = ({ className, currentUser }) => {
+    const scrollBarStore = ScrollBarStore()
     const userLoggedIn = [
         {
             logo: (
@@ -123,6 +125,7 @@ const Dropdown: React.FC<DropdownProps> = ({ className, currentUser }) => {
                 callbackUrl: "/"
             });
             router.push(logoutData.url);
+            scrollBarStore.setScrollBar(undefined)
             return router.refresh();
         }
         if (dropdown === "My Trips") {

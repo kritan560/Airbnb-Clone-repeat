@@ -48,6 +48,7 @@ const ReservationPage: React.FC<ReservationPageTypeProps> = ({ listings }) => {
                 title="Reservation"
                 subtitle="Your reservations are here"
             />
+            
             <DeleteConfirmationModal
                 buttonPrimaryLabel="Delete"
                 buttonPrimaryAction={handleButtonPrimaryAction}
