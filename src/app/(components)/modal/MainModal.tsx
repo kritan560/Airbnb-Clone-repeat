@@ -60,7 +60,8 @@ const MainModal = () => {
                     router.refresh();
                 })
                 .catch((err) => {
-                    console.error(err), toast.error("something went wrong");
+                    console.error("something went wrong"),
+                        toast.error("something went wrong");
                 })
                 .finally(() => {
                     modalStore.onClose();

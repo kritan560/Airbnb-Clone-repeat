@@ -59,7 +59,7 @@ const ListingCard: React.FC<ListingCardType> = ({
                     toast("favorite removed", { icon: "😔" });
                 }
             })
-            .catch((err) => console.error(err));
+            .catch((err) => console.error("something went wrong"));
     }
 
     function uniqueItem(listing: string) {
@@ -70,11 +70,11 @@ const ListingCard: React.FC<ListingCardType> = ({
         axios
             .delete(`/api/reservation/${reservationId}`)
             .then((res) => {
-                console.log(res);
+                // console.log(res);
                 router.refresh();
                 toast.success(`reservation of ${totalDays} cancelled`);
             })
-            .catch((err) => console.error(err));
+            .catch((err) => console.error("something went wrong"));
     }
 
     return (

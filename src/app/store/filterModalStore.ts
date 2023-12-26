@@ -15,6 +15,8 @@ type FilterModalType = {
     setGuest: (guest: number | undefined) => void;
     setLocation: (location: string | undefined) => void;
     setDays: (days: number | undefined) => void;
+
+    resetModal: () => void;
 };
 
 export enum FilterModalEnum {
@@ -55,7 +57,9 @@ const FilterModalStore = create<FilterModalType>((set) => ({
     location: undefined,
     setDays: (value) => set({ days: value }),
     setLocation: (value) => set({ location: value }),
-    setGuest: (value) => set({ guest: value })
+    setGuest: (value) => set({ guest: value }),
+
+    resetModal: () => set({ currentModal: FilterModalEnum.MAP })
 }));
 
 export default FilterModalStore;

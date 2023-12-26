@@ -95,7 +95,7 @@ const ListingDetail: React.FC<ListingDetailProps> = ({
                     toast("favorite removed", { icon: "😔" });
                 }
             })
-            .catch((err) => console.error(err));
+            .catch((err) => console.error("something went wrong"));
     }
 
     async function handleReserveClick(listingId: string, userId: string) {
@@ -115,7 +115,7 @@ const ListingDetail: React.FC<ListingDetailProps> = ({
                 totalDays: totalDays
             })
             .then((res) => {
-                console.log(res.data);
+                // console.log(res.data);
                 setState([]);
                 toast.success(
                     `successfully reserve ${listing.map.slice(0, 14)}`
@@ -124,7 +124,7 @@ const ListingDetail: React.FC<ListingDetailProps> = ({
                 router.push("/reservations");
                 router.refresh();
             })
-            .catch((err) => console.error(err));
+            .catch((err) => console.error("something went wrong"));
     }
 
     function handleChange({ selection }: RangeKeyDict) {
@@ -186,7 +186,7 @@ const ListingDetail: React.FC<ListingDetailProps> = ({
                         <div className="flex flex-col gap-y-9">
                             <div className="flex flex-col gap-y-2">
                                 <div className="flex gap-x-2 font-bold items-center text-lg">
-                                    <p className="text-xl">Created By</p>
+                                    <p className="text-xl">Faciliated By</p>
                                     <div className="flex gap-x-2 items-center">
                                         <p className="">{currentUser.name}</p>
                                         <Image

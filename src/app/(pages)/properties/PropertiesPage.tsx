@@ -37,12 +37,11 @@ const PropertiesPage: React.FC<PropertiesPageProps> = ({
         axios
             .delete(`/api/listing/${deleteConfirmStore.id}`)
             .then((res) => {
-                console.log(res);
                 router.refresh();
                 deleteConfirmStore.onClose();
             })
             .catch((err) => {
-                console.error(err);
+                console.error("something went wrong");
             });
     }
 

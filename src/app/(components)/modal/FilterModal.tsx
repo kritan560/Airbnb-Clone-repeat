@@ -15,9 +15,11 @@ import Heading from "../heading/Heading";
 import { useState } from "react";
 import { RangeKeyDict } from "react-date-range";
 import Body from "../body/Body";
+import { useRouter } from "next/navigation";
 
 const FilterModal = () => {
     const filterModalStore = FilterModalStore();
+    const router = useRouter();
     const { setValue, watch, handleSubmit, reset } = useForm<FieldValues>({
         mode: "all",
         defaultValues: {
@@ -27,25 +29,10 @@ const FilterModal = () => {
         }
     });
 
-    function submit(data: FieldValues) {
-        if (filterModalStore.currentModal !== filterModalEnumLength) {
-            return filterModalStore.nextModal();
-        }
-        filterModalStore.setGuest(data.guests);
-        filterModalStore.setLocation(data.maps ? data.maps.value : undefined);
-        const days = differenceInCalendarDays(
-            data.calendar.selection.endDate,
-            data.calendar.selection.startDate
-        );
-        filterModalStore.setDays(days);
-        filterModalStore.onClose();
-        reset();
-    }
-
     const [state, setState] = useState([
         {
             startDate: new Date(),
-            endDate: new Date(),
+            endDate: null || new Date(),
             key: "selection"
         }
     ]);
@@ -60,7 +47,41 @@ const FilterModal = () => {
         ]);
     }
 
+    function submit(data: FieldValues) {
+        if (filterModalStore.currentModal !== filterModalEnumLength) {
+            return filterModalStore.nextModal();
+        }
+        const days = differenceInCalendarDays(
+            state[0].endDate,
+            state[0].startDate
+        );
+
+        filterModalStore.setGuest(data.guests);
+        filterModalStore.setLocation(data.maps ? data.maps.value : undefined);
+        filterModalStore.setDays(days + 1);
+        filterModalStore.onClose();
+
+        // using numeric days actually should use calendar days
+        if (state[0].endDate && data.maps && data.guests) {
+            router.push(
+                `/?days=${days + 1}&location=${data.maps.value}&guest=${
+                    data.guests
+                }`
+            );
+            filterModalStore.resetModal();
+            reset();
+            setState([
+                {
+                    startDate: null || new Date(),
+                    endDate: null || new Date(),
+                    key: "selection"
+                }
+            ]);
+        }
+    }
+
     let bodyContent;
+
     if (filterModalStore.currentModal === FilterModalEnum.MAP) {
         bodyContent = (
             <MapModal
@@ -119,7 +140,7 @@ const FilterModal = () => {
                         primaryLabel={
                             filterModalStore.currentModal ==
                             filterModalEnumLength
-                                ? "Create"
+                                ? "Search"
                                 : "Next"
                         }
                         secondaryLabel="Previous"

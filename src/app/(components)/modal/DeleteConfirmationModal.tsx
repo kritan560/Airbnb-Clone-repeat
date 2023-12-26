@@ -35,12 +35,12 @@ const DeleteConfirmationModal: React.FC<DeleteConfirmationModalType> = ({
         axios
             .delete(`api/listing/${deleteConfirmStore.id}`)
             .then((res) => {
-                console.log(res.data);
+                // console.log(res.data);
                 router.refresh();
                 toast("listing deleted", { icon: "😿" });
                 deleteConfirmStore.onClose();
             })
-            .catch((err) => console.error(err));
+            .catch((err) => console.error("something went wrong"));
     }
 
     // this is not passed via props because this is static the value won't need to be changed.

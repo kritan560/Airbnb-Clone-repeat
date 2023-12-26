@@ -72,7 +72,7 @@ const SignupModal = () => {
                     toast.error("User already exists in DB");
                 }
             })
-            .catch((err) => console.error(err))
+            .catch((err) => console.error("something went wrong"))
             .finally(() => {});
     }
 

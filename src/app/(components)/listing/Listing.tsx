@@ -63,7 +63,7 @@ const Listing: React.FC<ListingProps> = ({
                     toast("favorite removed", { icon: "😔" });
                 }
             })
-            .catch((err) => console.error(err));
+            .catch((err) => console.error("something went wrong"));
     }
 
     function uniqueItem(listing: string) {

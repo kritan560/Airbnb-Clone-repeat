@@ -28,7 +28,9 @@ const Reservations = async () => {
                 </>
             );
         } else {
-            <Heading title="Reservation" subtitle="Your reservation here" />;
+            return (
+                <Heading title="Reservation" subtitle="Your reservation here" />
+            );
         }
     }
 
