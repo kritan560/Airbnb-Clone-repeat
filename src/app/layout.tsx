@@ -9,7 +9,6 @@ import MainModal from "./(components)/modal/MainModal";
 import SignupModal from "./(components)/modal/SignupModal";
 import Navbar from "./(components)/navbar/Navbar";
 import "./globals.css";
-import { Providers } from "./provider";
 
 const nunito = Nunito({ subsets: ["latin"] });
 
@@ -32,21 +31,19 @@ export default async function RootLayout({
 }) {
     const currentUser = await getCurrentUser();
     return (
-        <html lang="en" suppressHydrationWarning>
+        <html lang="en">
             <body className={`${nunito.className} bg-gray-700`}>
-                <Providers>
-                    <div className="rounded-lg bg-white fixed inset-0 overflow-y-auto scrollbar-thumb-red-600 scrollbar-thin scrollbar-thumb-rounded-full">
-                        <Toaster />
-                        <Navbar currentUser={currentUser} />
-                        <MainModal />
-                        <FilterModal />
-                        <Suspense>
-                            <LoginModal />
-                            <SignupModal />
-                        </Suspense>
-                        <div className="px-24 py-6">{children}</div>
-                    </div>
-                </Providers>
+                <div className="rounded-lg bg-white fixed inset-0 overflow-y-auto scrollbar-thumb-red-600 scrollbar-thin scrollbar-thumb-rounded-full">
+                    <Toaster />
+                    <Navbar currentUser={currentUser} />
+                    <MainModal />
+                    <FilterModal />
+                    <Suspense>
+                        <LoginModal />
+                        <SignupModal />
+                    </Suspense>
+                    <div className="px-24 py-6">{children}</div>
+                </div>
             </body>
         </html>
     );

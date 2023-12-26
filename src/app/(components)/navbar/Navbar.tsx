@@ -1,17 +1,16 @@
 "use client";
 
-import Image from "next/image";
-import { IoSearchCircleSharp } from "react-icons/io5";
-import { GiHamburgerMenu } from "react-icons/gi";
-import ModalStore from "@/app/store/modalStore";
-import Dropdown from "./Dropdown";
 import DropdownStore from "@/app/store/dropdownStore";
-import { useEffect, useRef } from "react";
 import FilterModalStore from "@/app/store/filterModalStore";
-import { useRouter } from "next/navigation";
+import ModalStore from "@/app/store/modalStore";
 import ScrollBarStore from "@/app/store/scrollBarStore";
 import SignUpStore from "@/app/store/signupStore";
-import ThemeSwitch from "../theme/ThemeSwitch";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useEffect, useRef } from "react";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { IoSearchCircleSharp } from "react-icons/io5";
+import Dropdown from "./Dropdown";
 
 type NavbarProps = {
     currentUser?: any;
