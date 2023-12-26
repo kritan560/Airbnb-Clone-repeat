@@ -31,7 +31,7 @@ const NoMatchFound: React.FC<NoMatchFoundProps> = ({
 
     return (
         <div className="flex justify-center items-center flex-col gap-y-4">
-            <h1 className="text-3xl font-bold">No Match Found</h1>
+            <h1 className="text-3xl font-bold">Opps!!!</h1>
             <h4 className="text-lg font-semibold">{headingLabel}</h4>
             <button
                 className="py-2 px-4 border-2 rounded-md border-gray-600 hover:border-gray-600/50"

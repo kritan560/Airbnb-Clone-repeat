@@ -7,16 +7,14 @@ type ParamsType = {
 };
 
 export async function DELETE(request: Request, { params }: ParamsType) {
-    // delete those reservation whose listing id is listingId
-    const currentLoggedInUser = await getCurrentUser();
-
-    const reservation = await prisma.reservation.deleteMany({
+    const reservation = await prisma.reservation.delete({
         where: {
-            listingId: params.reservationId,
-            userId: currentLoggedInUser?.id
+            id: params.reservationId,
         }
     });
+
     console.log(params.reservationId);
     console.log(reservation);
-    return NextResponse.json("hello");
+
+    return NextResponse.json("reservation deleted");
 }

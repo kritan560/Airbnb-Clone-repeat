@@ -48,7 +48,7 @@ const Map: React.FC<MapProps> = ({ position }) => {
     );
 
     return (
-        <div>
+        <div className="sticky z-0">
             {map ? <DisplayPosition map={map} /> : null}
             {displayMap}
         </div>

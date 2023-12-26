@@ -20,6 +20,11 @@
 . ✅ after creating reservations the dateRange will be unselectable.
 . ✅ when user1 reserveation deleted user2 reservation will also be deleted !!fix this.
 . ✅ a user perviously reserved 2 days and want to add 2 days (make this happen)
-. 🔃 create you have been logged out toast
-. 🔃 when days in calender is selected show the totalDays and totalPrice
-.
+
+
+. ✅ when clicked reserve make a toast message
+. ✅ create you have been logged out toast
+. ✅ open login screen if user not logged in and click reserve
+. ✅ fixed the map overlay on LoginModal. (using static and z-index)
+. ✅ when days in calender is selected show the totalDays and totalPrice if already reserved price will add
+. 🔃 you are not logged in and you are on detail page when clicked reserved and logged in the scroll pos changes.

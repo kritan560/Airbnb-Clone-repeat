@@ -17,7 +17,7 @@ export async function DELETE(
     }
     const userId = user.id;
     const listingId = params.listingId;
-    const deletedListing = await prisma.listing.deleteMany({
+    const deletedListing = await prisma.listing.delete({
         where: {
             id: listingId,
             userId: userId

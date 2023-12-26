@@ -51,8 +51,6 @@ const FilterModal = () => {
     ]);
 
     function handleChange({ selection }: RangeKeyDict) {
-        console.log(state);
-        console.log(selection);
         setState([
             {
                 startDate: selection.startDate as Date,

@@ -38,7 +38,6 @@ const page = async ({ params }: ParamsId) => {
     );
     let totalPrice = 0;
     totalPriceArray.forEach((tp) => (totalPrice += tp));
-    console.log(totalPrice);
 
     // total Days Calculation
     const totalDaysArray: number[] = [];
@@ -47,7 +46,6 @@ const page = async ({ params }: ParamsId) => {
     );
     let totalDays = 0;
     totalDaysArray.forEach((td) => (totalDays += td));
-    console.log(totalDays);
 
     // calculating the disabled dates
     const intervals: Date[] = [];

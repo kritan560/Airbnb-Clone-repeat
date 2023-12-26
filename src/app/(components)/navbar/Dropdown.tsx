@@ -5,6 +5,7 @@ import ScrollBarStore from "@/app/store/scrollBarStore";
 import SignUpStore from "@/app/store/signupStore";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 import { AiOutlinePropertySafety } from "react-icons/ai";
 import { FaHome } from "react-icons/fa";
 import { IoIosLogIn, IoIosLogOut } from "react-icons/io";
@@ -23,7 +24,8 @@ const Style = {
 };
 
 const Dropdown: React.FC<DropdownProps> = ({ className, currentUser }) => {
-    const scrollBarStore = ScrollBarStore()
+    const scrollBarStore = ScrollBarStore();
+
     const userLoggedIn = [
         {
             logo: (
@@ -98,6 +100,7 @@ const Dropdown: React.FC<DropdownProps> = ({ className, currentUser }) => {
             name: "SignUp"
         }
     ];
+
     const modalStore = ModalStore();
     const loginStore = LoginStore();
     const signupStore = SignUpStore();
@@ -125,7 +128,8 @@ const Dropdown: React.FC<DropdownProps> = ({ className, currentUser }) => {
                 callbackUrl: "/"
             });
             router.push(logoutData.url);
-            scrollBarStore.setScrollBar(undefined)
+            scrollBarStore.setScrollBar(undefined);
+            toast.success("Logout Successfully");
             return router.refresh();
         }
         if (dropdown === "My Trips") {

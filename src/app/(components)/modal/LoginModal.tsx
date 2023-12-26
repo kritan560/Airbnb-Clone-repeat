@@ -108,7 +108,7 @@ const LoginModal = () => {
     }
 
     bodyContent = (
-        <>
+        <div className="">
             <Heading title="Welcome Back!" subtitle="login to your account" />
             <Body className="flex gap-y-4 flex-col">
                 <Input
@@ -162,7 +162,7 @@ const LoginModal = () => {
                     </span>
                 </div>
             </Body>
-        </>
+        </div>
     );
 
     return (

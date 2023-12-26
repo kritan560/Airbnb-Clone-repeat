@@ -80,7 +80,7 @@ const Listing: React.FC<ListingProps> = ({
     if (listings.length <= 0) {
         return (bodyContent = (
             <div className="">
-                {listings.length <= 0 && (
+                {/* {listings.length <= 0 && (
                     <div className="mt-10">
                         <NoMatchFound
                             buttonLabel={noMatchFoundbuttonLabel}
@@ -88,7 +88,7 @@ const Listing: React.FC<ListingProps> = ({
                             buttonAction={noMatchFoundButtonAction}
                         />
                     </div>
-                )}
+                )} */}
             </div>
         ));
     } else
@@ -137,7 +137,7 @@ const Listing: React.FC<ListingProps> = ({
                                 className=""
                             >
                                 <div className="font-semibold">
-                                    {listing.map}
+                                    {listing.map.slice(0,25)}
                                 </div>
                                 <div className="font-light">
                                     {listing.category}

@@ -16,7 +16,7 @@ type DeleteConfirmationModalType = {
     subtitle: string;
     buttonPrimaryAction: () => void;
     buttonPrimaryLabel: string;
-    buttonPrimaryIcon: IconType;
+    buttonPrimaryIcon?: IconType;
 };
 
 const DeleteConfirmationModal: React.FC<DeleteConfirmationModalType> = ({

@@ -100,10 +100,11 @@ const ListingDetail: React.FC<ListingDetailProps> = ({
 
     async function handleReserveClick(listingId: string, userId: string) {
         const currentLoggedInUser = await getCurrentUser();
+        if (!currentLoggedInUser) {
+            return loginStore.onOpen();
+        }
         const currentLoggedInUserId = currentLoggedInUser?.id;
         const date = state[0];
-        console.log(date.startDate, "startDate");
-        console.log(date.endDate, "endDate");
         axios
             .post("/api/reservation", {
                 listingId,
@@ -114,10 +115,14 @@ const ListingDetail: React.FC<ListingDetailProps> = ({
                 totalDays: totalDays
             })
             .then((res) => {
-                router.prefetch("/reservations");
                 console.log(res.data);
-                router.refresh();
                 setState([]);
+                toast.success(
+                    `successfully reserve ${listing.map.slice(0, 14)}`
+                );
+                router.prefetch("/reservations");
+                router.push("/reservations");
+                router.refresh();
             })
             .catch((err) => console.error(err));
     }
@@ -137,7 +142,6 @@ const ListingDetail: React.FC<ListingDetailProps> = ({
         const diff = differenceInCalendarDays(endDate, startDate) + 1;
         setTotalPrice(diff * listing.price);
         setTotalDays(diff);
-        console.log(diff);
     }
 
     return (
