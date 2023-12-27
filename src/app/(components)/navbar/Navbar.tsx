@@ -152,7 +152,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
                         {/* <ThemeSwitch /> */}
                         <Dropdown
                             currentUser={currentUser}
-                            className="absolute top-12 right-0 md:-left-8 md:top-10 hover:shadow-md"
+                            className="absolute top-11 -right-[1px]  hover:shadow-md"
                         />
                     </div>
                 </div>

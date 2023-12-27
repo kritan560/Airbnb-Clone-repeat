@@ -167,7 +167,7 @@ const Dropdown: React.FC<DropdownProps> = ({ className, currentUser }) => {
             `}
         >
             <div
-                className={`flex bg-white border-b border-l border-r shadow-sm rounded-md flex-col whitespace-nowrap`}
+                className={`flex bg-slate-50 border-r border-l shadow-sm rounded-md flex-col whitespace-nowrap`}
             >
                 {dropDowns.map((dropdown, index) => (
                     <div
