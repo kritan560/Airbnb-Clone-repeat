@@ -33,7 +33,7 @@ export default async function RootLayout({
     return (
         <html lang="en">
             <body className={`${nunito.className} bg-gray-700`}>
-                <div className="rounded-lg bg-white fixed inset-0 overflow-y-auto scrollbar-thumb-red-600 scrollbar-thin scrollbar-thumb-rounded-full">
+                <div className="rounded-xl bg-white fixed inset-0 overflow-y-auto scrollbar-thumb-red-600 scrollbar-thin scrollbar-thumb-rounded-full select-none">
                     <Toaster />
                     <Navbar currentUser={currentUser} />
                     <MainModal />
@@ -42,7 +42,9 @@ export default async function RootLayout({
                         <LoginModal />
                         <SignupModal />
                     </Suspense>
-                    <div className="pl-4 pr-2 md:px-14 lg:px-24 py-6">{children}</div>
+                    <div className="pl-4 pr-2 md:px-14 lg:px-24 py-6">
+                        {children}
+                    </div>
                 </div>
             </body>
         </html>

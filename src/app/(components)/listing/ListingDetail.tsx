@@ -98,7 +98,10 @@ const ListingDetail: React.FC<ListingDetailProps> = ({
             .catch((err) => console.error("something went wrong"));
     }
 
+    const [wating, setWating] = useState(false);
+
     async function handleReserveClick(listingId: string, userId: string) {
+        setWating(true);
         const currentLoggedInUser = await getCurrentUser();
         if (!currentLoggedInUser) {
             return loginStore.onOpen();
@@ -123,6 +126,7 @@ const ListingDetail: React.FC<ListingDetailProps> = ({
                 router.prefetch("/reservations");
                 router.push("/reservations");
                 router.refresh();
+                setWating(false);
             })
             .catch((err) => console.error("something went wrong"));
     }
@@ -287,10 +291,18 @@ const ListingDetail: React.FC<ListingDetailProps> = ({
                         {/* reserve button */}
                         <Button
                             primaryAction={() => {
-                                handleReserveClick(listing.id, currentUser.id);
+                                if (!wating)
+                                    handleReserveClick(
+                                        listing.id,
+                                        currentUser.id
+                                    );
                             }}
                             primaryLabel="Reserve"
-                            class={{ bgPrimaryStyle: "mx-4" }}
+                            class={{
+                                bgPrimaryStyle: `mx-4 ${
+                                    wating && "cursor-not-allowed"
+                                }`
+                            }}
                         />
                     </div>
                 </div>

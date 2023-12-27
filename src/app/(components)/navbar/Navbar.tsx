@@ -125,7 +125,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
                 {/* hamburger and airbnb logo */}
                 <div className="flex gap-x-1 lg:gap-x-6 items-center">
                     <p
-                        className="hover:cursor-pointer text-slate-600 text-sm font-semibold py-3 transition px-4 rounded-full hover:bg-slate-300 active:bg-slate-400 hidden sm:hidden"
+                        className="hover:cursor-pointer text-slate-600 text-sm font-semibold py-3 transition px-4 rounded-full hover:bg-slate-300 active:bg-slate-400 hidden lg:block"
                         onClick={handleModalOpen}
                     >
                         Airbnb Your Home
@@ -133,7 +133,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
 
                     {/* hamburger menu */}
                     <div
-                        className="flex gap-x-2 items-center border rounded-full px-2 py-1 relative hover:cursor-pointer select-none hover:shadow-md hover:text-slate-700 text-slate-800 active:bg-slate-50 active:shadow-lg transition"
+                        className="flex gap-x-2 items-center border-[2px] rounded-full px-2 py-2 relative hover:cursor-pointer select-none hover:shadow-md hover:text-slate-700 text-slate-800 active:bg-slate-50 active:shadow-lg transition active:border-slate-400"
                         onClick={handleDropDownToggle}
                         ref={dropDownToggleRef}
                     >
@@ -152,7 +152,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
                         {/* <ThemeSwitch /> */}
                         <Dropdown
                             currentUser={currentUser}
-                            className="absolute top-11 -right-[1px]  hover:shadow-md"
+                            className="absolute top-12 -right-[1px] md:-right-10  hover:shadow-md"
                         />
                     </div>
                 </div>

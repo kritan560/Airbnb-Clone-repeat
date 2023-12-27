@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+body,
+:root {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
 /* leaflet-container */
 .leaflet-container {
     height: 240px;
