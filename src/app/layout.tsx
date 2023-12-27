@@ -42,7 +42,7 @@ export default async function RootLayout({
                         <LoginModal />
                         <SignupModal />
                     </Suspense>
-                    <div className="px-24 py-6">{children}</div>
+                    <div className="pl-4 pr-2 md:px-14 lg:px-24 py-6">{children}</div>
                 </div>
             </body>
         </html>

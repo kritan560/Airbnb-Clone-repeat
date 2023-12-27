@@ -76,7 +76,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
 
     return (
         <>
-            <div className="flex justify-between items-center py-4 border-b px-20 dark:bg-blue-400">
+            <div className="flex justify-between items-center py-4 border-b px-4 md:px-14 lg:px-24 min-w-[350px]">
                 {/* logo */}
                 <div className="hover:cursor-pointer" onClick={handleLogoClick}>
                     <Image
@@ -90,17 +90,25 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
 
                 {/* filter content */}
                 <div
-                    className="flex items-center gap-x-3 border rounded-full pl-4 pr-1 py-[2px] hover:cursor-pointer hover:shadow-md shadow-sm text-sm font-semibold text-slate-600 transition"
+                    className="flex items-center gap-x-3 border rounded-full pl-4 pr-1 py-4 sm:py-[2px] hover:cursor-pointer hover:shadow-md shadow-sm text-sm font-semibold text-slate-600 transition select-none"
                     onClick={handleFilterModal}
                 >
-                    <span>{location ? location : "AnyWhere"}</span>
-                    <span>|</span>
-                    <div>
+                    <span className="mr-3">
+                        {location ? location : "AnyWhere"}
+                    </span>
+
+                    <span className="hidden sm:flex">|</span>
+
+                    <div className="hidden sm:flex">
                         <span className={`${days && "mr-1"}`}>{days}</span>
-                        <span>{days ? "Days" : "Any Week"}</span>
+                        <span className="mr-3 sm:mr-0">
+                            {days ? "Days" : "Any Week"}
+                        </span>
                     </div>
-                    <span>|</span>
-                    <div className="flex gap-x-1 items-center">
+
+                    <span className="hidden sm:flex">|</span>
+
+                    <div className=" gap-x-1 items-center hidden sm:flex">
                         <div>
                             <span className={`${guest && "mr-1"}`}>
                                 {guest}
@@ -115,9 +123,9 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
                 </div>
 
                 {/* hamburger and airbnb logo */}
-                <div className="flex gap-x-6 items-center">
+                <div className="flex gap-x-1 lg:gap-x-6 items-center">
                     <p
-                        className="hover:cursor-pointer text-slate-600 text-sm font-semibold py-3 transition px-4 rounded-full hover:bg-slate-300 active:bg-slate-400"
+                        className="hover:cursor-pointer text-slate-600 text-sm font-semibold py-3 transition px-4 rounded-full hover:bg-slate-300 active:bg-slate-400 hidden sm:hidden"
                         onClick={handleModalOpen}
                     >
                         Airbnb Your Home
@@ -129,7 +137,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
                         onClick={handleDropDownToggle}
                         ref={dropDownToggleRef}
                     >
-                        <GiHamburgerMenu className="" />
+                        <GiHamburgerMenu className="hidden lg:block" />
                         <Image
                             src={
                                 currentUser?.image
@@ -139,12 +147,12 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
                             width={30}
                             height={30}
                             alt="placeholder"
-                            className="rounded-full shadow border border-gray-600"
+                            className="rounded-full shadow border border-gray-600 select-none"
                         />
                         {/* <ThemeSwitch /> */}
                         <Dropdown
                             currentUser={currentUser}
-                            className="absolute top-10 -left-8 hover:shadow-md"
+                            className="absolute top-12 right-0 md:-left-8 md:top-10 hover:shadow-md"
                         />
                     </div>
                 </div>

@@ -181,8 +181,8 @@ const ListingDetail: React.FC<ListingDetailProps> = ({
                         />
                     </div>
                 </div>
-                <div className="flex gap-x-9 py-8">
-                    <div className="w-[60%]">
+                <div className="flex flex-col items-center lg:flex-row gap-y-3 gap-x-9 py-8">
+                    <div className="w-[95%] lg:w-[60%]">
                         <div className="flex flex-col gap-y-9">
                             <div className="flex flex-col gap-y-2">
                                 <div className="flex gap-x-2 font-bold items-center text-lg">
@@ -241,14 +241,14 @@ const ListingDetail: React.FC<ListingDetailProps> = ({
                             <hr />
 
                             {/* maps */}
-                            <div>
+                            <div className="">
                                 <Map position={position.latLng} />
                             </div>
                         </div>
                     </div>
 
                     {/* the calender to display */}
-                    <div className="w-[40%] flex flex-col gap-y-4 border-2 py-4 rounded-lg">
+                    <div className="w-[95%] lg:w-[40%] md:flex flex-col gap-y-4 border-2 py-4 rounded-lg">
                         {/* per night */}
                         <p className="font-bold text-xl px-4">
                             ${listing.price}{" "}
