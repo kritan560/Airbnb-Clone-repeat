@@ -54,6 +54,7 @@ const ListingDetail: React.FC<ListingDetailProps> = ({
         [loginStore.isOpen]
     );
 
+    const [wating, setWating] = useState(false);
     const [totalPrice, setTotalPrice] = useState(0);
     const [totalDays, setTotalDays] = useState(0);
     const [state, setState] = useState([
@@ -97,8 +98,6 @@ const ListingDetail: React.FC<ListingDetailProps> = ({
             })
             .catch((err) => console.error("something went wrong"));
     }
-
-    const [wating, setWating] = useState(false);
 
     async function handleReserveClick(listingId: string, userId: string) {
         setWating(true);
