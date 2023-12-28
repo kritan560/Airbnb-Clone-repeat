@@ -4,7 +4,6 @@ import Body from "@/app/(components)/body/Body";
 import Button from "@/app/(components)/button/Button";
 import Heading from "@/app/(components)/heading/Heading";
 import LoginStore from "@/app/store/loginStore";
-import React, { useEffect } from "react";
 import { CiLogin } from "react-icons/ci";
 
 const page = () => {

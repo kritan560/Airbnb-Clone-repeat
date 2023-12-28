@@ -1,4 +1,3 @@
-import React from "react";
 import TripsPage from "./TripsPage";
 
 // a user created a property . and when same user login the in /trips page should have ability to view all the property listings that other user have reserved.

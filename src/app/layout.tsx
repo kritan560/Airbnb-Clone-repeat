@@ -8,8 +8,8 @@ import LoginModal from "./(components)/modal/LoginModal";
 import MainModal from "./(components)/modal/MainModal";
 import SignupModal from "./(components)/modal/SignupModal";
 import Navbar from "./(components)/navbar/Navbar";
-import "./globals.css";
 import { ThemeProvider } from "./(components)/theme/ThemeProvider";
+import "./globals.css";
 
 const nunito = Nunito({ subsets: ["latin"] });
 

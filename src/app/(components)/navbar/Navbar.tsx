@@ -10,8 +10,8 @@ import { useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoSearchCircleSharp } from "react-icons/io5";
-import Dropdown from "./Dropdown";
 import { ModeToggle } from "../theme/ShadCnSwitch";
+import Dropdown from "./Dropdown";
 
 type NavbarProps = {
     currentUser?: any;
@@ -137,7 +137,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
                         hover:bg-slate-300
                         active:bg-slate-400 
                         dark:text-slate-100 
-                        dark:active:bg-red-300
+                        dark:active:bg-slate-600
                         dark:hover:bg-slate-500"
                         onClick={handleModalOpen}
                     >

@@ -1,18 +1,17 @@
 "use client";
 
-import React from "react";
-import Button from "../button/Button";
-import Image from "next/image";
-import toast from "react-hot-toast";
-import axios from "axios";
-import { FavoriteEnum } from "@/app/enumStore/userStateEnum";
-import { useRouter } from "next/navigation";
-import DeleteConfirmStore from "@/app/store/deleteConfirmStore";
-import LoginStore from "@/app/store/loginStore";
 import getCurrentUser from "@/app/(actions)/getCurrentUser";
-import { GoHeartFill } from "react-icons/go";
-import { FaRegHeart } from "react-icons/fa";
+import { FavoriteEnum } from "@/app/enumStore/userStateEnum";
+import LoginStore from "@/app/store/loginStore";
+import axios from "axios";
 import { format } from "date-fns";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import React from "react";
+import toast from "react-hot-toast";
+import { FaRegHeart } from "react-icons/fa";
+import { GoHeartFill } from "react-icons/go";
+import Button from "../button/Button";
 
 type ListingCardType = {
     endDay: Date;
@@ -38,7 +37,6 @@ const ListingCard: React.FC<ListingCardType> = ({
     reservationId
 }) => {
     const router = useRouter();
-    const deleteConfirmStore = DeleteConfirmStore();
     const loginStore = LoginStore();
 
     async function handleHeartClick(itemId: string) {

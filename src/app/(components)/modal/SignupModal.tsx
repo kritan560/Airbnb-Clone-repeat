@@ -1,21 +1,21 @@
 "use client";
 
-import React, { useEffect } from "react";
-import Heading from "../heading/Heading";
-import Body from "../body/Body";
-import Modal from "./Modal";
-import Input from "../input/Input";
-import { FieldValues, useForm } from "react-hook-form";
-import Button from "../button/Button";
-import { FaGithub } from "react-icons/fa";
-import { FcGoogle } from "react-icons/fc";
-import SignUpStore from "@/app/store/signupStore";
-import LoginStore from "@/app/store/loginStore";
-import axios from "axios";
-import toast from "react-hot-toast";
 import { UserState } from "@/app/enumStore/userStateEnum";
+import LoginStore from "@/app/store/loginStore";
+import SignUpStore from "@/app/store/signupStore";
+import axios from "axios";
 import { signIn } from "next-auth/react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useEffect } from "react";
+import { FieldValues, useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import { FaGithub } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
+import Body from "../body/Body";
+import Button from "../button/Button";
+import Heading from "../heading/Heading";
+import Input from "../input/Input";
+import Modal from "./Modal";
 
 const SignupModal = () => {
     let bodyContent;
@@ -28,7 +28,7 @@ const SignupModal = () => {
 
     const {
         register,
-        formState: { errors, isSubmitSuccessful, isValid },
+        formState: { errors },
         handleSubmit,
         reset,
         watch,
@@ -64,7 +64,7 @@ const SignupModal = () => {
                         if (callback?.ok) {
                             router.refresh();
                             toast.success("User logged in");
-                        } 
+                        }
                     });
                     reset();
                     signupStore.onClose();

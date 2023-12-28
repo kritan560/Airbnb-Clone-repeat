@@ -1,8 +1,7 @@
+import getCurrentUser from "@/app/(actions)/getCurrentUser";
+import ListingCard from "@/app/(components)/listing/ListingCard";
 import React from "react";
 import prisma from "../../../../prisma/PrismaDB";
-import ListingCard from "@/app/(components)/listing/ListingCard";
-import getCurrentUser from "@/app/(actions)/getCurrentUser";
-import NoMatchFound from "@/app/(components)/noMatchFound/NoMatchFound";
 
 type ReservationPageType = {
     listingId: string;

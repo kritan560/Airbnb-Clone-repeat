@@ -1,5 +1,3 @@
-// import Body from "../../body/Body";
-// import Heading from "../../heading/Heading";
 import { DateRange, RangeKeyDict } from "react-date-range";
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file

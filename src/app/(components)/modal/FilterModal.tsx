@@ -4,18 +4,18 @@ import FilterModalStore, {
     FilterModalEnum,
     filterModalEnumLength
 } from "@/app/store/filterModalStore";
-import Modal from "./Modal";
-import MapModal from "./2mapModal/MapModal";
-import { FieldValues, useForm } from "react-hook-form";
-import Button from "../button/Button";
-import AmenitiesModal from "./3amenitiesModal/AmenitiesModal";
-import DateRangeModal from "./7_dateRangeModal/DateRangeModal";
-import { differenceInCalendarDays, differenceInDays } from "date-fns";
-import Heading from "../heading/Heading";
+import { differenceInCalendarDays } from "date-fns";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { RangeKeyDict } from "react-date-range";
+import { FieldValues, useForm } from "react-hook-form";
 import Body from "../body/Body";
-import { useRouter } from "next/navigation";
+import Button from "../button/Button";
+import Heading from "../heading/Heading";
+import MapModal from "./2mapModal/MapModal";
+import AmenitiesModal from "./3amenitiesModal/AmenitiesModal";
+import DateRangeModal from "./7_dateRangeModal/DateRangeModal";
+import Modal from "./Modal";
 
 const FilterModal = () => {
     const filterModalStore = FilterModalStore();
@@ -149,7 +149,7 @@ const FilterModal = () => {
                         class={{
                             bgSecondaryStyle:
                                 "bg-inherit border-2 active:bg-inherit active:border-gray-900 border-gray-500 hover:border-gray-700 text-black dark:text-gray-300",
-                                bgPrimaryStyle: "hover:bg-red-700 active:bg-red-600"
+                            bgPrimaryStyle: "hover:bg-red-700 active:bg-red-600"
                         }}
                     />
                 </>

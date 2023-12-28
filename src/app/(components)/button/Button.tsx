@@ -39,8 +39,6 @@ const Button: React.FC<ButtonProps> = ({
                     onClick={secondaryAction}
                     className={`
                     transition
-                    active:bg-slate-200/80
-                    hover:bg-slate-500/95
                     w-full 
                     rounded-lg
                     select-none

@@ -1,10 +1,9 @@
-import { MdAddPhotoAlternate } from "react-icons/md";
-import Body from "../../body/Body";
-import Heading from "../../heading/Heading";
 import { CldUploadWidget } from "next-cloudinary";
 import Image from "next/image";
 import { FieldValues, UseFormSetValue, UseFormWatch } from "react-hook-form";
-// NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME="dapm1y4jh"
+import { MdAddPhotoAlternate } from "react-icons/md";
+import Body from "../../body/Body";
+import Heading from "../../heading/Heading";
 
 type PhotoProps = {
     title: string;
@@ -40,16 +39,16 @@ const PhotoModal: React.FC<PhotoProps> = ({
                                 onClick={() =>
                                     open !== undefined ? open() : ""
                                 }
-                                className="border-4 border-dotted h-full rounded-md flex justify-center items-center hover:cursor-pointer overflow-hidden"
+                                className="border-4 border-dotted dark:border-gray-300 border-gray-400 h-full rounded-md flex justify-center items-center hover:cursor-pointer overflow-hidden"
                             >
                                 {!result && (
                                     <>
                                         <div className="flex flex-col gap-y-1 items-center">
                                             <MdAddPhotoAlternate
                                                 size={45}
-                                                className="text-slate-600"
+                                                className="text-slate-600 dark:text-slate-300"
                                             />
-                                            <span className="font-semibold text-sm text-slate-600">
+                                            <span className="font-semibold text-sm text-slate-600 dark:text-slate-300">
                                                 Click to upload
                                             </span>
                                         </div>

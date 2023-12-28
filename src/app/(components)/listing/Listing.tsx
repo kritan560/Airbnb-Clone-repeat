@@ -14,7 +14,6 @@ import { FaRegHeart } from "react-icons/fa";
 import { GoHeartFill } from "react-icons/go";
 import Button from "../button/Button";
 import Heading from "../heading/Heading";
-import NoMatchFound from "../noMatchFound/NoMatchFound";
 
 type ListingProps = {
     listings: ListingType[];
@@ -35,9 +34,6 @@ const Listing: React.FC<ListingProps> = ({
     favorites,
     subtitle = "",
     title = "",
-    noMatchFoundbuttonLabel = "",
-    noMatchFoundheadingLabel = "",
-    noMatchFoundButtonAction,
     buttonAction = () => {},
     buttonLabel
 }) => {

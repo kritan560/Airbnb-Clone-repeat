@@ -1,9 +1,8 @@
 import getCurrentUser from "@/app/(actions)/getCurrentUser";
-import prisma from "../../../../prisma/PrismaDB";
-import ListingCard from "@/app/(components)/listing/ListingCard";
-import ReservationPage from "./ReservationPage";
 import Heading from "@/app/(components)/heading/Heading";
 import NoMatchFound from "@/app/(components)/noMatchFound/NoMatchFound";
+import prisma from "../../../../prisma/PrismaDB";
+import ReservationPage from "./ReservationPage";
 
 const Reservations = async () => {
     const currentLoggedInUser = await getCurrentUser();

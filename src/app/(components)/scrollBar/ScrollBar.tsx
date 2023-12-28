@@ -1,10 +1,8 @@
 "use client";
 
-import ScrollBarStore from "@/app/store/scrollBarStore";
-import { useRouter } from "next/navigation";
-import React from "react";
 import { categoryIcons } from "@/app/(components)/modal/1categoriesModal/CategoryModal";
-import { useSearchParams } from "next/navigation";
+import ScrollBarStore from "@/app/store/scrollBarStore";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const ScrollBar = () => {
     const router = useRouter();
@@ -26,9 +24,16 @@ const ScrollBar = () => {
                 <div
                     className={`flex flex-col space-y-1 justify-center items-center 
                     hover:cursor-pointer group 
-                    text-gray-500 hover:text-gray-800 active:text-gray-600 
-                    dark:text-slate-100 dark:hover:text-gray-500 dark:active:text-gray-300
-                    ${item == category.iconName && "text-gray-900 dark:text-slate-500"}
+                    text-gray-500 
+                    hover:text-gray-800 
+                    active:text-gray-600 
+                    dark:text-slate-100 
+                    dark:hover:text-gray-500 
+                    dark:active:text-gray-300
+                    ${
+                        item == category.iconName &&
+                        "text-gray-900 dark:text-slate-500"
+                    }
                     ${
                         categoryFromURL == category.iconName &&
                         "text-gray-900 dark:text-slate-500"
@@ -48,7 +53,7 @@ const ScrollBar = () => {
                     <span className="text-sm font-semibold">
                         {category.iconName}
                         <div
-                            className={`w-full h-1 bg-gray-900 dark:bg-gray-200 rounded-full opacity-0 transition 
+                            className={`w-full h-1 bg-gray-900 dark:bg-gray-500 rounded-full opacity-0 transition 
                                 ${item == category.iconName && "opacity-100"}
                                 ${
                                     categoryFromURL == category.iconName &&

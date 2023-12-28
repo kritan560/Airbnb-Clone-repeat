@@ -1,6 +1,12 @@
-import { IoDiamondSharp } from "react-icons/io5";
-import Heading from "../../heading/Heading";
-import Body from "../../body/Body";
+import CategoryStore from "@/app/store/categoryStore";
+import { useEffect, useRef } from "react";
+import { FieldValues, UseFormSetValue, UseFormWatch } from "react-hook-form";
+import {
+    FaRegSnowflake,
+    FaSchool,
+    FaSkiing,
+    FaUniversity
+} from "react-icons/fa";
 import {
     GiBarn,
     GiBoatFishing,
@@ -10,18 +16,12 @@ import {
     GiJungle,
     GiWaterMill
 } from "react-icons/gi";
-import { MdCarRepair, MdStadium, MdTempleHindu } from "react-icons/md";
-import {
-    FaRegSnowflake,
-    FaSchool,
-    FaSkiing,
-    FaUniversity
-} from "react-icons/fa";
-import { PiSwimmingPoolDuotone } from "react-icons/pi";
+import { IoDiamondSharp } from "react-icons/io5";
 import { LiaHotelSolid } from "react-icons/lia";
-import { FieldValues, UseFormSetValue, UseFormWatch } from "react-hook-form";
-import { useEffect, useRef } from "react";
-import CategoryStore from "@/app/store/categoryStore";
+import { MdCarRepair, MdStadium, MdTempleHindu } from "react-icons/md";
+import { PiSwimmingPoolDuotone } from "react-icons/pi";
+import Body from "../../body/Body";
+import Heading from "../../heading/Heading";
 
 type CategoryModalProps = {
     setValue: UseFormSetValue<FieldValues>;
@@ -62,7 +62,6 @@ const CategoryModal: React.FC<CategoryModalProps> = ({
     title,
     subtitle
 }) => {
-
     let firstAndSecondIcons = [];
     for (let i = 0; i < categoryIcons.length; i += 2) {
         firstAndSecondIcons.push(categoryIcons.slice(i, i + 2));
@@ -112,12 +111,18 @@ const CategoryModal: React.FC<CategoryModalProps> = ({
                                 <div
                                     onClick={() => setValue(id, item)}
                                     key={index}
-                                    className={`border-2 px-4 py-3 rounded-lg w-full transition duration-100 hover:border-slate-400 hover:cursor-pointer active:border-slate-500 ${
-                                        categoryValue &&
-                                        categoryValue.iconName ===
-                                            item.iconName &&
-                                        "border-slate-500"
-                                    }`}
+                                    className={`border-2 px-4 py-3 rounded-lg w-full transition duration-100 hover:border-slate-400
+                                    active:border-slate-600 
+                                    dark:border-slate-100
+                                    dark:active:border-slate-100
+                                    dark:hover:border-slate-400
+                                      hover:cursor-pointer
+                                       ${
+                                           categoryValue &&
+                                           categoryValue.iconName ===
+                                               item.iconName &&
+                                           "border-slate-400 dark:border-slate-400"
+                                       }`}
                                 >
                                     <item.icon size={22} />
                                     <span>{item.iconName}</span>

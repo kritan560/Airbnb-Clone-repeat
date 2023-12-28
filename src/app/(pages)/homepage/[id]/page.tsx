@@ -1,7 +1,7 @@
 import getCurrentUser from "@/app/(actions)/getCurrentUser";
 import ListingDetail from "@/app/(components)/listing/ListingDetail";
-import prisma from "../../../../../prisma/PrismaDB";
 import { eachDayOfInterval } from "date-fns";
+import prisma from "../../../../../prisma/PrismaDB";
 
 type ParamsId = {
     params: { id: string };

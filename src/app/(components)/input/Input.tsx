@@ -108,7 +108,7 @@ const Input: React.FC<InputProps> = ({
             {inputBodyContent}
             <label
                 htmlFor=""
-                className="absolute left-4 font-semibold text-sm text-slate-400 peer-focus:scale-[.80] duration-[250] origin-left transition-transform"
+                className="absolute left-4 font-semibold text-sm text-slate-400 dark:text-slate-200 peer-focus:scale-[.80] duration-[250] origin-left transition-transform"
             >
                 {label}
             </label>

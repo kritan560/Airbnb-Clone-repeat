@@ -1,20 +1,19 @@
 "use client";
 
+import CategoryStore from "@/app/store/categoryStore";
 import ModalStore, { ModalEnum, ModalEnumLength } from "@/app/store/modalStore";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import { FieldValues, useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import Button from "../button/Button";
 import CategoryModal from "./1categoriesModal/CategoryModal";
 import MapModal from "./2mapModal/MapModal";
-import Modal from "./Modal";
-import { FieldValues, useForm } from "react-hook-form";
 import AmenitiesModal from "./3amenitiesModal/AmenitiesModal";
 import PhotoModal from "./4photoModal.tsx/PhotoModal";
 import DescribeModal from "./5describeModal/DescribeModal";
 import PriceModal from "./6priceModal/PriceModal";
-import Button from "../button/Button";
-import axios from "axios";
-import toast from "react-hot-toast";
-import CategoryStore from "@/app/store/categoryStore";
-import { useRouter } from "next/navigation";
-import { Gi3DGlasses } from "react-icons/gi";
+import Modal from "./Modal";
 
 const MainModal = () => {
     const {
@@ -153,9 +152,21 @@ const MainModal = () => {
                         secondaryAction={handleSecondaryAction}
                         secondaryLabel="Previous"
                         class={{
-                            bgSecondaryStyle:
-                                "bg-inherit border-2 active:bg-inherit active:border-gray-900 border-gray-500 hover:border-gray-700 text-black dark:text-gray-300",
-                                bgPrimaryStyle: "hover:bg-red-700 active:bg-red-600"
+                            bgSecondaryStyle: `bg-inherit border-2 active:bg-inherit 
+                            text-black 
+                            border-gray-500 
+
+                            active:border-gray-900 
+                            hover:border-gray-700 
+                            
+                            dark:text-gray-300
+                            dark:border-gray-300
+                            dark:hover:border-gray-500
+                            dark:active:border-gray-300
+                            `,
+                            bgPrimaryStyle: `
+                            hover:bg-red-700 
+                            active:bg-red-600`
                         }}
                         currentModal={modalStore.currentModal}
                     />

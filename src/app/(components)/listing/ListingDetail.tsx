@@ -6,7 +6,7 @@ import useCountries from "@/app/hooks/useCountries";
 import LoginStore from "@/app/store/loginStore";
 import { Listing, User } from "@prisma/client";
 import axios from "axios";
-import { differenceInCalendarDays, eachDayOfInterval } from "date-fns";
+import { differenceInCalendarDays } from "date-fns";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -20,7 +20,6 @@ import Button from "../button/Button";
 import Heading from "../heading/Heading";
 import { categoryIcons } from "../modal/1categoriesModal/CategoryModal";
 import DateRangeModal from "../modal/7_dateRangeModal/DateRangeModal";
-import { Si1001Tracklists } from "react-icons/si";
 
 type ListingDetailProps = {
     listing: Listing;

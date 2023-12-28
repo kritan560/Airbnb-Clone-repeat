@@ -1,20 +1,19 @@
 "use client";
 
-import React, { useEffect } from "react";
-import Heading from "../heading/Heading";
-import Body from "../body/Body";
-import Modal from "./Modal";
 import LoginStore from "@/app/store/loginStore";
-import Input from "../input/Input";
-import { FieldValues, useForm } from "react-hook-form";
-import Button from "../button/Button";
-import { FaGithub } from "react-icons/fa";
-import { FcGoogle } from "react-icons/fc";
 import SignUpStore from "@/app/store/signupStore";
-import toast from "react-hot-toast";
 import { signIn } from "next-auth/react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import ModalStore from "@/app/store/modalStore";
+import { useEffect } from "react";
+import { FieldValues, useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import { FaGithub } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
+import Body from "../body/Body";
+import Button from "../button/Button";
+import Heading from "../heading/Heading";
+import Input from "../input/Input";
+import Modal from "./Modal";
 
 const LoginModal = () => {
     let bodyContent;

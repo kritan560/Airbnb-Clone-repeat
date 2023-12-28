@@ -10,7 +10,9 @@ type ModalProps = {
 const Modal: React.FC<ModalProps> = ({ body, modal, title }) => {
     const Store = modal();
     const modalStore = ModalStore();
+    
     let bodyContent;
+
     bodyContent = (
         <div
             className={`inset-0 flex justify-center items-center transition-all duration-300 bg-slate-800/70 dark:bg-slate-500/70 overflow-y-clip fixed z-30 ${
