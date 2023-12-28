@@ -9,6 +9,7 @@ import MainModal from "./(components)/modal/MainModal";
 import SignupModal from "./(components)/modal/SignupModal";
 import Navbar from "./(components)/navbar/Navbar";
 import "./globals.css";
+import { ThemeProvider } from "./(components)/theme/ThemeProvider";
 
 const nunito = Nunito({ subsets: ["latin"] });
 
@@ -31,21 +32,28 @@ export default async function RootLayout({
 }) {
     const currentUser = await getCurrentUser();
     return (
-        <html lang="en">
-            <body className={`${nunito.className} bg-gray-700`}>
-                <div className="rounded-xl bg-white fixed inset-0 overflow-y-auto scrollbar-thumb-red-600 scrollbar-thin scrollbar-thumb-rounded-full select-none">
-                    <Toaster />
-                    <Navbar currentUser={currentUser} />
-                    <MainModal />
-                    <FilterModal />
-                    <Suspense>
-                        <LoginModal />
-                        <SignupModal />
-                    </Suspense>
-                    <div className="pl-4 pr-2 md:px-14 lg:px-24 py-6">
-                        {children}
+        <html lang="en" suppressHydrationWarning>
+            <body className={`${nunito.className}`}>
+                <ThemeProvider
+                    attribute="class"
+                    defaultTheme="system"
+                    enableSystem
+                    disableTransitionOnChange
+                >
+                    <div className="rounded-xl bg-white fixed inset-0 overflow-y-auto scrollbar-thumb-red-600 scrollbar-thin scrollbar-thumb-rounded-full select-none dark:bg-slate-900 dark:text-slate-100">
+                        <Toaster />
+                        <Navbar currentUser={currentUser} />
+                        <MainModal />
+                        <FilterModal />
+                        <Suspense>
+                            <LoginModal />
+                            <SignupModal />
+                        </Suspense>
+                        <div className="pl-4 pr-2 md:px-14 lg:px-24 py-6">
+                            {children}
+                        </div>
                     </div>
-                </div>
+                </ThemeProvider>
             </body>
         </html>
     );

@@ -154,7 +154,8 @@ const MainModal = () => {
                         secondaryLabel="Previous"
                         class={{
                             bgSecondaryStyle:
-                                "bg-inherit border-2 active:bg-inherit active:border-gray-900 border-gray-500 hover:border-gray-700 text-black"
+                                "bg-inherit border-2 active:bg-inherit active:border-gray-900 border-gray-500 hover:border-gray-700 text-black dark:text-gray-300",
+                                bgPrimaryStyle: "hover:bg-red-700 active:bg-red-600"
                         }}
                         currentModal={modalStore.currentModal}
                     />

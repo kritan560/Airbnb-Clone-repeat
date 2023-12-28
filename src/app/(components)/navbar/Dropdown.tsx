@@ -31,7 +31,7 @@ const Dropdown: React.FC<DropdownProps> = ({ className, currentUser }) => {
             logo: (
                 <SlPlane
                     size={18}
-                    className={`${Style.class} text-slate-800`}
+                    className={`${Style.class} text-slate-800 dark:text-yellow-400`}
                 />
             ),
             name: "My Trips"
@@ -49,7 +49,7 @@ const Dropdown: React.FC<DropdownProps> = ({ className, currentUser }) => {
             logo: (
                 <TbReservedLine
                     size={18}
-                    className={`${Style.class} text-slate-800`}
+                    className={`${Style.class} text-slate-800 dark:text-yellow-400`}
                 />
             ),
             name: "My Reservations"
@@ -58,14 +58,17 @@ const Dropdown: React.FC<DropdownProps> = ({ className, currentUser }) => {
             logo: (
                 <AiOutlinePropertySafety
                     size={18}
-                    className={`${Style.class} text-slate-800`}
+                    className={`${Style.class} text-slate-800 dark:text-yellow-400`}
                 />
             ),
             name: "My Properties"
         },
         {
             logo: (
-                <FaHome size={18} className={`${Style.class} text-slate-800`} />
+                <FaHome
+                    size={18}
+                    className={`${Style.class} text-slate-800 dark:text-yellow-400`}
+                />
             ),
             name: "Airbnb My Home"
         },
@@ -73,7 +76,7 @@ const Dropdown: React.FC<DropdownProps> = ({ className, currentUser }) => {
             logo: (
                 <IoIosLogOut
                     size={18}
-                    className={`${Style.class} text-slate-800`}
+                    className={`${Style.class} text-slate-800 dark:text-yellow-400`}
                 />
             ),
             name: `Logout (${currentUser ? currentUser.name : ""})`
@@ -85,7 +88,7 @@ const Dropdown: React.FC<DropdownProps> = ({ className, currentUser }) => {
             logo: (
                 <IoIosLogIn
                     size={18}
-                    className={`${Style.class} text-slate-800`}
+                    className={`${Style.class} text-slate-800 dark:text-yellow-400`}
                 />
             ),
             name: "Login"
@@ -94,7 +97,7 @@ const Dropdown: React.FC<DropdownProps> = ({ className, currentUser }) => {
             logo: (
                 <IoPersonAddOutline
                     size={18}
-                    className={`${Style.class} text-slate-800`}
+                    className={`${Style.class} text-slate-800 dark:text-yellow-400`}
                 />
             ),
             name: "SignUp"
@@ -167,7 +170,7 @@ const Dropdown: React.FC<DropdownProps> = ({ className, currentUser }) => {
             `}
         >
             <div
-                className={`flex bg-slate-50 border-r border-l shadow-sm rounded-md flex-col whitespace-nowrap`}
+                className={`flex bg-slate-50 dark:bg-slate-700 shadow-sm rounded-md flex-col whitespace-nowrap`}
             >
                 {dropDowns.map((dropdown, index) => (
                     <div
@@ -175,7 +178,7 @@ const Dropdown: React.FC<DropdownProps> = ({ className, currentUser }) => {
                             await handleDropdownMenuClick(dropdown.name);
                         }}
                         key={index}
-                        className={`hover:bg-slate-200 px-5 py-3 hover:cursor-pointer text-sm font-semibold text-slate-600 hover:text-slate-800 transition
+                        className={`hover:bg-slate-200 px-5 py-3 hover:cursor-pointer text-sm font-semibold text-slate-600 hover:text-slate-800 dark:text-slate-100 dark:hover:bg-slate-600 transition
                     ${index == 0 && "rounded-t-md"}
                     ${dropdown.name == "Logout" && "border-t"}
                     ${index == dropDowns.length - 1 && "rounded-b-md"} 

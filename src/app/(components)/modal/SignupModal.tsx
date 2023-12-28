@@ -145,7 +145,7 @@ const SignupModal = () => {
                     primaryLabel="Continue with Google"
                     class={{
                         bgPrimaryStyle:
-                            "bg-transparent text-black border-2 active:bg-transparent hover:border-gray-600 border-gray-800 active:border-gray-950"
+                            "bg-transparent text-black border-2 active:bg-transparent hover:border-gray-600 border-gray-800 active:border-gray-950 dark:text-slate-100 dark:hover:border-gray-300 dark:active:border-gray-500 dark:border-gray-200"
                     }}
                     icon={FcGoogle}
                     iconSize={25}
@@ -155,7 +155,7 @@ const SignupModal = () => {
                     primaryLabel="Continue with Github"
                     class={{
                         bgPrimaryStyle:
-                            "bg-transparent text-black border-2 active:bg-transparent hover:border-gray-600 border-gray-800 active:border-gray-950"
+                            "bg-transparent text-black border-2 active:bg-transparent hover:border-gray-600 border-gray-800 active:border-gray-950 dark:text-slate-100 dark:hover:border-gray-300 dark:active:border-gray-500 dark:border-gray-200"
                     }}
                     icon={FaGithub}
                     iconSize={25}
@@ -165,7 +165,7 @@ const SignupModal = () => {
                     <span>Already have an account?</span>
                     <span
                         onClick={handleLoginClick}
-                        className="font-semibold hover:underline ml-1 hover:cursor-pointer active:text-slate-700"
+                        className="font-semibold hover:underline ml-1 hover:cursor-pointer dark:text-red-500 dark:active:text-red-600 active:text-slate-700"
                     >
                         Login
                     </span>

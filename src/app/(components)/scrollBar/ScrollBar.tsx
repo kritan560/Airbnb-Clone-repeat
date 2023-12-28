@@ -24,12 +24,15 @@ const ScrollBar = () => {
         <div className="grid grid-rows-1 grid-flow-col gap-x-10 whitespace-nowrap scrollbar-thumb-red-600 scrollbar-thin scrollbar-thumb-rounded-md overflow-x-scroll select-none z-0 pb-2 pt-1 hover:cursor-pointer">
             {categoryIcons.map((category) => (
                 <div
-                    className={`flex flex-col space-y-1 justify-center items-center text-gray-500 hover:cursor-pointer group hover:text-gray-800 active:text-gray-600 
-                        ${item == category.iconName && "text-gray-900"}
-                        ${
-                            categoryFromURL == category.iconName &&
-                            "text-gray-900"
-                        }
+                    className={`flex flex-col space-y-1 justify-center items-center 
+                    hover:cursor-pointer group 
+                    text-gray-500 hover:text-gray-800 active:text-gray-600 
+                    dark:text-slate-100 dark:hover:text-gray-500 dark:active:text-gray-300
+                    ${item == category.iconName && "text-gray-900 dark:text-slate-500"}
+                    ${
+                        categoryFromURL == category.iconName &&
+                        "text-gray-900 dark:text-slate-500"
+                    }
                         `}
                     key={category.icon}
                     onClick={() => handleScrollItemClick(category.iconName)}
@@ -45,7 +48,7 @@ const ScrollBar = () => {
                     <span className="text-sm font-semibold">
                         {category.iconName}
                         <div
-                            className={`w-full h-1 bg-gray-900 rounded-full opacity-0 transition 
+                            className={`w-full h-1 bg-gray-900 dark:bg-gray-200 rounded-full opacity-0 transition 
                                 ${item == category.iconName && "opacity-100"}
                                 ${
                                     categoryFromURL == category.iconName &&

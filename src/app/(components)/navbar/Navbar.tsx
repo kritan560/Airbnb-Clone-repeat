@@ -11,6 +11,7 @@ import { useEffect, useRef } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoSearchCircleSharp } from "react-icons/io5";
 import Dropdown from "./Dropdown";
+import { ModeToggle } from "../theme/ShadCnSwitch";
 
 type NavbarProps = {
     currentUser?: any;
@@ -76,7 +77,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
 
     return (
         <>
-            <div className="flex justify-between items-center py-4 border-b px-4 md:px-14 lg:px-24 min-w-[350px]">
+            <div className="flex justify-between items-center py-4 border-b px-4 md:px-14 lg:px-24 min-w-[350px] ">
                 {/* logo */}
                 <div className="hover:cursor-pointer" onClick={handleLogoClick}>
                     <Image
@@ -90,7 +91,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
 
                 {/* filter content */}
                 <div
-                    className="flex items-center gap-x-3 border rounded-full pl-4 pr-1 py-3 sm:py-[2px] hover:cursor-pointer hover:shadow-md shadow-sm text-sm font-semibold text-slate-600 transition select-none"
+                    className="flex items-center gap-x-3 border rounded-full pl-4 pr-1 py-3 sm:py-[2px] hover:cursor-pointer hover:shadow-md shadow-sm text-sm font-semibold text-slate-600 transition select-none dark:text-slate-100"
                     onClick={handleFilterModal}
                 >
                     <span className="mr-3">
@@ -122,22 +123,34 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
                     </div>
                 </div>
 
+                <div>
+                    <ModeToggle />
+                </div>
+
                 {/* hamburger and airbnb logo */}
                 <div className="flex gap-x-1 lg:gap-x-6 items-center">
-                    <p
-                        className="hover:cursor-pointer text-slate-600 text-sm font-semibold py-3 transition px-4 rounded-full hover:bg-slate-300 active:bg-slate-400 hidden lg:block"
+                    <div
+                        className="hover:cursor-pointer 
+                        text-sm font-semibold py-3 transition px-4 rounded-full
+                        hidden lg:block 
+                        text-slate-600 
+                        hover:bg-slate-300
+                        active:bg-slate-400 
+                        dark:text-slate-100 
+                        dark:active:bg-red-300
+                        dark:hover:bg-slate-500"
                         onClick={handleModalOpen}
                     >
                         Airbnb Your Home
-                    </p>
+                    </div>
 
                     {/* hamburger menu */}
                     <div
-                        className="flex gap-x-2 items-center border-[2px] rounded-full px-2 py-2 relative hover:cursor-pointer select-none hover:shadow-md hover:text-slate-700 text-slate-800 active:bg-slate-50 active:shadow-lg transition active:border-slate-400"
+                        className="flex gap-x-2 items-center border-[2px] rounded-full px-2 py-2 relative hover:cursor-pointer select-none hover:shadow-md hover:text-slate-700 text-slate-800 active:bg-slate-50 active:shadow-lg transition active:border-slate-400 dark:active:bg-slate-400"
                         onClick={handleDropDownToggle}
                         ref={dropDownToggleRef}
                     >
-                        <GiHamburgerMenu className="hidden lg:block" />
+                        <GiHamburgerMenu className="hidden lg:block dark:text-slate-100" />
                         <Image
                             src={
                                 currentUser?.image

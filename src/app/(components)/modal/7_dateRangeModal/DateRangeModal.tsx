@@ -21,20 +21,18 @@ const DateRangeModal: React.FC<DateRangeModalProps> = ({
 }) => {
     return (
         <div>
-            <div>
-                <div className="">
-                    <DateRange
-                        fixedHeight
-                        ranges={state}
-                        showDateDisplay={false}
-                        onChange={handleChange}
-                        date={new Date()}
-                        minDate={new Date()}
-                        direction="vertical"
-                        disabledDates={disableDates}
-                    />
-                </div>
-            </div>
+            <DateRange
+                className=""
+                fixedHeight
+                ranges={state}
+                showDateDisplay={false}
+                onChange={handleChange}
+                date={new Date()}
+                minDate={new Date()}
+                direction="vertical"
+                disabledDates={disableDates}
+                
+            />
         </div>
     );
 };

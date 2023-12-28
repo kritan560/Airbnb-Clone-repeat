@@ -37,8 +37,13 @@ const Button: React.FC<ButtonProps> = ({
             {secondaryAction && currentModal > 1 ? (
                 <button
                     onClick={secondaryAction}
-                    className={`bg-blue-600 transition active:bg-slate-200/80 hover:bg-slate-200/95 w-full 
-                    rounded-lg select-none
+                    className={`
+                    transition
+                    active:bg-slate-200/80
+                    hover:bg-slate-500/95
+                    w-full 
+                    rounded-lg
+                    select-none
                     ${btnSm ? "py-[2px]" : "py-2"}
                     ${Style?.bgSecondaryStyle}
                     ${textSize == "thin" && "font-thin"}
@@ -53,8 +58,11 @@ const Button: React.FC<ButtonProps> = ({
             )}
             <button
                 onClick={primaryAction}
-                className={`bg-red-600 transition active:bg-red-600/95 w-full 
-                rounded-lg select-none hover:bg-red-600/90
+                className={`
+                bg-red-600 
+                w-full
+                transition
+                rounded-lg select-none 
                 ${btnSm ? "py-[2px]" : "py-2"}
                 ${Style?.bgPrimaryStyle}
                 ${textSize == "thin" && "font-thin"}

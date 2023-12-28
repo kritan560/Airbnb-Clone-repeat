@@ -219,7 +219,7 @@ const ListingDetail: React.FC<ListingDetailProps> = ({
 
                             {/* property on */}
                             <div className="flex gap-x-3 items-end">
-                                <Icon size={55} className={"text-slate-700"} />
+                                <Icon size={55} className={"text-slate-700 dark:text-slate-200"} />
                                 <div>
                                     <h2 className="font-bold text-lg">
                                         {iconName}
