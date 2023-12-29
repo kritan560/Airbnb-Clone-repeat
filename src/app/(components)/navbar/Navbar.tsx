@@ -91,7 +91,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
 
                 {/* filter content */}
                 <div
-                    className="flex items-center gap-x-3 border rounded-full pl-4 pr-1 py-3 sm:py-[2px] hover:cursor-pointer hover:shadow-md shadow-sm text-sm font-semibold text-slate-600 transition select-none dark:text-slate-100"
+                    className="flex items-center gap-x-3 border dark:border-gray-200 rounded-full pl-4 pr-1 py-3 sm:py-[2px] hover:cursor-pointer hover:shadow-md shadow-sm text-sm font-semibold text-slate-600 transition select-none dark:text-slate-100"
                     onClick={handleFilterModal}
                 >
                     <span className="mr-3">

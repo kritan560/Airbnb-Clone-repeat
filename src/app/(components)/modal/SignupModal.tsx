@@ -5,16 +5,23 @@ import LoginStore from "@/app/store/loginStore";
 import SignUpStore from "@/app/store/signupStore";
 import axios from "axios";
 import { signIn } from "next-auth/react";
+import { useTheme } from "next-themes";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import { FieldValues, useForm } from "react-hook-form";
-import toast from "react-hot-toast";
 import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import Body from "../body/Body";
 import Button from "../button/Button";
 import Heading from "../heading/Heading";
 import Input from "../input/Input";
+import {
+    ERROR_MESSAGE,
+    ErrorToast,
+    LOGIN_SUCCESS,
+    NEW_USER,
+    SuccessToast
+} from "../toast/Toast";
 import Modal from "./Modal";
 
 const SignupModal = () => {
@@ -48,28 +55,33 @@ const SignupModal = () => {
     const email = watch("email");
     const name = watch("name");
     const password = watch("password");
+    const { theme } = useTheme();
 
     function submit(data: any) {
         axios
             .post("/api/auth/signup", data)
             .then((res) => {
                 if (res.data.code == UserState.NEW_USER_CREATED) {
-                    toast.success("New User Created");
                     signIn("credentials", {
                         callbackUrl: pathName,
                         redirect: false,
                         email,
                         password
-                    }).then((callback) => {
-                        if (callback?.ok) {
-                            router.refresh();
-                            toast.success("User logged in");
-                        }
-                    });
+                    })
+                        .then((callback) => {
+                            if (callback?.ok) {
+                                router.refresh();
+                                SuccessToast(theme, LOGIN_SUCCESS);
+                            }
+                        })
+                        .catch(() => {
+                            ErrorToast(theme, ERROR_MESSAGE);
+                        });
                     reset();
                     signupStore.onClose();
+                    SuccessToast(theme, NEW_USER);
                 } else if (res.data.code == UserState.USER_ALREADY_EXISTS) {
-                    toast.error("User already exists in DB");
+                    ErrorToast(theme, "User alredy in DB");
                 }
             })
             .catch((err) => console.error("something went wrong"))

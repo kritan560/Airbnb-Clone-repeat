@@ -2,13 +2,18 @@
 
 import DeleteConfirmStore from "@/app/store/deleteConfirmStore";
 import axios from "axios";
+import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
-import toast from "react-hot-toast";
 import { IconType } from "react-icons";
 import { RxCross1 } from "react-icons/rx";
 import Body from "../body/Body";
 import Button from "../button/Button";
 import Heading from "../heading/Heading";
+import {
+    EmojiToast,
+    FAVORITE_REMOVED_ICON,
+    LISTING_DELETE
+} from "../toast/Toast";
 import Modal from "./Modal";
 
 type DeleteConfirmationModalType = {
@@ -29,16 +34,16 @@ const DeleteConfirmationModal: React.FC<DeleteConfirmationModalType> = ({
     let bodyContent;
     const router = useRouter();
     const deleteConfirmStore = DeleteConfirmStore();
+    const { theme } = useTheme();
 
     function handleDelete() {
         // remove the listing
         axios
             .delete(`api/listing/${deleteConfirmStore.id}`)
             .then((res) => {
-                // console.log(res.data);
                 router.refresh();
-                toast("listing deleted", { icon: "😿" });
                 deleteConfirmStore.onClose();
+                EmojiToast(theme, LISTING_DELETE, FAVORITE_REMOVED_ICON);
             })
             .catch((err) => console.error("something went wrong"));
     }

@@ -4,8 +4,8 @@ import ModalStore from "@/app/store/modalStore";
 import ScrollBarStore from "@/app/store/scrollBarStore";
 import SignUpStore from "@/app/store/signupStore";
 import { signOut } from "next-auth/react";
+import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
-import toast from "react-hot-toast";
 import { AiOutlinePropertySafety } from "react-icons/ai";
 import { FaHome } from "react-icons/fa";
 import { IoIosLogIn, IoIosLogOut } from "react-icons/io";
@@ -13,6 +13,7 @@ import { IoPersonAddOutline } from "react-icons/io5";
 import { MdFavorite } from "react-icons/md";
 import { SlPlane } from "react-icons/sl";
 import { TbReservedLine } from "react-icons/tb";
+import { SuccessToast, USER_LOGOUT_SUCCESS } from "../toast/Toast";
 
 type DropdownProps = {
     className?: string;
@@ -25,6 +26,7 @@ const Style = {
 
 const Dropdown: React.FC<DropdownProps> = ({ className, currentUser }) => {
     const scrollBarStore = ScrollBarStore();
+    const { theme } = useTheme();
 
     const userLoggedIn = [
         {
@@ -132,8 +134,8 @@ const Dropdown: React.FC<DropdownProps> = ({ className, currentUser }) => {
             });
             router.push(logoutData.url);
             scrollBarStore.setScrollBar(undefined);
-            toast.success("Logout Successfully");
-            return router.refresh();
+            router.refresh();
+            SuccessToast(theme, USER_LOGOUT_SUCCESS);
         }
         if (dropdown === "My Trips") {
             return router.push("/trips");

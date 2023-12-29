@@ -7,12 +7,12 @@ import LoginStore from "@/app/store/loginStore";
 import { Listing, User } from "@prisma/client";
 import axios from "axios";
 import { differenceInCalendarDays } from "date-fns";
+import { useTheme } from "next-themes";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useMemo, useState } from "react";
 import { RangeKeyDict } from "react-date-range";
-import toast from "react-hot-toast";
 import { FaRegHeart } from "react-icons/fa";
 import { GoHeartFill } from "react-icons/go";
 import Body from "../body/Body";
@@ -20,6 +20,16 @@ import Button from "../button/Button";
 import Heading from "../heading/Heading";
 import { categoryIcons } from "../modal/1categoriesModal/CategoryModal";
 import DateRangeModal from "../modal/7_dateRangeModal/DateRangeModal";
+import {
+    EmojiToast,
+    FAVORITE_ASSIGNED,
+    FAVORITE_ASSIGNED_ICON,
+    FAVORITE_REMOVED,
+    FAVORITE_REMOVED_ICON,
+    RESERVED_SUCCESS,
+    SuccessToast,
+    UNAUTHORIZED
+} from "../toast/Toast";
 
 type ListingDetailProps = {
     listing: Listing;
@@ -41,6 +51,7 @@ const ListingDetail: React.FC<ListingDetailProps> = ({
     const router = useRouter();
     const countries = useCountries();
     const loginStore = LoginStore();
+    const { theme } = useTheme();
 
     // when you load the content dynamically the change in some component would refresh the whole component causing the refresh of the component. to stop the refresh of the component remove the dynamic comonent and use the regular import of the component
     // const Body = dynamic(() => import("../body/Body"), { ssr: false });
@@ -80,8 +91,8 @@ const ListingDetail: React.FC<ListingDetailProps> = ({
     async function handleHeartClick(itemId: string) {
         const user = await getCurrentUser();
         if (!user) {
-            toast.error("Opps! Please login");
-            return loginStore.onOpen();
+            loginStore.onOpen();
+            SuccessToast(theme, UNAUTHORIZED);
         }
 
         // make the listing favorite to specific user
@@ -90,9 +101,14 @@ const ListingDetail: React.FC<ListingDetailProps> = ({
             .then((res) => {
                 router.refresh();
                 if (res.data.code == FavoriteEnum.FAVORITE_ASSIGNED) {
-                    toast("favorited", { icon: "😊" });
+                    // toast("favorited", { icon: "😊" });
+                    EmojiToast(
+                        theme,
+                        FAVORITE_ASSIGNED,
+                        FAVORITE_ASSIGNED_ICON
+                    );
                 } else if (res.data.code == FavoriteEnum.FAVORITE_REMOVED) {
-                    toast("favorite removed", { icon: "😔" });
+                    EmojiToast(theme, FAVORITE_REMOVED, FAVORITE_REMOVED_ICON);
                 }
             })
             .catch((err) => console.error("something went wrong"));
@@ -116,15 +132,15 @@ const ListingDetail: React.FC<ListingDetailProps> = ({
                 totalDays: totalDays
             })
             .then((res) => {
-                // console.log(res.data);
                 setState([]);
-                toast.success(
-                    `successfully reserve ${listing.map.slice(0, 14)}`
-                );
                 router.prefetch("/reservations");
                 router.push("/reservations");
                 router.refresh();
                 setWating(false);
+                SuccessToast(
+                    theme,
+                    `${RESERVED_SUCCESS}${listing.map.slice(0, 14)}`
+                );
             })
             .catch((err) => console.error("something went wrong"));
     }
@@ -157,7 +173,6 @@ const ListingDetail: React.FC<ListingDetailProps> = ({
                         alt="listing detail image"
                         style={{ objectFit: "cover" }}
                         className="rounded-lg"
-                        quality={20}
                     />
                     <div
                         className="group/heart hover:cursor-pointer"
@@ -218,7 +233,12 @@ const ListingDetail: React.FC<ListingDetailProps> = ({
 
                             {/* property on */}
                             <div className="flex gap-x-3 items-end">
-                                <Icon size={55} className={"text-slate-700 dark:text-slate-200"} />
+                                <Icon
+                                    size={55}
+                                    className={
+                                        "text-slate-700 dark:text-slate-200"
+                                    }
+                                />
                                 <div>
                                     <h2 className="font-bold text-lg">
                                         {iconName}

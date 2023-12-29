@@ -6,14 +6,15 @@ import DeleteConfirmStore from "@/app/store/deleteConfirmStore";
 import LoginStore from "@/app/store/loginStore";
 import { Listing as ListingType } from "@prisma/client";
 import axios from "axios";
+import { useTheme } from "next-themes";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React from "react";
-import toast from "react-hot-toast";
 import { FaRegHeart } from "react-icons/fa";
 import { GoHeartFill } from "react-icons/go";
 import Button from "../button/Button";
 import Heading from "../heading/Heading";
+import { EmojiToast, ErrorToast } from "../toast/Toast";
 
 type ListingProps = {
     listings: ListingType[];
@@ -40,12 +41,13 @@ const Listing: React.FC<ListingProps> = ({
     const router = useRouter();
     const deleteConfirmStore = DeleteConfirmStore();
     const loginStore = LoginStore();
+    const { theme } = useTheme();
 
     async function handleHeartClick(itemId: string) {
         const user = await getCurrentUser();
         if (!user) {
-            toast.error("opps! Please login");
-            return loginStore.onOpen();
+            loginStore.onOpen();
+            ErrorToast(theme, "Opps! please Login");
         }
 
         // make the listing favorite to specific user
@@ -54,9 +56,11 @@ const Listing: React.FC<ListingProps> = ({
             .then((res) => {
                 router.refresh();
                 if (res.data.code == FavoriteEnum.FAVORITE_ASSIGNED) {
-                    toast("favorited", { icon: "😊" });
+                    // toast("favorited", { icon: "😊" });
+                    EmojiToast(theme, "Favorited", '😍')
                 } else if (res.data.code == FavoriteEnum.FAVORITE_REMOVED) {
-                    toast("favorite removed", { icon: "😔" });
+                    // toast("favorite removed", { icon: "😔" });
+                    EmojiToast(theme, "Favorite Removed", '😢')
                 }
             })
             .catch((err) => console.error("something went wrong"));

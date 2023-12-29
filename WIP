@@ -28,3 +28,8 @@
 . ✅ fixed the map overlay on LoginModal. (using static and z-index)
 . ✅ when days in calender is selected show the totalDays and totalPrice if already reserved price will add
 . 🔃 you are not logged in and you are on detail page when clicked reserved and logged in the scroll pos changes.
+
+
+. :: Testing toast (dark/light mode) ::
+. when user logout.
+. making listing favorite and unfavorite from listing component and heart click

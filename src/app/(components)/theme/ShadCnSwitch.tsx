@@ -10,6 +10,7 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
+import { Cpu, Moon, Sun } from "lucide-react";
 
 export function ModeToggle() {
     const { setTheme } = useTheme();
@@ -28,14 +29,23 @@ export function ModeToggle() {
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="dark:bg-slate-700">
-                <DropdownMenuItem onClick={() => setTheme("light")}>
-                    Light
+                <DropdownMenuItem
+                    onClick={() => setTheme("light")}
+                    className="flex gap-x-2"
+                >
+                    <Sun size={15} /> Light
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setTheme("dark")}>
-                    Dark
+                <DropdownMenuItem
+                    onClick={() => setTheme("dark")}
+                    className="flex gap-x-2"
+                >
+                    <Moon size={15} /> Dark
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setTheme("system")}>
-                    System
+                <DropdownMenuItem
+                    onClick={() => setTheme("system")}
+                    className="flex gap-x-2"
+                >
+                    <Cpu size={15} /> System
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>

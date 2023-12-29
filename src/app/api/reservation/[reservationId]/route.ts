@@ -1,4 +1,3 @@
-import getCurrentUser from "@/app/(actions)/getCurrentUser";
 import { NextResponse } from "next/server";
 import prisma from "../../../../../prisma/PrismaDB";
 
@@ -12,9 +11,6 @@ export async function DELETE(request: Request, { params }: ParamsType) {
             id: params.reservationId,
         }
     });
-
-    console.log(params.reservationId);
-    console.log(reservation);
 
     return NextResponse.json("reservation deleted");
 }

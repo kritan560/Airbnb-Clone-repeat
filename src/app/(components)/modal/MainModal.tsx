@@ -3,10 +3,16 @@
 import CategoryStore from "@/app/store/categoryStore";
 import ModalStore, { ModalEnum, ModalEnumLength } from "@/app/store/modalStore";
 import axios from "axios";
+import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
 import { FieldValues, useForm } from "react-hook-form";
-import toast from "react-hot-toast";
 import Button from "../button/Button";
+import {
+    DB_SAVED,
+    ERROR_MESSAGE,
+    ErrorToast,
+    SuccessToast
+} from "../toast/Toast";
 import CategoryModal from "./1categoriesModal/CategoryModal";
 import MapModal from "./2mapModal/MapModal";
 import AmenitiesModal from "./3amenitiesModal/AmenitiesModal";
@@ -38,6 +44,7 @@ const MainModal = () => {
     const modalStore = ModalStore();
     const categoryStore = CategoryStore();
     const router = useRouter();
+    const { theme } = useTheme();
 
     function submit(data: FieldValues) {
         if (modalStore.currentModal !== ModalEnumLength) {
@@ -52,15 +59,15 @@ const MainModal = () => {
             axios
                 .post("/api/listing", datas)
                 .then(() => {
-                    toast.success("data saved to DB", { duration: 5000 });
                     reset();
                     categoryStore.setScrollPosition(0);
                     modalStore.resetModal();
                     router.refresh();
+                    SuccessToast(theme, DB_SAVED);
                 })
                 .catch((err) => {
-                    console.error("something went wrong"),
-                        toast.error("something went wrong");
+                    // console.error("something went wrong"),
+                        ErrorToast(theme, ERROR_MESSAGE);
                 })
                 .finally(() => {
                     modalStore.onClose();

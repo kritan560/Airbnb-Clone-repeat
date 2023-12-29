@@ -3,16 +3,22 @@
 import LoginStore from "@/app/store/loginStore";
 import SignUpStore from "@/app/store/signupStore";
 import { signIn } from "next-auth/react";
+import { useTheme } from "next-themes";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import { FieldValues, useForm } from "react-hook-form";
-import toast from "react-hot-toast";
 import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import Body from "../body/Body";
 import Button from "../button/Button";
 import Heading from "../heading/Heading";
 import Input from "../input/Input";
+import {
+    ERROR_MESSAGE,
+    ErrorToast,
+    LOGIN_SUCCESS,
+    SuccessToast
+} from "../toast/Toast";
 import Modal from "./Modal";
 
 const LoginModal = () => {
@@ -24,6 +30,7 @@ const LoginModal = () => {
     const callbackURL = useSearchParams();
     const callbackRedirectURL = callbackURL.get("callbackUrl");
     const pathName = usePathname();
+    const { theme } = useTheme();
 
     const {
         register,
@@ -54,9 +61,9 @@ const LoginModal = () => {
             password
         }).then((callback) => {
             if (callback?.ok) {
-                toast.success("User logged in success");
                 reset();
                 loginStore.onClose();
+                SuccessToast(theme, LOGIN_SUCCESS);
 
                 // if there is a callbackUrl | pathName defined in titlebar
                 if (callbackRedirectURL) {
@@ -70,7 +77,7 @@ const LoginModal = () => {
                 router.refresh();
             } else if (callback?.error) {
                 setFocus("password");
-                toast.error(callback.error);
+                ErrorToast(theme, ERROR_MESSAGE);
             }
         });
     }

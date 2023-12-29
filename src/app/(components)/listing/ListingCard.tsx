@@ -5,13 +5,23 @@ import { FavoriteEnum } from "@/app/enumStore/userStateEnum";
 import LoginStore from "@/app/store/loginStore";
 import axios from "axios";
 import { format } from "date-fns";
+import { useTheme } from "next-themes";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React from "react";
-import toast from "react-hot-toast";
 import { FaRegHeart } from "react-icons/fa";
 import { GoHeartFill } from "react-icons/go";
 import Button from "../button/Button";
+import {
+    EmojiToast,
+    ErrorToast,
+    FAVORITE_ASSIGNED,
+    FAVORITE_ASSIGNED_ICON,
+    FAVORITE_REMOVED,
+    FAVORITE_REMOVED_ICON,
+    SuccessToast,
+    UNAUTHORIZED
+} from "../toast/Toast";
 
 type ListingCardType = {
     endDay: Date;
@@ -38,12 +48,13 @@ const ListingCard: React.FC<ListingCardType> = ({
 }) => {
     const router = useRouter();
     const loginStore = LoginStore();
+    const { theme } = useTheme();
 
     async function handleHeartClick(itemId: string) {
         const user = await getCurrentUser();
         if (!user) {
-            toast.error("opps! Please login");
-            return loginStore.onOpen();
+            loginStore.onOpen();
+            ErrorToast(theme, UNAUTHORIZED);
         }
 
         // make the listing favorite to specific user
@@ -52,9 +63,15 @@ const ListingCard: React.FC<ListingCardType> = ({
             .then((res) => {
                 router.refresh();
                 if (res.data.code == FavoriteEnum.FAVORITE_ASSIGNED) {
-                    toast("favorited", { icon: "😊" });
+                    // toast("favorited", { icon: "😊" });
+                    EmojiToast(
+                        theme,
+                        FAVORITE_ASSIGNED,
+                        FAVORITE_ASSIGNED_ICON
+                    );
                 } else if (res.data.code == FavoriteEnum.FAVORITE_REMOVED) {
-                    toast("favorite removed", { icon: "😔" });
+                    // toast("favorite removed", { icon: "😔" });
+                    EmojiToast(theme, FAVORITE_REMOVED, FAVORITE_REMOVED_ICON);
                 }
             })
             .catch((err) => console.error("something went wrong"));
@@ -68,9 +85,8 @@ const ListingCard: React.FC<ListingCardType> = ({
         axios
             .delete(`/api/reservation/${reservationId}`)
             .then((res) => {
-                // console.log(res);
                 router.refresh();
-                toast.success(`reservation of ${totalDays} cancelled`);
+                SuccessToast(theme, `reservation of ${totalDays} cancelled`);
             })
             .catch((err) => console.error("something went wrong"));
     }

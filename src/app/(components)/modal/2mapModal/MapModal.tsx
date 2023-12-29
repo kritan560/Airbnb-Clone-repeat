@@ -50,7 +50,7 @@ const MapModal: React.FC<MapModalProps> = ({
                 <div className="flex flex-col gap-y-3">
                     <ReactSelect
                         instanceId={useId()} // you need this instanceId without it give react-select-4-live-region warning error
-                        className="z-[9999]"
+                        className="z-[9999] dark:text-blue-900"
                         isClearable
                         placeholder="AnyWhere"
                         options={useCountries()}
