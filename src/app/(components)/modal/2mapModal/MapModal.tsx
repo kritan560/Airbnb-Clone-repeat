@@ -58,7 +58,7 @@ const MapModal: React.FC<MapModalProps> = ({
                 setInvert(false);
             }
         }
-    }, [theme]);
+    }, [theme, systemTheme]);
 
     return (
         <div>
