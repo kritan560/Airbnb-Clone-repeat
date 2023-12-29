@@ -289,6 +289,8 @@ const ListingDetail: React.FC<ListingDetailProps> = ({
                                 handleChange={handleChange}
                                 state={state}
                                 disableDates={disableRanges}
+                                theme={theme}
+                                systemTheme={systemTheme}
                             />
                         </div>
 

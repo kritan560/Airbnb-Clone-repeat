@@ -16,10 +16,12 @@ import MapModal from "./2mapModal/MapModal";
 import AmenitiesModal from "./3amenitiesModal/AmenitiesModal";
 import DateRangeModal from "./7_dateRangeModal/DateRangeModal";
 import Modal from "./Modal";
+import { useTheme } from "next-themes";
 
 const FilterModal = () => {
     const filterModalStore = FilterModalStore();
     const router = useRouter();
+    const { theme, systemTheme } = useTheme();
     const { setValue, watch, handleSubmit, reset } = useForm<FieldValues>({
         mode: "all",
         defaultValues: {
@@ -116,6 +118,8 @@ const FilterModal = () => {
                         <DateRangeModal
                             handleChange={handleChange}
                             state={state}
+                            systemTheme={systemTheme}
+                            theme={theme}
                         />
                     </Body>
                 </div>
