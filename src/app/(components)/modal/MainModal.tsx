@@ -44,7 +44,7 @@ const MainModal = () => {
     const modalStore = ModalStore();
     const categoryStore = CategoryStore();
     const router = useRouter();
-    const { theme } = useTheme();
+    const { theme, systemTheme } = useTheme();
 
     function submit(data: FieldValues) {
         if (modalStore.currentModal !== ModalEnumLength) {
@@ -63,11 +63,11 @@ const MainModal = () => {
                     categoryStore.setScrollPosition(0);
                     modalStore.resetModal();
                     router.refresh();
-                    SuccessToast(theme, DB_SAVED);
+                    SuccessToast(theme, systemTheme, DB_SAVED);
                 })
                 .catch((err) => {
                     // console.error("something went wrong"),
-                        ErrorToast(theme, ERROR_MESSAGE);
+                        ErrorToast(theme, systemTheme, ERROR_MESSAGE);
                 })
                 .finally(() => {
                     modalStore.onClose();

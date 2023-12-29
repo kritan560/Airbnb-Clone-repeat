@@ -55,7 +55,7 @@ const SignupModal = () => {
     const email = watch("email");
     const name = watch("name");
     const password = watch("password");
-    const { theme } = useTheme();
+    const { theme,systemTheme } = useTheme();
 
     function submit(data: any) {
         axios
@@ -71,17 +71,17 @@ const SignupModal = () => {
                         .then((callback) => {
                             if (callback?.ok) {
                                 router.refresh();
-                                SuccessToast(theme, LOGIN_SUCCESS);
+                                SuccessToast(theme, systemTheme, LOGIN_SUCCESS);
                             }
                         })
                         .catch(() => {
-                            ErrorToast(theme, ERROR_MESSAGE);
+                            ErrorToast(theme, systemTheme, ERROR_MESSAGE);
                         });
                     reset();
                     signupStore.onClose();
-                    SuccessToast(theme, NEW_USER);
+                    SuccessToast(theme, systemTheme, NEW_USER);
                 } else if (res.data.code == UserState.USER_ALREADY_EXISTS) {
-                    ErrorToast(theme, "User alredy in DB");
+                    ErrorToast(theme, systemTheme, "User alredy in DB");
                 }
             })
             .catch((err) => console.error("something went wrong"))

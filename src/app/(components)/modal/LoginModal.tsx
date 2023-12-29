@@ -30,7 +30,7 @@ const LoginModal = () => {
     const callbackURL = useSearchParams();
     const callbackRedirectURL = callbackURL.get("callbackUrl");
     const pathName = usePathname();
-    const { theme } = useTheme();
+    const { theme, systemTheme } = useTheme();
 
     const {
         register,
@@ -63,7 +63,7 @@ const LoginModal = () => {
             if (callback?.ok) {
                 reset();
                 loginStore.onClose();
-                SuccessToast(theme, LOGIN_SUCCESS);
+                SuccessToast(theme, systemTheme, LOGIN_SUCCESS);
 
                 // if there is a callbackUrl | pathName defined in titlebar
                 if (callbackRedirectURL) {
@@ -77,7 +77,7 @@ const LoginModal = () => {
                 router.refresh();
             } else if (callback?.error) {
                 setFocus("password");
-                ErrorToast(theme, ERROR_MESSAGE);
+                ErrorToast(theme, systemTheme, ERROR_MESSAGE);
             }
         });
     }

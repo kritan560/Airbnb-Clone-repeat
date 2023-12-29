@@ -41,13 +41,13 @@ const Listing: React.FC<ListingProps> = ({
     const router = useRouter();
     const deleteConfirmStore = DeleteConfirmStore();
     const loginStore = LoginStore();
-    const { theme } = useTheme();
+    const { systemTheme, theme } = useTheme();
 
     async function handleHeartClick(itemId: string) {
         const user = await getCurrentUser();
         if (!user) {
             loginStore.onOpen();
-            ErrorToast(theme, "Opps! please Login");
+            ErrorToast(theme, systemTheme, "Opps! please Login");
         }
 
         // make the listing favorite to specific user
@@ -57,10 +57,10 @@ const Listing: React.FC<ListingProps> = ({
                 router.refresh();
                 if (res.data.code == FavoriteEnum.FAVORITE_ASSIGNED) {
                     // toast("favorited", { icon: "😊" });
-                    EmojiToast(theme, "Favorited", '😍')
+                    EmojiToast(theme, systemTheme, "Favorited", "😍");
                 } else if (res.data.code == FavoriteEnum.FAVORITE_REMOVED) {
                     // toast("favorite removed", { icon: "😔" });
-                    EmojiToast(theme, "Favorite Removed", '😢')
+                    EmojiToast(theme, systemTheme, "Favorite Removed", "😢");
                 }
             })
             .catch((err) => console.error("something went wrong"));

@@ -13,37 +13,93 @@ export const DB_SAVED = "Data Saved To DB";
 export const NEW_USER = "New User Created";
 export const USER_LOGOUT_SUCCESS = "Logout Success";
 
-export function SuccessToast(theme: string | undefined, message: string) {
+// success toast
+export function SuccessToast(
+    theme: string | undefined,
+    systemTheme: "dark" | "light" | undefined,
+    message: string
+) {
     if (theme == "dark") {
-        return toast.success(message, {
+        toast.success(message, {
             style: { borderRadius: "10px", background: "#333", color: "#fff" }
         });
     } else if (theme == "light") {
-        return toast.success(message);
+        toast.success(message);
+    } else if (theme == "system") {
+        if (systemTheme == "dark") {
+            toast.error(message, {
+                style: {
+                    borderRadius: "10px",
+                    background: "#333",
+                    color: "#fff"
+                }
+            });
+        } else if (systemTheme == "light") {
+            toast.error(message);
+        }
     }
 }
 
-export function ErrorToast(theme: string | undefined, message: string) {
+// error toast
+export function ErrorToast(
+    theme: string | undefined,
+    systemTheme: "dark" | "light" | undefined,
+    message: string
+) {
     if (theme == "dark") {
-        return toast.error(message, {
+        toast.error(message, {
             style: { borderRadius: "10px", background: "#333", color: "#fff" }
         });
     } else if (theme == "light") {
-        return toast.error(message);
+        toast.error(message);
+    } else if (theme == "system") {
+        if (systemTheme == "dark") {
+            toast.error(message, {
+                style: {
+                    borderRadius: "10px",
+                    background: "#333",
+                    color: "#fff"
+                }
+            });
+        } else if (systemTheme == "light") {
+            toast.error(message);
+        }
     }
 }
 
+// emoji toast
 export function EmojiToast(
     theme: string | undefined,
+    systemTheme: "dark" | "light" | undefined,
     message: string,
     emoji: string
 ) {
     if (theme == "dark") {
-        return toast.error(message, {
+        toast.error(message, {
             icon: emoji,
             style: { borderRadius: "10px", background: "#333", color: "#fff" }
         });
     } else if (theme == "light") {
-        return toast.error(message, { icon: emoji });
+        toast.error(message, { icon: emoji });
+    } else if (theme == "system") {
+        if (systemTheme == "dark") {
+            toast.error(message, {
+                style: {
+                    borderRadius: "10px",
+                    background: "#333",
+                    color: "#fff"
+                }
+            });
+        } else if (systemTheme == "light") {
+            toast.error(message);
+        }
     }
 }
+
+// export function SuccessToast(){
+//     toast.success('helloss')
+// }
+
+// export function ErrorToast(){
+//     toast.error('error')
+// }

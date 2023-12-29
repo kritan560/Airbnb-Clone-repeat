@@ -51,7 +51,7 @@ const ListingDetail: React.FC<ListingDetailProps> = ({
     const router = useRouter();
     const countries = useCountries();
     const loginStore = LoginStore();
-    const { theme } = useTheme();
+    const { theme, systemTheme } = useTheme();
 
     // when you load the content dynamically the change in some component would refresh the whole component causing the refresh of the component. to stop the refresh of the component remove the dynamic comonent and use the regular import of the component
     // const Body = dynamic(() => import("../body/Body"), { ssr: false });
@@ -92,7 +92,7 @@ const ListingDetail: React.FC<ListingDetailProps> = ({
         const user = await getCurrentUser();
         if (!user) {
             loginStore.onOpen();
-            SuccessToast(theme, UNAUTHORIZED);
+            SuccessToast(theme, systemTheme, UNAUTHORIZED);
         }
 
         // make the listing favorite to specific user
@@ -104,11 +104,17 @@ const ListingDetail: React.FC<ListingDetailProps> = ({
                     // toast("favorited", { icon: "😊" });
                     EmojiToast(
                         theme,
+                        systemTheme,
                         FAVORITE_ASSIGNED,
                         FAVORITE_ASSIGNED_ICON
                     );
                 } else if (res.data.code == FavoriteEnum.FAVORITE_REMOVED) {
-                    EmojiToast(theme, FAVORITE_REMOVED, FAVORITE_REMOVED_ICON);
+                    EmojiToast(
+                        theme,
+                        systemTheme,
+                        FAVORITE_REMOVED,
+                        FAVORITE_REMOVED_ICON
+                    );
                 }
             })
             .catch((err) => console.error("something went wrong"));
@@ -139,6 +145,7 @@ const ListingDetail: React.FC<ListingDetailProps> = ({
                 setWating(false);
                 SuccessToast(
                     theme,
+                    systemTheme,
                     `${RESERVED_SUCCESS}${listing.map.slice(0, 14)}`
                 );
             })

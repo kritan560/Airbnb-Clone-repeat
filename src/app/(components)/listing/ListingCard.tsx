@@ -19,7 +19,6 @@ import {
     FAVORITE_ASSIGNED_ICON,
     FAVORITE_REMOVED,
     FAVORITE_REMOVED_ICON,
-    SuccessToast,
     UNAUTHORIZED
 } from "../toast/Toast";
 
@@ -48,13 +47,13 @@ const ListingCard: React.FC<ListingCardType> = ({
 }) => {
     const router = useRouter();
     const loginStore = LoginStore();
-    const { theme } = useTheme();
+    const { theme, systemTheme } = useTheme();
 
     async function handleHeartClick(itemId: string) {
         const user = await getCurrentUser();
         if (!user) {
             loginStore.onOpen();
-            ErrorToast(theme, UNAUTHORIZED);
+            ErrorToast(theme, systemTheme, UNAUTHORIZED);
         }
 
         // make the listing favorite to specific user
@@ -65,13 +64,13 @@ const ListingCard: React.FC<ListingCardType> = ({
                 if (res.data.code == FavoriteEnum.FAVORITE_ASSIGNED) {
                     // toast("favorited", { icon: "😊" });
                     EmojiToast(
-                        theme,
+                        theme, systemTheme,
                         FAVORITE_ASSIGNED,
                         FAVORITE_ASSIGNED_ICON
                     );
                 } else if (res.data.code == FavoriteEnum.FAVORITE_REMOVED) {
                     // toast("favorite removed", { icon: "😔" });
-                    EmojiToast(theme, FAVORITE_REMOVED, FAVORITE_REMOVED_ICON);
+                    EmojiToast(theme, systemTheme, FAVORITE_REMOVED, FAVORITE_REMOVED_ICON);
                 }
             })
             .catch((err) => console.error("something went wrong"));
@@ -86,7 +85,11 @@ const ListingCard: React.FC<ListingCardType> = ({
             .delete(`/api/reservation/${reservationId}`)
             .then((res) => {
                 router.refresh();
-                SuccessToast(theme, `reservation of ${totalDays} cancelled`);
+                // SuccessToast(
+                //     theme,
+                //     `reservation of ${totalDays} cancelled`,
+                //     toast
+                // );
             })
             .catch((err) => console.error("something went wrong"));
     }

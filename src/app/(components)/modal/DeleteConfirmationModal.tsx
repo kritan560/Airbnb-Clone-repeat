@@ -34,7 +34,7 @@ const DeleteConfirmationModal: React.FC<DeleteConfirmationModalType> = ({
     let bodyContent;
     const router = useRouter();
     const deleteConfirmStore = DeleteConfirmStore();
-    const { theme } = useTheme();
+    const { theme, systemTheme } = useTheme();
 
     function handleDelete() {
         // remove the listing
@@ -43,7 +43,7 @@ const DeleteConfirmationModal: React.FC<DeleteConfirmationModalType> = ({
             .then((res) => {
                 router.refresh();
                 deleteConfirmStore.onClose();
-                EmojiToast(theme, LISTING_DELETE, FAVORITE_REMOVED_ICON);
+                EmojiToast(theme, systemTheme, LISTING_DELETE, FAVORITE_REMOVED_ICON);
             })
             .catch((err) => console.error("something went wrong"));
     }

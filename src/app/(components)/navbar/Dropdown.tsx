@@ -26,7 +26,7 @@ const Style = {
 
 const Dropdown: React.FC<DropdownProps> = ({ className, currentUser }) => {
     const scrollBarStore = ScrollBarStore();
-    const { theme } = useTheme();
+    const { theme, systemTheme } = useTheme();
 
     const userLoggedIn = [
         {
@@ -135,7 +135,7 @@ const Dropdown: React.FC<DropdownProps> = ({ className, currentUser }) => {
             router.push(logoutData.url);
             scrollBarStore.setScrollBar(undefined);
             router.refresh();
-            SuccessToast(theme, USER_LOGOUT_SUCCESS);
+            SuccessToast(theme, systemTheme, USER_LOGOUT_SUCCESS);
         }
         if (dropdown === "My Trips") {
             return router.push("/trips");
