@@ -27,7 +27,7 @@ export function SuccessToast(
         toast.success(message);
     } else if (theme == "system") {
         if (systemTheme == "dark") {
-            toast.error(message, {
+            toast.success(message, {
                 style: {
                     borderRadius: "10px",
                     background: "#333",
@@ -35,7 +35,7 @@ export function SuccessToast(
                 }
             });
         } else if (systemTheme == "light") {
-            toast.error(message);
+            toast.success(message);
         }
     }
 }
@@ -46,6 +46,8 @@ export function ErrorToast(
     systemTheme: "dark" | "light" | undefined,
     message: string
 ) {
+    console.log("theme", theme);
+    console.log("systemTheme", systemTheme);
     if (theme == "dark") {
         toast.error(message, {
             style: { borderRadius: "10px", background: "#333", color: "#fff" }
@@ -75,23 +77,24 @@ export function EmojiToast(
     emoji: string
 ) {
     if (theme == "dark") {
-        toast.error(message, {
+        toast(message, {
             icon: emoji,
             style: { borderRadius: "10px", background: "#333", color: "#fff" }
         });
     } else if (theme == "light") {
-        toast.error(message, { icon: emoji });
+        toast(message, { icon: emoji });
     } else if (theme == "system") {
         if (systemTheme == "dark") {
-            toast.error(message, {
+            toast(message, {
                 style: {
                     borderRadius: "10px",
                     background: "#333",
                     color: "#fff"
-                }
+                },
+                icon: emoji
             });
         } else if (systemTheme == "light") {
-            toast.error(message);
+            toast(message, { icon: emoji });
         }
     }
 }
