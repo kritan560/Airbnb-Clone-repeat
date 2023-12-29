@@ -44,7 +44,7 @@ const DateRangeModal: React.FC<DateRangeModalProps> = ({
                 setInvertedColor("#DC2626");
             }
         }
-    }, [theme]);
+    }, [theme, systemTheme]);
 
     return (
         <div className={invert ? "invert" : "invert-0"}>
