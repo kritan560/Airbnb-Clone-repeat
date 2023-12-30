@@ -2,7 +2,7 @@ import React from "react";
 import { IconType } from "react-icons";
 
 type ButtonProps = {
-    primaryLabel: string; // this should not be optional
+    primaryLabel: string | React.JSX.Element; // this should not be optional
     primaryAction: () => void; // this should not be optional
     currentModal?: number;
     stayBottom?: boolean; // will make button absolute bottom. relative to modal.

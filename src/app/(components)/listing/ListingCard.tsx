@@ -8,7 +8,7 @@ import { format } from "date-fns";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
 import { FaRegHeart } from "react-icons/fa";
 import { GoHeartFill } from "react-icons/go";
 import Button from "../button/Button";
@@ -21,6 +21,7 @@ import {
     FAVORITE_REMOVED_ICON,
     UNAUTHORIZED
 } from "../toast/Toast";
+import { BeatLoader } from "react-spinners";
 
 type ListingCardType = {
     endDay: Date;
@@ -48,6 +49,7 @@ const ListingCard: React.FC<ListingCardType> = ({
     const router = useRouter();
     const loginStore = LoginStore();
     const { theme, systemTheme } = useTheme();
+    const [loading, setLoading] = useState<boolean>();
 
     async function handleHeartClick(itemId: string) {
         const user = await getCurrentUser();
@@ -64,13 +66,19 @@ const ListingCard: React.FC<ListingCardType> = ({
                 if (res.data.code == FavoriteEnum.FAVORITE_ASSIGNED) {
                     // toast("favorited", { icon: "😊" });
                     EmojiToast(
-                        theme, systemTheme,
+                        theme,
+                        systemTheme,
                         FAVORITE_ASSIGNED,
                         FAVORITE_ASSIGNED_ICON
                     );
                 } else if (res.data.code == FavoriteEnum.FAVORITE_REMOVED) {
                     // toast("favorite removed", { icon: "😔" });
-                    EmojiToast(theme, systemTheme, FAVORITE_REMOVED, FAVORITE_REMOVED_ICON);
+                    EmojiToast(
+                        theme,
+                        systemTheme,
+                        FAVORITE_REMOVED,
+                        FAVORITE_REMOVED_ICON
+                    );
                 }
             })
             .catch((err) => console.error("something went wrong"));
@@ -81,15 +89,12 @@ const ListingCard: React.FC<ListingCardType> = ({
     }
 
     function handleDeleteReservation(reservationId: string) {
+        setLoading(true);
         axios
             .delete(`/api/reservation/${reservationId}`)
             .then((res) => {
                 router.refresh();
-                // SuccessToast(
-                //     theme,
-                //     `reservation of ${totalDays} cancelled`,
-                //     toast
-                // );
+                setLoading(false);
             })
             .catch((err) => console.error("something went wrong"));
     }
@@ -157,7 +162,9 @@ const ListingCard: React.FC<ListingCardType> = ({
                     </div>
                 </div>
                 <Button
-                    primaryLabel={"cancel reservation"}
+                    primaryLabel={
+                        loading ? <BeatLoader size={15} /> : "cancel reservation"
+                    }
                     primaryAction={() => handleDeleteReservation(reservationId)}
                     btnSm={true}
                     textSize="thin"

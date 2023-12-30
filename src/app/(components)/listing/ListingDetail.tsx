@@ -30,6 +30,7 @@ import {
     SuccessToast,
     UNAUTHORIZED
 } from "../toast/Toast";
+import { BeatLoader } from "react-spinners";
 
 type ListingDetailProps = {
     listing: Listing;
@@ -140,7 +141,6 @@ const ListingDetail: React.FC<ListingDetailProps> = ({
             .then((res) => {
                 setState([]);
                 router.prefetch("/reservations");
-                router.push("/reservations");
                 router.refresh();
                 setWating(false);
                 SuccessToast(
@@ -324,7 +324,7 @@ const ListingDetail: React.FC<ListingDetailProps> = ({
                                         currentUser.id
                                     );
                             }}
-                            primaryLabel="Reserve"
+                            primaryLabel={wating ? <BeatLoader size={10} /> : "Reserve"}
                             class={{
                                 bgPrimaryStyle: `mx-4 ${
                                     wating && "cursor-not-allowed"
