@@ -26,55 +26,46 @@ const Map: React.FC<MapProps> = ({ position }) => {
     const zoom = 12;
     const [map, setMap] = useState<M | null>();
     const { theme, systemTheme } = useTheme();
-    const [darkMode, setDarkMode] = useState<string>(
-        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-    );
+    const [darkMode, setDarkMode] = useState<boolean>();
 
     function DisplayPosition({ map }: { map: M }) {
         useEffect(() => {
             if (theme == "dark") {
-                setDarkMode(
-                    "https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png"
-                );
+                setDarkMode(true);
             } else if (theme == "light") {
-                setDarkMode(
-                    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                );
+                setDarkMode(false);
             } else if (theme == "system") {
                 if (systemTheme == "dark") {
-                    setDarkMode(
-                        "https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png"
-                    );
+                    setDarkMode(true);
                 } else if (systemTheme == "light") {
-                    setDarkMode(
-                        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                    );
+                    setDarkMode(false);
                 }
             }
             map.setView(position ? position : center, zoom);
-        }, [map]);
+        }, [map, theme, systemTheme]);
 
         return <></>;
     }
 
     const displayMap = useMemo(
         () => (
-            <MapContainer
-                center={center}
-                zoom={zoom}
-                scrollWheelZoom={false}
-                ref={setMap}
-                className="rounded-lg"
-            >
-                <TileLayer
-                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                    url={darkMode}
-                    // url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                />
-                <Marker position={position ? position : center} icon={icon}>
-                    <Popup className="ml-[13px]">Popup</Popup>
-                </Marker>
-            </MapContainer>
+            <div className={darkMode ? "invert" : "invert-0"}>
+                <MapContainer
+                    center={center}
+                    zoom={zoom}
+                    scrollWheelZoom={false}
+                    ref={setMap}
+                    className="rounded-lg"
+                >
+                    <TileLayer
+                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    />
+                    <Marker position={position ? position : center} icon={icon}>
+                        <Popup className="ml-[13px]">Popup</Popup>
+                    </Marker>
+                </MapContainer>
+            </div>
         ),
         [center, icon, position]
     );

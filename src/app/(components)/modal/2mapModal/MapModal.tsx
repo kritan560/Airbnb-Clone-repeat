@@ -70,6 +70,7 @@ const MapModal: React.FC<MapModalProps> = ({
                         className={`z-[9999] dark:text-blue-400 ${
                             invert ? "invert" : "invert-0"
                         }`}
+                        classNamePrefix={"className"}
                         isClearable
                         placeholder="AnyWhere"
                         options={useCountries()}
@@ -77,7 +78,7 @@ const MapModal: React.FC<MapModalProps> = ({
                         onChange={(e) => handleCountryChange(e)}
                         formatOptionLabel={(fieldValue) => (
                             <div
-                                className={`flex gap-x-2 ${
+                                className={`flex gap-x-2 placeholder:text-black ${
                                     invert ? "invert" : "invert-0"
                                 }`}
                             >
