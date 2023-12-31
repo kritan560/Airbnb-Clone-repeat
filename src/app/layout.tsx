@@ -40,19 +40,19 @@ export default async function RootLayout({
                     enableSystem
                     disableTransitionOnChange
                 >
-                    <div className="rounded-xl bg-white fixed inset-0 overflow-y-auto scrollbar-thumb-red-600 scrollbar-thin scrollbar-thumb-rounded-full select-none dark:bg-slate-900 dark:text-slate-100">
-                        <Toaster />
-                        <Navbar currentUser={currentUser} />
-                        <MainModal />
-                        <FilterModal />
-                        <Suspense>
-                            <LoginModal />
-                            <SignupModal />
-                        </Suspense>
-                        <div className="pl-4 pr-2 md:px-14 lg:px-24 py-6">
-                            {children}
+                    <div>
+                        <div className="rounded-xl bg-white select-none dark:bg-slate-900 dark:text-slate-100">
+                            <Navbar currentUser={currentUser} />
+                            <Toaster />
+                            <MainModal />
+                            <FilterModal />
+                            <Suspense>
+                                <LoginModal />
+                                <SignupModal />
+                            </Suspense>
+                            <div className=" px-2 md:px-14 lg:px-24 py-6">{children}</div>
                         </div>
-                    </div>
+                    </div>{" "}
                 </ThemeProvider>
             </body>
         </html>

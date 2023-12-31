@@ -139,7 +139,13 @@ const ListingDetail: React.FC<ListingDetailProps> = ({
                 totalDays: totalDays
             })
             .then((res) => {
-                setState([]);
+                setState([
+                    {
+                        endDate: new Date(),
+                        startDate: new Date(),
+                        key: "selection"
+                    }
+                ]);
                 router.prefetch("/reservations");
                 router.refresh();
                 setWating(false);
@@ -170,9 +176,9 @@ const ListingDetail: React.FC<ListingDetailProps> = ({
     }
 
     return (
-        <div>
+        <div className="">
             <Heading title={listing.map} subtitle={listing.description} />
-            <Body>
+            <Body className="h-full">
                 <div className="w-full h-96 relative">
                     <Image
                         src={listing.image}
@@ -324,7 +330,9 @@ const ListingDetail: React.FC<ListingDetailProps> = ({
                                         currentUser.id
                                     );
                             }}
-                            primaryLabel={wating ? <BeatLoader size={10} /> : "Reserve"}
+                            primaryLabel={
+                                wating ? <BeatLoader size={10} /> : "Reserve"
+                            }
                             class={{
                                 bgPrimaryStyle: `mx-4 ${
                                     wating && "cursor-not-allowed"

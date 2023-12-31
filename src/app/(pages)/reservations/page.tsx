@@ -57,17 +57,3 @@ const Reservations = async () => {
 
 export default Reservations;
 
-// const page = () => {
-//     const maps = [1, 2, 3, 4];
-//     return (
-//         <div>
-//             {maps.map((map) =>
-//                 map === 2 || map === 4 ? null : (
-//                     <div key={map}>Content for map {map}</div>
-//                 )
-//             )}
-//         </div>
-//     );
-// };
-
-// export default page;

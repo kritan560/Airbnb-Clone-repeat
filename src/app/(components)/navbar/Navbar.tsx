@@ -7,11 +7,12 @@ import ScrollBarStore from "@/app/store/scrollBarStore";
 import SignUpStore from "@/app/store/signupStore";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoSearchCircleSharp } from "react-icons/io5";
 import { ModeToggle } from "../theme/ShadCnSwitch";
 import Dropdown from "./Dropdown";
+import { useScrollTop } from "@/app/hooks/useScrollTop";
 
 type NavbarProps = {
     currentUser?: any;
@@ -24,6 +25,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
     const filterModalStore = FilterModalStore();
     const router = useRouter();
     const signupStore = SignUpStore();
+    const hasScrolled = useScrollTop();
 
     const handleModalOpen = () => {
         if (!currentUser) {
@@ -54,8 +56,17 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
         filterModalStore.onOpen();
     }
 
+    const handleKeyPressClose = (ev: KeyboardEvent) => {
+        if (ev.key == "Escape") {
+            dropdownStore.onClose();
+            filterModalStore.onClose();
+            modalStore.onClose();
+        }
+    };
+
     useEffect(() => {
         document.addEventListener("click", handleDropDownClose);
+        document.addEventListener("keydown", handleKeyPressClose);
     }, []);
 
     // the underline under selected scrollbar items
@@ -73,11 +84,14 @@ const Navbar: React.FC<NavbarProps> = ({ currentUser }) => {
     const days = filterModalStore.days;
     const location = filterModalStore.location;
 
-    // when logged in with social network use those image
-
     return (
         <>
-            <div className="flex justify-between items-center py-4 border-b px-4 md:px-14 lg:px-24 min-w-[350px] ">
+            <div
+                className={`flex justify-between items-center py-4 px-4 md:px-14 lg:px-24 min-w-[350px] sticky top-0 w-full dark:bg-slate-900 bg-white z-20 ${
+                    hasScrolled &&
+                    "border-b-2 shadow-sm dark:border-b-slate-400 dark:shadow-slate-400"
+                }`}
+            >
                 {/* logo */}
                 <div className="hover:cursor-pointer" onClick={handleLogoClick}>
                     <Image

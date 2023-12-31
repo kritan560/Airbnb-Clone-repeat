@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import { ReactNode } from "react";
 
 type BodyType = {
@@ -6,6 +7,6 @@ type BodyType = {
 };
 
 const Body: React.FC<BodyType> = ({ children, className }) => {
-    return <div className={`${className} h-[290px] mt-4`}>{children}</div>;
+    return <div className={cn(` h-[290px] mt-4`, className)}>{children}</div>;
 };
 export default Body;

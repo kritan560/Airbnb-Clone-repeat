@@ -63,7 +63,7 @@ const page = async ({ params }: ParamsId) => {
     // get the current user Reservations
 
     return (
-        <>
+        <div className="">
             <ListingDetail
                 listing={list}
                 currentUser={ListingUser}
@@ -72,7 +72,7 @@ const page = async ({ params }: ParamsId) => {
                 totalprice={totalPrice}
                 totalDays={totalDays}
             />
-        </>
+        </div>
     );
 };
 export default page;

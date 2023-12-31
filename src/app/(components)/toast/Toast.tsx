@@ -46,8 +46,6 @@ export function ErrorToast(
     systemTheme: "dark" | "light" | undefined,
     message: string
 ) {
-    console.log("theme", theme);
-    console.log("systemTheme", systemTheme);
     if (theme == "dark") {
         toast.error(message, {
             style: { borderRadius: "10px", background: "#333", color: "#fff" }

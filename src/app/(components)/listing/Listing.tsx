@@ -15,6 +15,7 @@ import { GoHeartFill } from "react-icons/go";
 import Button from "../button/Button";
 import Heading from "../heading/Heading";
 import { EmojiToast, ErrorToast } from "../toast/Toast";
+import { useScrollTop } from "@/app/hooks/useScrollTop";
 
 type ListingProps = {
     listings: ListingType[];
