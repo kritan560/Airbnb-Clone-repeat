@@ -16,6 +16,7 @@ import Button from "../button/Button";
 import Heading from "../heading/Heading";
 import { EmojiToast, ErrorToast } from "../toast/Toast";
 import { useScrollTop } from "@/app/hooks/useScrollTop";
+import Body from "../body/Body";
 
 type ListingProps = {
     listings: ListingType[];
@@ -84,77 +85,85 @@ const Listing: React.FC<ListingProps> = ({
         bodyContent = (
             <>
                 <Heading title={title} subtitle={subtitle} />
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-x-8 gap-y-6 mt-12">
-                    {listings.map((listing) => (
-                        <div
-                            key={listing.id}
-                            className="hover:cursor-pointer group"
-                        >
-                            <div className="overflow-hidden rounded-lg mb-1 relative">
-                                <Image
-                                    src={listing.image}
-                                    width={500}
-                                    height={500}
-                                    alt="image"
-                                    className={`w-full aspect-square transition group-hover:scale-110 group-active:scale-105`}
-                                    onClick={() => uniqueItem(listing.id)}
-                                />
-                                <div
-                                    className="group/heart"
-                                    onClick={() => handleHeartClick(listing.id)}
-                                >
-                                    <GoHeartFill
-                                        className={` absolute top-2 left-3
+                <Body className="h-full">
+                    <div
+                        className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-x-8 gap-y-6 mt-12 ${
+                            listings.length < 3 && "h-screen"
+                        }`}
+                    >
+                        {listings.map((listing) => (
+                            <div
+                                key={listing.id}
+                                className="hover:cursor-pointer group"
+                            >
+                                <div className="overflow-hidden rounded-lg mb-1 relative">
+                                    <Image
+                                        src={listing.image}
+                                        width={500}
+                                        height={500}
+                                        alt="image"
+                                        className={`w-full aspect-square transition group-hover:scale-110 group-active:scale-105`}
+                                        onClick={() => uniqueItem(listing.id)}
+                                    />
+                                    <div
+                                        className="group/heart"
+                                        onClick={() =>
+                                            handleHeartClick(listing.id)
+                                        }
+                                    >
+                                        <GoHeartFill
+                                            className={` absolute top-2 left-3
                         group-active/heart:scale-95 group-hover/heart:scale-[1.15] transition
                     ${
                         favorites?.some((listItem) => listItem == listing.id)
                             ? "fill-red-600"
                             : "fill-slate-500"
                     }`}
-                                        size={25}
-                                    />
-                                    <FaRegHeart
-                                        size={26}
-                                        className={
-                                            "fill-slate-200 absolute top-2 left-3 group-active/heart:scale-95 group-hover/heart:scale-[1.15] transition"
+                                            size={25}
+                                        />
+                                        <FaRegHeart
+                                            size={26}
+                                            className={
+                                                "fill-slate-200 absolute top-2 left-3 group-active/heart:scale-95 group-hover/heart:scale-[1.15] transition"
+                                            }
+                                        />
+                                    </div>
+                                </div>
+                                <div
+                                    onClick={() => uniqueItem(listing.id)}
+                                    className=""
+                                >
+                                    <div className="font-semibold">
+                                        {listing.map.slice(0, 25)}
+                                    </div>
+                                    <div className="font-light">
+                                        {listing.category}
+                                    </div>
+                                    <div>
+                                        <span className="font-semibold">
+                                            ${listing.price}
+                                        </span>
+                                        <span className="font-light ml-2">
+                                            per Night
+                                        </span>
+                                    </div>
+                                </div>
+                                {buttonNeeded && (
+                                    <Button
+                                        primaryLabel={
+                                            buttonLabel || "give me a Name"
                                         }
+                                        primaryAction={() => {
+                                            buttonAction(listing.id);
+                                        }}
+                                        btnSm={true}
+                                        textSize="thin"
                                     />
-                                </div>
+                                )}
                             </div>
-                            <div
-                                onClick={() => uniqueItem(listing.id)}
-                                className=""
-                            >
-                                <div className="font-semibold">
-                                    {listing.map.slice(0, 25)}
-                                </div>
-                                <div className="font-light">
-                                    {listing.category}
-                                </div>
-                                <div>
-                                    <span className="font-semibold">
-                                        ${listing.price}
-                                    </span>
-                                    <span className="font-light ml-2">
-                                        per Night
-                                    </span>
-                                </div>
-                            </div>
-                            {buttonNeeded && (
-                                <Button
-                                    primaryLabel={
-                                        buttonLabel || "give me a Name"
-                                    }
-                                    primaryAction={() => {
-                                        buttonAction(listing.id);
-                                    }}
-                                    btnSm={true}
-                                    textSize="thin"
-                                />
-                            )}
-                        </div>
-                    ))}
-                </div>
+                        ))}
+                    </div>
+                </Body>
             </>
         );
 

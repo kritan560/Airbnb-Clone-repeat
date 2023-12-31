@@ -41,7 +41,7 @@ export default async function RootLayout({
                     disableTransitionOnChange
                 >
                     <div>
-                        <div className="rounded-xl bg-white select-none dark:bg-slate-900 dark:text-slate-100">
+                        <div className="rounded-xl bg-white select-none w-full dark:bg-slate-900 dark:text-slate-100">
                             <Navbar currentUser={currentUser} />
                             <Toaster />
                             <MainModal />
@@ -50,7 +50,9 @@ export default async function RootLayout({
                                 <LoginModal />
                                 <SignupModal />
                             </Suspense>
-                            <div className=" px-2 md:px-14 lg:px-24 py-6">{children}</div>
+                            <div className=" px-3 md:px-14 lg:px-24 py-6">
+                                {children}
+                            </div>
                         </div>
                     </div>{" "}
                 </ThemeProvider>

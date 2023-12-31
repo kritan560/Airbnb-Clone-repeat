@@ -4,6 +4,7 @@ import FilterModalStore from "@/app/store/filterModalStore";
 import ScrollBarStore from "@/app/store/scrollBarStore";
 import { useRouter } from "next/navigation";
 import React from "react";
+import Body from "../body/Body";
 
 type NoMatchFoundProps = {
     buttonLabel?: string;
@@ -30,18 +31,20 @@ const NoMatchFound: React.FC<NoMatchFoundProps> = ({
     }
 
     return (
-        <div className="flex justify-center items-center flex-col gap-y-4">
-            <h1 className="text-3xl font-bold">Opps!!!</h1>
-            <h4 className="text-lg font-semibold text-center">
-                {headingLabel}
-            </h4>
-            <button
-                className="py-2 px-4 border-2 rounded-md border-gray-600 hover:border-gray-600/40 active:border-gray-600/80"
-                onClick={buttonAction ? buttonAction : removeFilters}
-            >
-                {buttonLabel}
-            </button>
-        </div>
+        <Body className="h-screen">
+            <div className="flex justify-center items-center flex-col gap-y-4 mt-12">
+                <h1 className="text-3xl font-bold">Opps!!!</h1>
+                <h4 className="text-lg font-semibold text-center">
+                    {headingLabel}
+                </h4>
+                <button
+                    className="py-2 px-4 border-2 rounded-md border-gray-600 hover:border-gray-600/40 active:border-gray-600/80"
+                    onClick={buttonAction ? buttonAction : removeFilters}
+                >
+                    {buttonLabel}
+                </button>
+            </div>
+        </Body>
     );
 };
 

@@ -57,7 +57,7 @@ const DeleteConfirmationModal: React.FC<DeleteConfirmationModalType> = ({
     bodyContent = (
         <>
             <Heading title={title} subtitle={subtitle} />
-            <Body className="flex h-fit gap-x-4 ">
+            <Body className="flex h-fit gap-x-4">
                 <Button
                     primaryAction={() => buttonPrimaryAction()}
                     primaryLabel={buttonPrimaryLabel}
